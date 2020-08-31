@@ -7,9 +7,9 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class Planet extends CelestialBody {
     public final class SIZES {
-        public static final double SMALL = 10;
-        public static final double MEDIUM = 50;
-        public static final double LARGE = 100;
+        public static final double SMALL = 1;
+        public static final double MEDIUM = 5;
+        public static final double LARGE = 10;
     }
 
     public Planet() {

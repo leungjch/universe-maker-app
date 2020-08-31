@@ -18,7 +18,11 @@ public class Universe {
 
     public final class CONSTANTS {
 //      Actual gravitational constant is much smaller
-        public static final double G = 1000;
+        public static final double G = 10000;
+
+        // Maximum force allowed to be exerted
+        // This solves problem of extreme acceleration when two objects are near each other
+        public static final double MAXFORCE = 1000000000;
 
         // The exponent to raise distance when calculating gravitational force
         // In real life, this is 2 (Gmm/r^2)
@@ -27,13 +31,14 @@ public class Universe {
 
 //      Time step for integration
 //      Smaller time step is more precise
-        public static final double STEPS = 100;
+        public static final double STEPS = 5000;
         public static final double dT = 1.0/STEPS;
     }
     private List<Star> stars;
     private List<Planet> planets;
     private List<CelestialBody> objects;
     private List<CelestialBody> objectsToAdd;
+    private List<CelestialBody> objectsToRemove;
 
     Random rand = new Random();
 
@@ -44,7 +49,7 @@ public class Universe {
         planets = new ArrayList<Planet>();
         objects = new ArrayList<CelestialBody>();
         objectsToAdd = new ArrayList<CelestialBody>();
-
+        objectsToRemove = new ArrayList<CelestialBody>();
 //      Create stars
         Star star = new Star();
         star.setRadius(Star.SIZES.MEDIUM);
@@ -93,29 +98,28 @@ public class Universe {
                 }
                 // Check if collide
                 if (object1.isCollide(object2)) {
-                    Fnet = new Vector2D(0,0);
-                    Acc = new Vector2D(0,0);
-                    Vel = new Vector2D(0,0);
+//                    Fnet = new Vector2D(0,0);
+//                    Acc = new Vector2D(0,0);
+//                    Vel = new Vector2D(0,0);
 //                    Log.d("Collision", "cloided");
-//                    iter1.remove();
-
-                    // Absorb
+                    // Biggest planet will absorb the smaller one
                     if (object2.getRadius() > object1.getRadius())
                     {
 //                        object2.setRadius(object2.getRadius()+ object1.getRadius());
 //                        object1.setRadius(0);
 
-//                        object2.setMass(object1.getMass()+object2.getMass());
-//                        object2.setRadius(object2.getRadius()+Math.sqrt(object1.getRadius()));
+                        object2.setMass(object1.getMass()+object2.getMass());
+                        object2.setRadius(object2.getRadius()+object1.getRadius()/object2.getRadius());
 
-//                        objects.remove(object1);
+                        objectsToRemove.add(object1);
                     }
                     else
                     {
-//                        object1.setMass(object2.getMass()+object1.getMass());
-//                        object1.setRadius(object1.getRadius()+Math.sqrt(object2.getRadius()));
+                        object1.setMass(object2.getMass()+object1.getMass());
+                        object1.setRadius(object1.getRadius()+object2.getRadius()/object1.getRadius());
 
 //                        objects.remove(object2);
+                        objectsToRemove.add(object2);
 
                     }
                     continue;
@@ -156,7 +160,7 @@ public class Universe {
                 if (object1 instanceof Planet)
                 {
 //                    objects.remove(object1);
-                    iter1.remove();
+                    objectsToRemove.add(object1);
                 }
             }
             else
@@ -167,12 +171,20 @@ public class Universe {
 
 
         }
+
+        // Remove planets queued for removal
+        for (CelestialBody object : objectsToRemove) {
+            objects.remove(object);
+        }
+        objectsToRemove.clear();
         // Add any new planets by the user
         for (CelestialBody object : objectsToAdd) {
             objects.add(object);
 
         }
         objectsToAdd.clear();
+
+
     }
 
     public void draw(Canvas canvas) {

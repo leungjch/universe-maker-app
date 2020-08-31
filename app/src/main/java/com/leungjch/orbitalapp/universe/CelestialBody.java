@@ -52,10 +52,17 @@ public class CelestialBody {
 
         double d = pos.distance(object2.getPos()) - radius - object2.getRadius();
         double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);
-
+        fGravAbs = Math.min(Universe.CONSTANTS.MAXFORCE, fGravAbs);
+        Vector2D fGrav;
         // Get x and y components
         double angle = pos.angle(object2.getPos());
-        Vector2D fGrav = new Vector2D(fGravAbs*Math.cos(angle),fGravAbs*Math.sin(angle));
+        if (!isCollide(object2)) {
+            fGrav = new Vector2D(fGravAbs*Math.cos(angle),fGravAbs*Math.sin(angle));
+        }
+        else
+        {
+            fGrav = new Vector2D(0,0);
+        }
 
         return fGrav;
     }
