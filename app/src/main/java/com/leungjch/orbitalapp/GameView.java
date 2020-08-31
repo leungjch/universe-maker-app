@@ -84,11 +84,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
 //                Log.d(DEBUG_TAG,"Action was DOWN");
-                universe.addPlanet(new Vector2D(x,y));
+//                universe.addPlanet(new Vector2D(x,y));
                 return true;
             case (MotionEvent.ACTION_MOVE) :
 //                Log.d(DEBUG_TAG,"Action was MOVE");
-//                universe.addPlanet(new Vector2D(x,y));
+                universe.addPlanet(new Vector2D(x,y));
 
                 return true;
             case (MotionEvent.ACTION_UP) :

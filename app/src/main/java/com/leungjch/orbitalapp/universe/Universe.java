@@ -18,7 +18,7 @@ public class Universe {
 
     public final class CONSTANTS {
 //      Actual gravitational constant is much smaller
-        public static final double G = 100000;
+        public static final double G = 1000;
 
         // The exponent to raise distance when calculating gravitational force
         // In real life, this is 2 (Gmm/r^2)
@@ -27,12 +27,14 @@ public class Universe {
 
 //      Time step for integration
 //      Smaller time step is more precise
-        public static final double STEPS = 300;
+        public static final double STEPS = 100;
         public static final double dT = 1.0/STEPS;
     }
     private List<Star> stars;
     private List<Planet> planets;
     private List<CelestialBody> objects;
+    private List<CelestialBody> objectsToAdd;
+
     Random rand = new Random();
 
     public Universe() {
@@ -41,6 +43,7 @@ public class Universe {
         stars = new ArrayList<Star>();
         planets = new ArrayList<Planet>();
         objects = new ArrayList<CelestialBody>();
+        objectsToAdd = new ArrayList<CelestialBody>();
 
 //      Create stars
         Star star = new Star();
@@ -50,7 +53,7 @@ public class Universe {
         objects.add(star);
 
 //      Create planets
-        int numPlanets = 300;
+        int numPlanets = 100;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet();
             tempPlanet.setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
@@ -94,7 +97,7 @@ public class Universe {
                     Acc = new Vector2D(0,0);
                     Vel = new Vector2D(0,0);
 //                    Log.d("Collision", "cloided");
-                    iter1.remove();
+//                    iter1.remove();
 
                     // Absorb
                     if (object2.getRadius() > object1.getRadius())
@@ -164,6 +167,12 @@ public class Universe {
 
 
         }
+        // Add any new planets by the user
+        for (CelestialBody object : objectsToAdd) {
+            objects.add(object);
+
+        }
+        objectsToAdd.clear();
     }
 
     public void draw(Canvas canvas) {
@@ -180,7 +189,7 @@ public class Universe {
             Planet tempPlanet = new Planet();
             tempPlanet.setPos(pos);
 //            planets.add(tempPlanet);
-            objects.add(tempPlanet);
+            objectsToAdd.add(tempPlanet);
         }
 
     }
