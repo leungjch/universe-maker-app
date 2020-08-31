@@ -9,6 +9,10 @@ public class Vector2D {
         y = new_y;
     }
 
+    // Return distance
+    public double distance(Vector2D vec2) {
+        return Math.sqrt(Math.pow(x-vec2.getX(),2) + Math.pow(y-vec2.getY()));
+    }
     // Getter and setter functions
     public void set(double new_x, double new_y) {
         x = new_x;

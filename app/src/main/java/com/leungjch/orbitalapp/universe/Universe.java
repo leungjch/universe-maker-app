@@ -5,11 +5,16 @@ import android.graphics.Canvas;
 
 import com.leungjch.orbitalapp.helpers.Vector2D;
 
+import java.util.Random;
+
 // The universe class contains all celestial objects defined
 // It also performs integration of forces here
 public class Universe {
     private Star star;
     private Planet[] planets;
+
+    Random rand = new Random();
+
     public Universe() {
         star = new Star();
         star.setRadius(Star.SIZES.LARGE);
@@ -18,9 +23,9 @@ public class Universe {
 //      Create planets
         int numPlanets = 10;
         planets = new Planet[numPlanets];
-        for (int i = 0; i < numPlanets; i++)
-        {
+        for (int i = 0; i < numPlanets; i++) {
             planets[i] = new Planet();
+            planets[i].setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
         }
     }
 
@@ -30,6 +35,9 @@ public class Universe {
 
     public void draw(Canvas canvas) {
         star.draw(canvas);
+        for (int i = 0; i < planets.length; i++) {
+            planets[i].draw(canvas);
+        }
     }
 
     // Return screen width
