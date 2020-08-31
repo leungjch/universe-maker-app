@@ -54,13 +54,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     public void update() {
         universe.update();
-        Log.d("Star","Updating");
 
     }
 
     @Override
     public void draw(Canvas canvas) {
-        Log.d("Star","Draw");
 
         super.draw(canvas);
 

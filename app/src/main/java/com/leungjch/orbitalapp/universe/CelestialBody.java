@@ -1,4 +1,5 @@
 package com.leungjch.orbitalapp.universe;
+import com.leungjch.orbitalapp.universe.Universe;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -44,6 +45,18 @@ public class CelestialBody {
         pos.setX(pos.getX() + vel.getX());
         pos.setY(pos.getY() + vel.getY());
     }
+
+//  Calculate gravitational force of attraction induced by another object
+//  https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation
+    public Vector2D calculateGrav(CelestialBody object2) {
+        Log.d("Log", Double.toString(Universe.CONSTANTS.G));
+        Vector2D fGrav = new Vector2D(0,0);
+
+        double d = pos.distance(object2.getPos()) - radius - object2.getRadius();
+        double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, 2);
+        return fGrav;
+    }
+
     //
     //  Setter functions
     //

@@ -53,7 +53,15 @@ public class Universe {
 //  Perform Euler integration
 //  Calculate Fnet for each object
     public void update() {
+        for (CelestialBody object1 : objects) {
+            for (CelestialBody object2 : objects) {
+//              Skip if same object
+                if (object1 == object2) {
+                    continue;
+                }
 
+            }
+        }
     }
 
     public void draw(Canvas canvas) {
