@@ -33,7 +33,7 @@ public class Star extends CelestialBody {
         Vector2D starFnet = new Vector2D(0,0);
 
         super.setRadius(50);
-        super.setMass(50);
+        super.setMass(50000);
 
 //        super.setPos(starPos);
         super.setVel(starVel);

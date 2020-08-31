@@ -16,9 +16,17 @@ public class Vector2D {
 
     // Return angle between two vectors
     public double angle(Vector2D vec2) {
-        return Math.atan((vec2.getX() - x)/(vec2.getY() - y));
+        return Math.atan2(vec2.getY()-y, vec2.getX()-x);
     }
 
+    // Dot product of two vectors
+    public double dotProduct(Vector2D vec2) {
+        return (x*vec2.getX()) + (y*vec2.getY());
+    }
+    // Magnitude of a vector
+    public double magnitude() {
+        return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
+    }
     // Getter and setter functions
     public void set(double new_x, double new_y) {
         x = new_x;

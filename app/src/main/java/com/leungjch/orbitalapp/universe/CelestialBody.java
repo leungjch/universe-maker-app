@@ -14,25 +14,25 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 
 public class CelestialBody {
-//  Mass determines the strength of its gravitational attraction
+    //  Mass determines the strength of its gravitational attraction
     private double mass;
 
-//  Radius determines the body's size
+    //  Radius determines the body's size
     private double radius;
 
-//  Position
+    //  Position
     private Vector2D pos;
 
-//  Velocity
+    //  Velocity
     private Vector2D vel;
 
-//  Acceleration
+    //  Acceleration
     private Vector2D acc;
 
-//  Net Force
+    //  Net Force
     private Vector2D fnet;
 
-//  Color
+    //  Color
     private Paint paint;
 
     Random rand = new Random();
@@ -41,13 +41,12 @@ public class CelestialBody {
         canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
     }
 
-    public void update() {
-        pos.setX(pos.getX() + vel.getX());
-        pos.setY(pos.getY() + vel.getY());
-    }
+    // Updates all properties when given a new FNet
+//    public void update() {
+//    }
 
-//  Calculate gravitational force of attraction induced by another object
-//  https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation
+    //  Calculate gravitational force of attraction induced by another object
+    //  https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation
     public Vector2D calculateGrav(CelestialBody object2) {
 
 
@@ -59,6 +58,16 @@ public class CelestialBody {
         Vector2D fGrav = new Vector2D(fGravAbs*Math.cos(angle),fGravAbs*Math.sin(angle));
 
         return fGrav;
+    }
+
+    public boolean isCollide(CelestialBody object2) {
+        double d = pos.distance(object2.getPos());
+        if (d < (radius + object2.getRadius())/2) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     //
