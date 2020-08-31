@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import java.util.Random;
 import android.util.Log;
 
+import com.leungjch.orbitalapp.helpers.Vector2D;
 
 // Superclass describing all objects in the simulation
 
@@ -16,62 +17,66 @@ public class CelestialBody {
     private double mass;
 
 //  Radius determines the body's size
-    private double radius = 50;
+    private double radius;
 
 //  Position
-    private double px, py;
+    private Vector2D pos;
 
 //  Velocity
-    private double vx, vy;
+    private Vector2D vel;
 
 //  Acceleration
-    private double ax, ay;
+    private Vector2D acc;
 
 //  Net Force
-    private double fx, fy;
+    private Vector2D fnet;
 
 //  Color
-    private final Paint paint;
+    private Paint paint;
 
     Random rand = new Random();
 
 
-    //  Constructor
-    public CelestialBody() {
-        paint = new Paint();
-        paint.setColor(Color.argb(255, 55,255,255));
-
-    }
-
     public void draw(Canvas canvas) {
-        canvas.drawCircle((int)px/2, (int)py/2, (int)radius, paint);
+        canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
     }
 
     public void update() {
         Log.d("CelestialBody", Double.toString(radius));
-        paint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
-        px += rand.nextInt(10) * (rand.nextInt(2) != 1 ? 1 : -1);
-        py += rand.nextInt(10)  * (rand.nextInt(2) != 1 ? 1 : -1);
+        pos.setX(pos.getX() + vel.getX());
+        pos.setY(pos.getY() + vel.getY());
     }
     //
     //  Setter functions
     //
     //  Set position
-    public void set_p(double new_px, double new_py) {
-        px = new_px;
-        py = new_py;
+    public void set_pos(Vector2D new_pos) {
+        pos = new_pos;
     }
 
     //  Set velocity
-    public void set_v(double new_vx, double new_vy) {
-        vx = new_vx;
-        vy = new_vy;
+    public void set_vel(Vector2D new_vel) {
+        vel = new_vel;
     }
 
     //  Set acceleration
-    public void set_a(double new_ax, double new_ay) {
-        ax = new_ax;
-        ay = new_ay;
+    public void set_acc(Vector2D new_acc) {
+        acc = new_acc;
+    }
+
+    // Set net force
+    public void set_fnet(Vector2D new_fnet) {
+        fnet = new_fnet;
+    }
+
+    // Set radius
+    public void set_radius(double new_radius) {
+        radius = new_radius;
+    }
+
+    // Set paint
+    public void set_paint(Paint new_paint) {
+        paint = new_paint;
     }
     //
     //  Getter functions
@@ -93,5 +98,4 @@ public class CelestialBody {
 //        ax = new_ax;
 //        ay = new_ay;
 //    }
-
 }
