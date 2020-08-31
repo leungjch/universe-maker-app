@@ -8,6 +8,8 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import com.leungjch.orbitalapp.universe.Star;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private MainThread thread;
     private Star star;

@@ -1,4 +1,4 @@
-package com.leungjch.orbitalapp;
+package com.leungjch.orbitalapp.universe;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,7 +37,6 @@ public class Star {
         paint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
         x += rand.nextInt(10) * (rand.nextInt(2) != 1 ? 1 : -1);
         y += rand.nextInt(10)  * (rand.nextInt(2) != 1 ? 1 : -1);
-
     }
 
 }
