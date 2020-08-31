@@ -51,7 +51,7 @@ public class CelestialBody {
 
 
         double d = pos.distance(object2.getPos()) - radius - object2.getRadius();
-        double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, 2);
+        double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);
 
         // Get x and y components
         double angle = pos.angle(object2.getPos());
@@ -62,7 +62,7 @@ public class CelestialBody {
 
     public boolean isCollide(CelestialBody object2) {
         double d = pos.distance(object2.getPos());
-        if (d < (radius + object2.getRadius())/2) {
+        if (d < (radius + object2.getRadius())) {
             return true;
         }
         else {

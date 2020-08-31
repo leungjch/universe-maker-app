@@ -17,11 +17,16 @@ public class Universe {
 
     public final class CONSTANTS {
 //      Actual gravitational constant is much smaller
-        public static final double G = 10;
+        public static final double G = 100000;
+
+        // The exponent to raise distance when calculating gravitational force
+        // In real life, this is 2 (Gmm/r^2)
+        // But modify it to adjust how "heavy" gravity feels
+        public static final double EPSILON = 2;
 
 //      Time step for integration
 //      Smaller time step is more precise
-        public static final double STEPS = 10;
+        public static final double STEPS = 300;
         public static final double dT = 1.0/STEPS;
     }
     private List<Star> stars;
@@ -38,13 +43,13 @@ public class Universe {
 
 //      Create stars
         Star star = new Star();
-        star.setRadius(Star.SIZES.LARGE);
+        star.setRadius(Star.SIZES.SMALL);
         star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
         stars.add(star);
         objects.add(star);
 
 //      Create planets
-        int numPlanets = 10;
+        int numPlanets = 100;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet();
             tempPlanet.setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
@@ -66,11 +71,40 @@ public class Universe {
                 if (object1 == object2) {
                     continue;
                 }
-                // Check if collide
-                if (object1.isCollide(object2)) {
+                // Skip if star
+                if (object1 instanceof Star)
+                {
                     Fnet.setX(0);
                     Fnet.setY(0);
 
+                    continue;
+                }
+                // Check if collide
+                if (object1.isCollide(object2)) {
+                    Fnet = new Vector2D(0,0);
+                    Acc = new Vector2D(0,0);
+                    Vel = new Vector2D(0,0);
+//                    Log.d("Collision", "cloided");
+
+                    // Absorb
+                    if (object2.getRadius() > object1.getRadius())
+                    {
+//                        object2.setRadius(object2.getRadius()+ object1.getRadius());
+//                        object1.setRadius(0);
+
+//                        object2.setMass(object1.getMass()+object2.getMass());
+//                        object2.setRadius(object2.getRadius()+Math.sqrt(object1.getRadius()));
+
+//                        objects.remove(object1);
+                    }
+                    else
+                    {
+//                        object1.setMass(object2.getMass()+object1.getMass());
+//                        object1.setRadius(object1.getRadius()+Math.sqrt(object2.getRadius()));
+
+//                        objects.remove(object2);
+
+                    }
                     continue;
                 }
 
@@ -87,9 +121,8 @@ public class Universe {
             // Integrate by time step
             // FNet = ma -> a = FNet / m
 
-            Acc.setX(Fnet.getX()/object1.getMass() * Universe.CONSTANTS.dT);
-            Acc.setY(Fnet.getY()/object1.getMass() * Universe.CONSTANTS.dT);
-            Log.d("TestIntegration", Double.toString(Universe.CONSTANTS.dT));
+            Acc.setX(Fnet.getX()/object1.getMass());
+            Acc.setY(Fnet.getY()/object1.getMass());
 
             // Obtain velocity by integrating acceleration
             Vel.setX(object1.getVel().getX() + (Acc.getX() * Universe.CONSTANTS.dT));
@@ -103,7 +136,18 @@ public class Universe {
             object1.setFnet(Fnet);
             object1.setAcc(Acc);
             object1.setVel(Vel);
+            // Check if past screen boundaries
+//            if (Pos.getX() > getScreenWidth()*5 || Pos.getX() < -getScreenWidth()*5
+//            ||  Pos.getY() > getScreenHeight()*5|| Pos.getY() < -getScreenHeight()*5)
+//            {
+//                objects.remove(object1);
+//            }
+//            else
+//            {
+//                object1.setPos(Pos);
+//            }
             object1.setPos(Pos);
+
 
         }
     }

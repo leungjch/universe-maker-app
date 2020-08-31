@@ -3,10 +3,12 @@ package com.leungjch.orbitalapp;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MotionEventCompat;
 
 import com.leungjch.orbitalapp.universe.Universe;
 
@@ -66,4 +68,35 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
             universe.draw(canvas);
         }
     }
+
+
+    // This example shows an Activity, but you would use the same approach if
+// you were subclassing a View.
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+
+        int action = MotionEventCompat.getActionMasked(event);
+        String DEBUG_TAG = "Gesture";
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                Log.d(DEBUG_TAG,"Action was DOWN");
+                return true;
+            case (MotionEvent.ACTION_MOVE) :
+                Log.d(DEBUG_TAG,"Action was MOVE");
+                return true;
+            case (MotionEvent.ACTION_UP) :
+                Log.d(DEBUG_TAG,"Action was UP");
+                return true;
+            case (MotionEvent.ACTION_CANCEL) :
+                Log.d(DEBUG_TAG,"Action was CANCEL");
+                return true;
+            case (MotionEvent.ACTION_OUTSIDE) :
+                Log.d(DEBUG_TAG,"Movement occurred outside bounds " +
+                        "of current screen element");
+                return true;
+            default :
+                return super.onTouchEvent(event);
+        }
+    }
+
 }
