@@ -23,7 +23,7 @@ public class Planet extends CelestialBody {
         Vector2D planetFnet = new Vector2D(0,0);
 
         super.setRadius(Planet.SIZES.SMALL);
-        super.setMass(1);
+        super.setMass(100);
 
         super.setPos(planetPos);
         super.setVel(planetVel);

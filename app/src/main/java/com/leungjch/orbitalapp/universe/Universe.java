@@ -9,6 +9,7 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 // The universe class contains all celestial objects defined
@@ -43,13 +44,13 @@ public class Universe {
 
 //      Create stars
         Star star = new Star();
-        star.setRadius(Star.SIZES.SMALL);
+        star.setRadius(Star.SIZES.MEDIUM);
         star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
         stars.add(star);
         objects.add(star);
 
 //      Create planets
-        int numPlanets = 100;
+        int numPlanets = 300;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet();
             tempPlanet.setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
@@ -60,13 +61,21 @@ public class Universe {
 //  Perform Euler integration
 //  Calculate Fnet for each object
     public void update() {
-        for (CelestialBody object1 : objects) {
+        ListIterator<CelestialBody> iter1 = objects.listIterator();
+        while (iter1.hasNext()) {
+//        for (CelestialBody object1 : objects) {
+            CelestialBody object1 = iter1.next();
             Vector2D Fnet = new Vector2D(0,0);
             Vector2D Acc = new Vector2D(0,0);
             Vector2D Vel = new Vector2D(0,0);
             Vector2D Pos = new Vector2D(0,0);
 
-            for (CelestialBody object2 : objects) {
+
+            ListIterator<CelestialBody> iter2 = objects.listIterator();
+            while (iter2.hasNext()) {
+                CelestialBody object2 = iter2.next();
+
+//            for (CelestialBody object2 : objects) {
                 //  Skip if same object
                 if (object1 == object2) {
                     continue;
@@ -85,6 +94,7 @@ public class Universe {
                     Acc = new Vector2D(0,0);
                     Vel = new Vector2D(0,0);
 //                    Log.d("Collision", "cloided");
+                    iter1.remove();
 
                     // Absorb
                     if (object2.getRadius() > object1.getRadius())
@@ -137,15 +147,19 @@ public class Universe {
             object1.setAcc(Acc);
             object1.setVel(Vel);
             // Check if past screen boundaries
-//            if (Pos.getX() > getScreenWidth()*5 || Pos.getX() < -getScreenWidth()*5
-//            ||  Pos.getY() > getScreenHeight()*5|| Pos.getY() < -getScreenHeight()*5)
-//            {
-//                objects.remove(object1);
-//            }
-//            else
-//            {
-//                object1.setPos(Pos);
-//            }
+            if (Pos.getX() > getScreenWidth()*2 || Pos.getX() < -getScreenWidth()*2
+            ||  Pos.getY() > getScreenHeight()*2|| Pos.getY() < -getScreenHeight()*2)
+            {
+                if (object1 instanceof Planet)
+                {
+//                    objects.remove(object1);
+                    iter1.remove();
+                }
+            }
+            else
+            {
+                object1.setPos(Pos);
+            }
             object1.setPos(Pos);
 
 
@@ -155,6 +169,18 @@ public class Universe {
     public void draw(Canvas canvas) {
         for (CelestialBody object : objects) {
             object.draw(canvas);
+        }
+
+    }
+
+    // Add planet on touch
+    public void addPlanet(Vector2D pos) {
+        if (objects.size() < 1000)
+        {
+            Planet tempPlanet = new Planet();
+            tempPlanet.setPos(pos);
+//            planets.add(tempPlanet);
+            objects.add(tempPlanet);
         }
 
     }
