@@ -10,33 +10,30 @@ import java.util.Random;
 import static java.sql.DriverManager.println;
 
 
-public class Star {
-    private final Paint paint;
+public class Star extends CelestialBody {
 
     Random rand = new Random();
 
+//    private int radius = 100;
+//    private int px = 100;
+//    private int py = 100;
 
-    private int radius = 100;
-    private int x = 500;
-    private int y = 500;
+
 
     public Star() {
-        paint = new Paint();
-        paint.setColor(Color.argb(255, 55,255,255));
-
-
-
+//        paint = new Paint();
+//        paint.setColor(Color.argb(255, 55,255,255));
+        super.set_p(500,100);
     }
-
-    public void draw(Canvas canvas) {
-
-        canvas.drawCircle(x/2, y/2, radius, paint);
-    }
-
-    public void update() {
-        paint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
-        x += rand.nextInt(10) * (rand.nextInt(2) != 1 ? 1 : -1);
-        y += rand.nextInt(10)  * (rand.nextInt(2) != 1 ? 1 : -1);
-    }
+//
+//    public void draw(Canvas canvas) {
+//        canvas.drawCircle(px, py, radius, paint);
+//    }
+//
+//    public void update() {
+//        paint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+//        x += rand.nextInt(10) * (rand.nextInt(2) != 1 ? 1 : -1);
+//        y += rand.nextInt(10)  * (rand.nextInt(2) != 1 ? 1 : -1);
+//    }
 
 }
