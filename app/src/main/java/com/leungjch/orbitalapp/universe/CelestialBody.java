@@ -50,52 +50,67 @@ public class CelestialBody {
     //  Setter functions
     //
     //  Set position
-    public void set_pos(Vector2D new_pos) {
-        pos = new_pos;
+    public void setPos(Vector2D newPos) {
+        pos = newPos;
     }
 
     //  Set velocity
-    public void set_vel(Vector2D new_vel) {
-        vel = new_vel;
+    public void setVel(Vector2D newVel) {
+        vel = newVel;
     }
 
     //  Set acceleration
-    public void set_acc(Vector2D new_acc) {
+    public void setAcc(Vector2D new_acc) {
         acc = new_acc;
     }
 
     // Set net force
-    public void set_fnet(Vector2D new_fnet) {
+    public void setFnet(Vector2D new_fnet) {
         fnet = new_fnet;
     }
 
     // Set radius
-    public void set_radius(double new_radius) {
+    public void setRadius(double new_radius) {
         radius = new_radius;
+    }
+    // Set mass
+    public void setMass(double new_mass) {
+        mass = new_mass;
     }
 
     // Set paint
-    public void set_paint(Paint new_paint) {
+    public void setPaint(Paint new_paint) {
         paint = new_paint;
     }
     //
     //  Getter functions
     //
     //  Get position
-//    public void get_p(double new_px, double new_py) {
-//        px = new_px;
-//        py = new_py;
-//    }
-//
-//    //  Get velocity
-//    public void set_v(double new_vx, double new_vy) {
-//        vx = new_vx;
-//        vy = new_vy;
-//    }
-//
-//    //  Get acceleration
-//    public void set_a(double new_ax, double new_ay) {
-//        ax = new_ax;
-//        ay = new_ay;
-//    }
+    public Vector2D getPos() {
+        return pos;
+    }
+
+    //  Get velocity
+    public Vector2D getVel() {
+        return vel;
+    }
+
+    //  Get acceleration
+    public Vector2D getAcc() {
+        return acc;
+    }
+
+    //  Get net force
+    public Vector2D getFnet() {
+        return fnet;
+    }
+
+    //  Get radius
+    public double getRadius() {
+        return radius;
+    }
+    //  Get mass
+    public double getMass() {
+        return mass;
+    }
 }

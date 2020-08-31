@@ -8,12 +8,11 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
-import com.leungjch.orbitalapp.universe.Star;
+import com.leungjch.orbitalapp.universe.Universe;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     private MainThread thread;
-    private Star star;
-
+    private Universe universe;
     public GameView(Context context){
         super(context);
 
@@ -30,7 +29,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        star = new Star();
+        universe = new Universe();
+
         Log.d("Star","Star created");
 
         thread.setRunning(true);
@@ -53,7 +53,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     }
 
     public void update() {
-        star.update();
+        universe.update();
         Log.d("Star","Updating");
 
     }
@@ -65,7 +65,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         super.draw(canvas);
 
         if(canvas!=null){
-            star.draw(canvas);
+            universe.draw(canvas);
         }
     }
 }
