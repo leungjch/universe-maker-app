@@ -36,13 +36,11 @@ public class CelestialBody {
 
     Random rand = new Random();
 
-
     public void draw(Canvas canvas) {
         canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
     }
 
     public void update() {
-        Log.d("CelestialBody", Double.toString(radius));
         pos.setX(pos.getX() + vel.getX());
         pos.setY(pos.getY() + vel.getY());
     }
