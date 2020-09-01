@@ -88,17 +88,15 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "Asteroid", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         addTypeState = ADD_TYPE.ASTEROID;
-
+                        break;
                     case 1:
                         Toast.makeText(MainActivity.this, "Planet", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         addTypeState = ADD_TYPE.PLANET;
-
                         break;
                     case 2:
                         Toast.makeText(MainActivity.this, "Star", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.STAR;
-
                         break;
                 }
                 dialog.dismiss();

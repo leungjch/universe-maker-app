@@ -230,6 +230,7 @@ public class Universe {
         switch (addType) {
             case ASTEROID:
                 tempObject = new Asteroid();
+                break;
             case PLANET:
                 tempObject = new Planet();
                 break;

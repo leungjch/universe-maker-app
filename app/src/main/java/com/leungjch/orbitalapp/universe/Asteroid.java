@@ -22,7 +22,7 @@ public class Asteroid extends CelestialBody {
         Vector2D asteroidFnet = new Vector2D(0,0);
 
         super.setRadius(Asteroid.SIZES.SMALL);
-        super.setMass(1);
+        super.setMass(0.1);
 
         super.setPos(asteroidPos);
         super.setVel(asteroidVel);

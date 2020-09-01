@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sizeType"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.leungjch.orbitalapp.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/resetButton"
@@ -34,14 +35,28 @@
         android:text="Type" />
 
     <Button
-        android:id="@+id/placementType"
-        android:layout_width="116dp"
+        android:id="@+id/sizeType"
+        android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="191dp"
+        android:layout_marginStart="190dp"
         android:layout_marginTop="690dp"
+        android:layout_marginBottom="-1dp"
+        android:text="Size" />
+
+    <Button
+        android:id="@+id/placementType"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="690dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="-1dp"
         android:text="Placement" />
 
