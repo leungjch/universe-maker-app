@@ -59,6 +59,7 @@ public class MainActivity extends Activity {
         });
     }
 
+    // Choose type
     private void showAlertDialogAddType() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
         alertDialog.setTitle("Celestial Body");
@@ -77,6 +78,39 @@ public class MainActivity extends Activity {
                         break;
                     case 1:
                         Toast.makeText(MainActivity.this, "Star Mode", Toast.LENGTH_LONG).show();
+                        addTypeState = ADD_TYPE.STAR;
+
+                        break;
+                }
+                dialog.dismiss();
+                addTypeButton.setText(addTypeState.name());
+                gameView.setCurrentAddType(addTypeState);
+
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
+    // Choose creation mode
+    private void showAlertDialogPlacementType() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("Celestial Body");
+        String[] list = ADD_TYPE.getString();
+        alertDialog.setSingleChoiceItems(list, addTypeState.ordinal(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Button addTypeButton = (Button)findViewById(R.id.addType);
+
+                switch (which) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, "Scatter", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        addTypeState = ADD_TYPE.PLANET;
+
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this, "Target", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.STAR;
 
                         break;

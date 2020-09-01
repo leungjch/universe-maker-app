@@ -38,8 +38,23 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         return strs;
         }
     }
-
     public ADD_TYPE currentAddType;
+
+    // Control which placement method
+    public static enum PLACEMENT_TYPE{
+
+        SCATTER, TARGET, ORBIT;
+
+        public static String[] getString() {
+            String[] strs = new String[ADD_TYPE.values().length];
+            int i = 0;
+            for (ADD_TYPE p: PLACEMENT_TYPE.values()) {
+                strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase();
+            }
+            return strs;
+        }
+    }
+
 
     public GameView(Context context){
         super(context);
