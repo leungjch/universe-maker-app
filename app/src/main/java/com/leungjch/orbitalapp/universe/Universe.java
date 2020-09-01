@@ -53,15 +53,14 @@ public class Universe {
         objectsToAdd = new ArrayList<CelestialBody>();
         objectsToRemove = new ArrayList<CelestialBody>();
 //      Create stars
-        Star star = new Star();
-        star.setRadius(Star.SIZES.MEDIUM);
+        Star star = new Star(GameView.SIZE_TYPE.MEDIUM);
         star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
         objects.add(star);
 
 //      Create planets
         int numPlanets = 50;
         for (int i = 0; i < numPlanets; i++) {
-            Planet tempPlanet = new Planet();
+            Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
             tempPlanet.setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
             objects.add(tempPlanet);
         }
@@ -195,7 +194,7 @@ public class Universe {
 
     // Add planet on touch
     public void addPlanet(Vector2D pos, GameView.PLACEMENT_TYPE placementType) {
-        Planet tempPlanet = new Planet();
+        Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
         tempPlanet.setPos(pos);
 
         if (objects.size() < 1000)
@@ -216,7 +215,7 @@ public class Universe {
     public void addStar(Vector2D pos) {
         if (objects.size() < 1000)
         {
-            Star tempStar = new Star();
+            Star tempStar = new Star(GameView.SIZE_TYPE.MEDIUM);
             tempStar.setPos(pos);
 //            planets.add(tempPlanet);
             objectsToAdd.add(tempStar);
@@ -224,18 +223,18 @@ public class Universe {
 
     }
 
-    public void addCelestialBody(Vector2D pos, Vector2D vel, int action, GameView.ADD_TYPE addType, GameView.PLACEMENT_TYPE placementType)
+    public void addCelestialBody(Vector2D pos, Vector2D vel, int action, GameView.ADD_TYPE addType, GameView.SIZE_TYPE sizeType, GameView.PLACEMENT_TYPE placementType)
     {
         CelestialBody tempObject = new CelestialBody();
         switch (addType) {
             case ASTEROID:
-                tempObject = new Asteroid();
+                tempObject = new Asteroid(sizeType);
                 break;
             case PLANET:
-                tempObject = new Planet();
+                tempObject = new Planet(sizeType);
                 break;
             case STAR:
-                tempObject = new Star();
+                tempObject = new Star(sizeType);
                 break;
         }
 

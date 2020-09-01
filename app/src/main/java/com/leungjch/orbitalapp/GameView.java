@@ -41,8 +41,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
     public ADD_TYPE currentAddType = ADD_TYPE.PLANET;
-    public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
-    // Control which placement method
+    // Control current placement mode
     public static enum PLACEMENT_TYPE{
 
         SCATTER, FLICK, TARGET, ORBIT;
@@ -56,7 +55,23 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             return strs;
         }
     }
+    public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
 
+    // Control current size mode
+    public static enum SIZE_TYPE{
+
+        SMALL, MEDIUM, LARGE, RANDOM;
+        // Return string enum with only first letter capitalized
+        public static String[] getString() {
+            String[] strs = new String[SIZE_TYPE.values().length];
+            int i = 0;
+            for (SIZE_TYPE p: SIZE_TYPE.values()) {
+                strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase();
+            }
+            return strs;
+        }
+    }
+    public SIZE_TYPE currentSizeType = SIZE_TYPE.MEDIUM;
 
     public GameView(Context context){
         super(context);
@@ -170,7 +185,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 mVelocityTracker.addMovement(event);
                 universe.addCelestialBody(new Vector2D(x, y),
                         new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getYVelocity(pointerId)),
-                        action, currentAddType, currentPlacementType);
+                        action, currentAddType, currentSizeType, currentPlacementType);
                 // Track original position
                 xOriginal = x;
                 yOriginal = y;
@@ -189,13 +204,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
                 universe.addCelestialBody(new Vector2D(x, y),
                         new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getYVelocity(pointerId)),
-                        action, currentAddType, currentPlacementType);
+                        action, currentAddType, currentSizeType, currentPlacementType);
                 return true;
 
             case (MotionEvent.ACTION_UP) :
                 universe.addCelestialBody(new Vector2D(xOriginal, yOriginal),
                                           new Vector2D(xOriginal-x, yOriginal-y),
-                                          action, currentAddType, currentPlacementType);
+                                          action, currentAddType, currentSizeType, currentPlacementType);
 
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
@@ -228,6 +243,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void setCurrentAddType(ADD_TYPE newAddType) {
         currentAddType = newAddType;
     }
-    public void setCurrentPlacementType(PLACEMENT_TYPE newPlacementType) {currentPlacementType = newPlacementType;}
+    public void setCurrentPlacementType(PLACEMENT_TYPE newPlacementType) {
+        currentPlacementType = newPlacementType;
+    }
+
+
+    public void setCurrentSizeType(SIZE_TYPE newSizeType) {
+        currentSizeType = newSizeType;
+    }
 
 }

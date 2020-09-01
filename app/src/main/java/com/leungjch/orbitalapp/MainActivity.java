@@ -19,6 +19,7 @@ import java.util.Random;
 
 import static com.leungjch.orbitalapp.GameView.ADD_TYPE;
 import static com.leungjch.orbitalapp.GameView.PLACEMENT_TYPE;
+import static com.leungjch.orbitalapp.GameView.SIZE_TYPE;
 
 import static java.sql.DriverManager.println;
 
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
 
     public ADD_TYPE addTypeState;
     public PLACEMENT_TYPE placementState;
+    public SIZE_TYPE sizeState;
 
     GameView gameView;
     @Override
@@ -55,6 +57,9 @@ public class MainActivity extends Activity {
 
         // Set default selected placementType
         placementState = PLACEMENT_TYPE.SCATTER;
+
+        // Set default selectted size
+        sizeState = SIZE_TYPE.MEDIUM;
         // Add type button
         Button addTypeButton = (Button)findViewById(R.id.addType);
         addTypeButton.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +76,15 @@ public class MainActivity extends Activity {
                 showAlertDialogPlacementType();
             }
         });
+        // Size Type button
+        Button sizeTypeButton = (Button)findViewById(R.id.objectSizeType);
+        sizeTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialogSizeType();
+            }
+        });
+
     }
 
     // Choose type
@@ -102,7 +116,6 @@ public class MainActivity extends Activity {
                 dialog.dismiss();
                 addTypeButton.setText(addTypeState.name());
                 gameView.setCurrentAddType(addTypeState);
-
             }
         });
         AlertDialog alert = alertDialog.create();
@@ -148,6 +161,43 @@ public class MainActivity extends Activity {
         alert.setCanceledOnTouchOutside(true);
         alert.show();
     }
+    // Choose creation size
+    private void showAlertDialogSizeType() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("Object Size");
+        String[] list = SIZE_TYPE.getString();
+        alertDialog.setSingleChoiceItems(list, sizeState.ordinal(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Button sizeButton = (Button)findViewById(R.id.objectSizeType);
 
+                switch (which) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, "Small", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        sizeState = SIZE_TYPE.SMALL;
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this, "Medium", Toast.LENGTH_LONG).show();
+                        sizeState = SIZE_TYPE.MEDIUM;
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this, "Large", Toast.LENGTH_LONG).show();
+                        sizeState = SIZE_TYPE.LARGE;
+                        break;
+                    case 3:
+                        Toast.makeText(MainActivity.this, "Random", Toast.LENGTH_LONG).show();
+                        sizeState = SIZE_TYPE.RANDOM;
+                        break;
+                }
+                dialog.dismiss();
+                sizeButton.setText(sizeState.name());
+                gameView.setCurrentSizeType(sizeState);
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
 
 }

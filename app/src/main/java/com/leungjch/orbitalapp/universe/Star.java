@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.leungjch.orbitalapp.GameView;
+import com.leungjch.orbitalapp.helpers.MassRadiusTuple;
 import com.leungjch.orbitalapp.helpers.Vector2D;
 
 import java.util.Random;
@@ -16,13 +18,13 @@ public class Star extends CelestialBody {
     Random rand = new Random();
 
 //  Constants for radii of stars
-    public final class SIZES {
-        public static final double SMALL = 10;
-        public static final double MEDIUM = 50;
-        public static final double LARGE = 100;
+    public static final class SIZES {
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.01,25);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(10000000,50);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(1000000000,100);
     }
 
-    public Star() {
+    public Star(GameView.SIZE_TYPE size) {
 
         Paint starPaint = new Paint();
         starPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
@@ -32,8 +34,20 @@ public class Star extends CelestialBody {
         Vector2D starAcc = new Vector2D(0,0);
         Vector2D starFnet = new Vector2D(0,0);
 
-        super.setRadius(SIZES.MEDIUM);
-        super.setMass(10000000);
+        switch (size) {
+            case SMALL:
+                super.setMass(Star.SIZES.SMALL.mass);
+                super.setRadius(Star.SIZES.SMALL.radius);
+                break;
+            case MEDIUM:
+                super.setMass(Star.SIZES.MEDIUM.mass);
+                super.setRadius(Star.SIZES.MEDIUM.radius);
+                break;
+            case LARGE:
+                super.setMass(Star.SIZES.LARGE.mass);
+                super.setRadius(Star.SIZES.LARGE.radius);
+                break;
+        }
 
 //        super.setPos(starPos);
         super.setVel(starVel);
