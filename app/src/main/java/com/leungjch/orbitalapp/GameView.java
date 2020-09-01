@@ -2,12 +2,14 @@ package com.leungjch.orbitalapp;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.MotionEventCompat;
 
 import com.leungjch.orbitalapp.helpers.Vector2D;
@@ -19,6 +21,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public GameView(Context context){
         super(context);
 
+        getHolder().addCallback(this);
+
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
+    }
+    public GameView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        getHolder().addCallback(this);
+
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
+    }
+
+    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        getHolder().addCallback(this);
+
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
+    }
+
+    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
