@@ -3,7 +3,9 @@ package com.leungjch.orbitalapp.universe;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 
+import com.leungjch.orbitalapp.GameView;
 import com.leungjch.orbitalapp.helpers.Vector2D;
 
 import java.lang.reflect.Array;
@@ -75,7 +77,6 @@ public class Universe {
             Vector2D Acc = new Vector2D(0,0);
             Vector2D Vel = new Vector2D(0,0);
             Vector2D Pos = new Vector2D(0,0);
-
 
             ListIterator<CelestialBody> iter2 = objects.listIterator();
             while (iter2.hasNext()) {
@@ -193,11 +194,19 @@ public class Universe {
     }
 
     // Add planet on touch
-    public void addPlanet(Vector2D pos) {
+    public void addPlanet(Vector2D pos, GameView.PLACEMENT_TYPE placementType) {
+        Planet tempPlanet = new Planet();
+        tempPlanet.setPos(pos);
+
         if (objects.size() < 1000)
         {
-            Planet tempPlanet = new Planet();
-            tempPlanet.setPos(pos);
+            switch (placementType) {
+                case SCATTER:
+                    tempPlanet.setVel(new Vector2D(rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1),
+                            rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1)));
+                case TARGET:
+
+            }
 //            planets.add(tempPlanet);
             objectsToAdd.add(tempPlanet);
         }
@@ -212,6 +221,11 @@ public class Universe {
 //            planets.add(tempPlanet);
             objectsToAdd.add(tempStar);
         }
+
+    }
+
+    public void addCelestialObject(Vector2D pos, MotionEvent event, GameView.ADD_TYPE addType, GameView.PLACEMENT_TYPE placementType)
+    {
 
     }
 

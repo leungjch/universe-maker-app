@@ -3,11 +3,13 @@ package com.leungjch.orbitalapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.media.AudioPlaybackCaptureConfiguration;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.Button;
 
@@ -28,7 +30,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         PLANET, STAR;
 
-
+        // Return string enum with only first letter capitalized
         public static String[] getString() {
         String[] strs = new String[ADD_TYPE.values().length];
         int i = 0;
@@ -38,17 +40,17 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         return strs;
         }
     }
-    public ADD_TYPE currentAddType;
-
+    public ADD_TYPE currentAddType = ADD_TYPE.PLANET;
+    public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
     // Control which placement method
     public static enum PLACEMENT_TYPE{
 
         SCATTER, TARGET, ORBIT;
-
+        // Return string enum with only first letter capitalized
         public static String[] getString() {
-            String[] strs = new String[ADD_TYPE.values().length];
+            String[] strs = new String[PLACEMENT_TYPE.values().length];
             int i = 0;
-            for (ADD_TYPE p: PLACEMENT_TYPE.values()) {
+            for (PLACEMENT_TYPE p: PLACEMENT_TYPE.values()) {
                 strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase();
             }
             return strs;
@@ -134,49 +136,41 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     }
 
 
-    // This example shows an Activity, but you would use the same approach if
-// you were subclassing a View.
+    private VelocityTracker mVelocityTracker = null;
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
         int x = (int)event.getX();
         int y = (int)event.getY();
 
-        int action = MotionEventCompat.getActionMasked(event);
+        int index = event.getActionIndex();
+        int action = event.getActionMasked();
+        int pointerId = event.getPointerId(index);
+
         String DEBUG_TAG = "Gesture";
         switch(action) {
             // Single tap
             case (MotionEvent.ACTION_DOWN) :
-//                Log.d(DEBUG_TAG,"Action was DOWN");
                 switch(currentAddType) {
                     case PLANET:
-                        universe.addPlanet(new Vector2D(x,y));
+                        universe.addPlanet(new Vector2D(x,y), currentPlacementType);
                         return true;
                     case STAR:
                         universe.addStar(new Vector2D(x,y));
                         return true;
                 }
             case (MotionEvent.ACTION_MOVE) :
-//                Log.d(DEBUG_TAG,"Action was MOVE");
                 switch(currentAddType) {
                     case PLANET:
-                        universe.addPlanet(new Vector2D(x,y));
+                        universe.addPlanet(new Vector2D(x,y), currentPlacementType);
                         return true;
-                    // Dont allow star spam
-//                    case STAR:
-//                        universe.addStar(new Vector2D(x,y));
-//                        return true;
                 }
 
             case (MotionEvent.ACTION_UP) :
-//                Log.d(DEBUG_TAG,"Action was UP");
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
-//                Log.d(DEBUG_TAG,"Action was CANCEL");
                 return true;
             case (MotionEvent.ACTION_OUTSIDE) :
-//                Log.d(DEBUG_TAG,"Movement occurred outside bounds " +
-//                        "of current screen element");
                 return true;
             default :
                 return super.onTouchEvent(event);
@@ -202,6 +196,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void setCurrentAddType(ADD_TYPE newAddType) {
         currentAddType = newAddType;
     }
-
+    public void setCurrentPlacementType(PLACEMENT_TYPE newPlacementType) {currentPlacementType = newPlacementType;}
 
 }

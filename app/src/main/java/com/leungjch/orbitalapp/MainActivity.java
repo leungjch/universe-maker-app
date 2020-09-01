@@ -18,11 +18,15 @@ import android.widget.Toast;
 import java.util.Random;
 
 import static com.leungjch.orbitalapp.GameView.ADD_TYPE;
+import static com.leungjch.orbitalapp.GameView.PLACEMENT_TYPE;
+
 import static java.sql.DriverManager.println;
 
 public class MainActivity extends Activity {
 
     public ADD_TYPE addTypeState;
+    public PLACEMENT_TYPE placementState;
+
     GameView gameView;
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,12 +53,22 @@ public class MainActivity extends Activity {
         // Set default selected addType
         addTypeState = ADD_TYPE.PLANET;
 
-        // Add type radio button dialog
+        // Set default selected placementType
+        placementState = PLACEMENT_TYPE.SCATTER;
+        // Add type button
         Button addTypeButton = (Button)findViewById(R.id.addType);
         addTypeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showAlertDialogAddType();
+            }
+        });
+        // Placement Type button
+        Button placementTypeButton = (Button)findViewById(R.id.placementType);
+        placementTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialogPlacementType();
             }
         });
     }
@@ -95,29 +109,31 @@ public class MainActivity extends Activity {
     // Choose creation mode
     private void showAlertDialogPlacementType() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-        alertDialog.setTitle("Celestial Body");
-        String[] list = ADD_TYPE.getString();
-        alertDialog.setSingleChoiceItems(list, addTypeState.ordinal(), new DialogInterface.OnClickListener() {
+        alertDialog.setTitle("Placement Mode");
+        String[] list = PLACEMENT_TYPE.getString();
+        alertDialog.setSingleChoiceItems(list, placementState.ordinal(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Button addTypeButton = (Button)findViewById(R.id.addType);
+                Button placementButton = (Button)findViewById(R.id.placementType);
 
                 switch (which) {
                     case 0:
                         Toast.makeText(MainActivity.this, "Scatter", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
-                        addTypeState = ADD_TYPE.PLANET;
-
+                        placementState = PLACEMENT_TYPE.SCATTER;
                         break;
                     case 1:
                         Toast.makeText(MainActivity.this, "Target", Toast.LENGTH_LONG).show();
-                        addTypeState = ADD_TYPE.STAR;
-
+                        placementState = PLACEMENT_TYPE.TARGET;
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this, "Orbit", Toast.LENGTH_LONG).show();
+                        placementState = PLACEMENT_TYPE.ORBIT;
                         break;
                 }
                 dialog.dismiss();
-                addTypeButton.setText(addTypeState.name());
-                gameView.setCurrentAddType(addTypeState);
+                placementButton.setText(placementState.name());
+                gameView.setCurrentPlacementType(placementState);
 
             }
         });

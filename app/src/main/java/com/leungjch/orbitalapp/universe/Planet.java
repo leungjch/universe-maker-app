@@ -17,8 +17,7 @@ public class Planet extends CelestialBody {
         planetPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
 
         Vector2D planetPos = new Vector2D(0,0);
-        Vector2D planetVel = new Vector2D(  rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1),
-                                            rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1));
+        Vector2D planetVel = new Vector2D( 0,0);
         Vector2D planetAcc = new Vector2D(0,0);
         Vector2D planetFnet = new Vector2D(0,0);
 

@@ -12,25 +12,37 @@
     <Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="41dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="710dp"
+        android:layout_marginTop="690dp"
         android:layout_marginBottom="0dp"
         android:text="Reset" />
 
     <Button
         android:id="@+id/addType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="102dp"
+        android:layout_height="41dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="88dp"
-        android:layout_marginTop="710dp"
+        android:layout_marginTop="690dp"
         android:layout_marginBottom="0dp"
         android:text="Type" />
+
+    <Button
+        android:id="@+id/placementType"
+        android:layout_width="116dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="191dp"
+        android:layout_marginTop="690dp"
+        android:layout_marginBottom="-1dp"
+        android:text="Placement" />
 
 </RelativeLayout>
