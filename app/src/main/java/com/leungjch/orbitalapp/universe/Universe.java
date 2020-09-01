@@ -29,11 +29,11 @@ public class Universe {
         // The exponent to raise distance when calculating gravitational force
         // In real life, this is 2 (Gmm/r^2)
         // But modify it to adjust how "heavy" gravity feels
-        public static final double EPSILON = 2;
+        public static final double EPSILON = 1.5;
 
 //      Time step for integration
 //      Smaller time step is more precise
-        public static final double STEPS = 50000;
+        public static final double STEPS = 10000;
         public static final double dT = 1.0/STEPS;
     }
     private List<Star> stars;
@@ -94,6 +94,11 @@ public class Universe {
 
                     continue;
                 }
+                // Asteroids exert negligible force, ignore them
+                if (object2 instanceof Asteroid)
+                {
+                    continue;
+                }
                 // Check if collide
                 if (object1.isCollide(object2)) {
 //                    Fnet = new Vector2D(0,0);
@@ -103,9 +108,6 @@ public class Universe {
                     // Biggest planet will absorb the smaller one
                     if (object2.getRadius() > object1.getRadius())
                     {
-//                        object2.setRadius(object2.getRadius()+ object1.getRadius());
-//                        object1.setRadius(0);
-
                         object2.setMass(object1.getMass()+object2.getMass());
                         object2.setRadius(object2.getRadius()+object1.getRadius()/object2.getRadius());
 
@@ -115,8 +117,6 @@ public class Universe {
                     {
                         object1.setMass(object2.getMass()+object1.getMass());
                         object1.setRadius(object1.getRadius()+object2.getRadius()/object1.getRadius());
-
-//                        objects.remove(object2);
                         objectsToRemove.add(object2);
 
                     }
@@ -178,7 +178,6 @@ public class Universe {
         // Add any new planets by the user
         for (CelestialBody object : objectsToAdd) {
             objects.add(object);
-
         }
         objectsToAdd.clear();
 
@@ -242,8 +241,8 @@ public class Universe {
         {
             switch (placementType) {
                 case SCATTER:
-                    tempObject.setVel(new Vector2D(rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1),
-                            rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1)));
+                    tempObject.setVel(new Vector2D(rand.nextInt(20000) * (rand.nextInt(2) == 1? -1 : 1),
+                            rand.nextInt(20000) * (rand.nextInt(2) == 1? -1 : 1)));
                     tempObject.setPos(pos);
                     objectsToAdd.add(tempObject);
 
@@ -251,14 +250,14 @@ public class Universe {
                 case TARGET:
                     if (action == MotionEvent.ACTION_UP)
                     {
-                        tempObject.setVel(new Vector2D(vel.getX()*1000, vel.getY()*1000));
+                        tempObject.setVel(new Vector2D(vel.getX()*300, vel.getY()*300));
                         tempObject.setPos(pos);
                         objectsToAdd.add(tempObject);
 
                     }
                     break;
                 case FLICK:
-                    tempObject.setVel(new Vector2D(vel.getX()*100, vel.getY()*100));
+                    tempObject.setVel(new Vector2D(vel.getX()*20, vel.getY()*20));
                     tempObject.setPos(pos);
                     objectsToAdd.add(tempObject);
 

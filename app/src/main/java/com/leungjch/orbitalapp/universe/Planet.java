@@ -9,9 +9,9 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class Planet extends CelestialBody {
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.01,1);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(0.1,3);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(1,5);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.1,5);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(1,10);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(10,20);
     }
 
     public Planet(GameView.SIZE_TYPE size) {
@@ -36,6 +36,13 @@ public class Planet extends CelestialBody {
                 super.setMass(Planet.SIZES.LARGE.mass);
                 super.setRadius(Planet.SIZES.LARGE.radius);
                 break;
+            case RANDOM:
+                double randRadius = Planet.SIZES.SMALL.radius + rand.nextDouble()*(Planet.SIZES.LARGE.radius - Planet.SIZES.SMALL.radius);
+                super.setRadius(Planet.SIZES.SMALL.radius + rand.nextDouble()*(Planet.SIZES.LARGE.radius - Planet.SIZES.SMALL.radius));
+                // apply a standard density
+                super.setMass(randRadius * Planet.SIZES.LARGE.mass/ Planet.SIZES.LARGE.radius);
+                break;
+
         }
         
         super.setPos(planetPos);

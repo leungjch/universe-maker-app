@@ -36,6 +36,13 @@ public class Asteroid extends CelestialBody {
                 super.setMass(SIZES.LARGE.mass);
                 super.setRadius(SIZES.LARGE.radius);
                 break;
+            case RANDOM:
+                double randRadius = SIZES.SMALL.radius + rand.nextDouble()*(SIZES.LARGE.radius - SIZES.SMALL.radius);
+                super.setRadius(SIZES.SMALL.radius + rand.nextDouble()*(SIZES.LARGE.radius - SIZES.SMALL.radius));
+                // apply a standard density
+                super.setMass(randRadius * SIZES.LARGE.mass/SIZES.LARGE.radius);
+                break;
+
         }
 
         super.setPos(asteroidPos);

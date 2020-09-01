@@ -36,7 +36,7 @@
 
     <Button
         android:id="@+id/objectSizeType"
-        android:layout_width="72dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -48,13 +48,13 @@
 
     <Button
         android:id="@+id/placementType"
-        android:layout_width="148dp"
+        android:layout_width="132dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="263dp"
+        android:layout_marginStart="279dp"
         android:layout_marginTop="690dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="-1dp"
