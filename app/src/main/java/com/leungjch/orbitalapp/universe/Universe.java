@@ -224,7 +224,7 @@ public class Universe {
 
     }
 
-    public void addCelestialBody(Vector2D pos, Vector2D vel, MotionEvent event, GameView.ADD_TYPE addType, GameView.PLACEMENT_TYPE placementType)
+    public void addCelestialBody(Vector2D pos, Vector2D vel, int action, GameView.ADD_TYPE addType, GameView.PLACEMENT_TYPE placementType)
     {
         CelestialBody tempObject = new CelestialBody();
         switch (addType) {
@@ -242,12 +242,27 @@ public class Universe {
                 case SCATTER:
                     tempObject.setVel(new Vector2D(rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1),
                             rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1)));
-                case TARGET:
+                    tempObject.setPos(pos);
+                    objectsToAdd.add(tempObject);
 
+                    break;
+                case TARGET:
+                    if (action == MotionEvent.ACTION_UP)
+                    {
+                        tempObject.setVel(new Vector2D(vel.getX()*100, vel.getY()*100));
+                        tempObject.setPos(pos);
+                        objectsToAdd.add(tempObject);
+
+                    }
+                    break;
+                case FLICK:
+                    tempObject.setVel(new Vector2D(vel.getX()*100, vel.getY()*100));
+                    tempObject.setPos(pos);
+                    objectsToAdd.add(tempObject);
+
+                    break;
             }
 //            planets.add(tempPlanet);
-            tempObject.setPos(pos);
-            objectsToAdd.add(tempObject);
         }
 
     }

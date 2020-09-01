@@ -45,7 +45,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Control which placement method
     public static enum PLACEMENT_TYPE{
 
-        SCATTER, TARGET, ORBIT;
+        SCATTER, TARGET, ORBIT, FLICK;
         // Return string enum with only first letter capitalized
         public static String[] getString() {
             String[] strs = new String[PLACEMENT_TYPE.values().length];
@@ -137,11 +137,17 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
 
     private VelocityTracker mVelocityTracker = null;
+
+    // If the user holds down touch, track the original touch position
+    private int xOriginal = 0;
+    private int yOriginal = 0;
+
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
         int x = (int)event.getX();
         int y = (int)event.getY();
+
 
         int index = event.getActionIndex();
         int action = event.getActionMasked();
@@ -155,6 +161,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     // Retrieve a new VelocityTracker object to watch the
                     // velocity of a motion.
                     mVelocityTracker = VelocityTracker.obtain();
+
                 }
                 else
                 {
@@ -162,8 +169,11 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 }
                 mVelocityTracker.addMovement(event);
                 universe.addCelestialBody(new Vector2D(x, y),
-                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getXVelocity(pointerId)),
-                        event, currentAddType, currentPlacementType);
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getYVelocity(pointerId)),
+                        action, currentAddType, currentPlacementType);
+                // Track original position
+                xOriginal = x;
+                yOriginal = y;
 
                 return true;
             case (MotionEvent.ACTION_MOVE) :
@@ -178,14 +188,14 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 Log.d("Vel", "Y velocity: " + mVelocityTracker.getYVelocity(pointerId));
 
                 universe.addCelestialBody(new Vector2D(x, y),
-                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getXVelocity(pointerId)),
-                        event, currentAddType, currentPlacementType);
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getYVelocity(pointerId)),
+                        action, currentAddType, currentPlacementType);
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-                universe.addCelestialBody(new Vector2D(x, y),
-                                          new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getXVelocity(pointerId)),
-                                          event, currentAddType, currentPlacementType);
+                universe.addCelestialBody(new Vector2D(xOriginal, yOriginal),
+                                          new Vector2D(xOriginal-x, yOriginal-y),
+                                          action, currentAddType, currentPlacementType);
 
                 return true;
             case (MotionEvent.ACTION_CANCEL) :

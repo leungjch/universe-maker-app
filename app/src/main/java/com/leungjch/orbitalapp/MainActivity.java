@@ -130,6 +130,10 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "Orbit", Toast.LENGTH_LONG).show();
                         placementState = PLACEMENT_TYPE.ORBIT;
                         break;
+                    case 3:
+                        Toast.makeText(MainActivity.this, "Flick", Toast.LENGTH_LONG).show();
+                        placementState = PLACEMENT_TYPE.FLICK;
+                        break;
                 }
                 dialog.dismiss();
                 placementButton.setText(placementState.name());
