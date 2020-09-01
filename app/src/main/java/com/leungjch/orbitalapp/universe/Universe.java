@@ -203,6 +203,18 @@ public class Universe {
         }
 
     }
+    // Add star on touch
+    public void addStar(Vector2D pos) {
+        if (objects.size() < 1000)
+        {
+            Star tempStar = new Star();
+            tempStar.setPos(pos);
+//            planets.add(tempPlanet);
+            objectsToAdd.add(tempStar);
+        }
+
+    }
+
 
     // Return screen width
     public static int getScreenWidth() {

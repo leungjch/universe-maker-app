@@ -1,12 +1,15 @@
 package com.leungjch.orbitalapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,12 +18,31 @@ import androidx.core.view.MotionEventCompat;
 import com.leungjch.orbitalapp.helpers.Vector2D;
 import com.leungjch.orbitalapp.universe.Universe;
 
-public class GameView extends SurfaceView implements SurfaceHolder.Callback{
+public class GameView extends SurfaceView implements View.OnClickListener, SurfaceHolder.Callback{
     private MainThread thread;
     private Universe universe;
+
+    // User settings
+    // Control which type of celestial body to add
+    public static enum ADD_TYPE{
+
+        PLANET, STAR;
+
+
+        public static String[] getString() {
+        String[] strs = new String[ADD_TYPE.values().length];
+        int i = 0;
+        for (ADD_TYPE p: ADD_TYPE.values()) {
+                strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase();
+            }
+        return strs;
+        }
+    }
+
+    public ADD_TYPE currentAddType;
+
     public GameView(Context context){
         super(context);
-
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
@@ -45,6 +67,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         getHolder().addCallback(this);
+
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -107,15 +130,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
         int action = MotionEventCompat.getActionMasked(event);
         String DEBUG_TAG = "Gesture";
         switch(action) {
+            // Single tap
             case (MotionEvent.ACTION_DOWN) :
 //                Log.d(DEBUG_TAG,"Action was DOWN");
-//                universe.addPlanet(new Vector2D(x,y));
-                return true;
+                switch(currentAddType) {
+                    case PLANET:
+                        universe.addPlanet(new Vector2D(x,y));
+                        return true;
+                    case STAR:
+                        universe.addStar(new Vector2D(x,y));
+                        return true;
+                }
             case (MotionEvent.ACTION_MOVE) :
 //                Log.d(DEBUG_TAG,"Action was MOVE");
-                universe.addPlanet(new Vector2D(x,y));
+                switch(currentAddType) {
+                    case PLANET:
+                        universe.addPlanet(new Vector2D(x,y));
+                        return true;
+                    // Dont allow star spam
+//                    case STAR:
+//                        universe.addStar(new Vector2D(x,y));
+//                        return true;
+                }
 
-                return true;
             case (MotionEvent.ACTION_UP) :
 //                Log.d(DEBUG_TAG,"Action was UP");
                 return true;
@@ -130,5 +167,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback{
                 return super.onTouchEvent(event);
         }
     }
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.resetButton:
+                Log.d("Hello", "Press");
+                break;
+
+        }
+    }
+
+    public void reset() {
+        universe = new Universe();
+    }
+
+    // Called by MainActivity after selecting radio button
+    public void setCurrentAddType(ADD_TYPE newAddType) {
+        currentAddType = newAddType;
+    }
+
 
 }
