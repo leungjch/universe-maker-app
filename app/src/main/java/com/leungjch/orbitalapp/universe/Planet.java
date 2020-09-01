@@ -7,9 +7,9 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class Planet extends CelestialBody {
     public final class SIZES {
-        public static final double SMALL = 1;
-        public static final double MEDIUM = 5;
-        public static final double LARGE = 10;
+        public static final double SMALL = 5;
+        public static final double MEDIUM = 10;
+        public static final double LARGE = 50;
     }
 
     public Planet() {
@@ -17,13 +17,13 @@ public class Planet extends CelestialBody {
         planetPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
 
         Vector2D planetPos = new Vector2D(0,0);
-        Vector2D planetVel = new Vector2D(  rand.nextInt(500) * (rand.nextInt(2) == 1? -1 : 1),
-                                            rand.nextInt(500) * (rand.nextInt(2) == 1? -1 : 1));
+        Vector2D planetVel = new Vector2D(  rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1),
+                                            rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1));
         Vector2D planetAcc = new Vector2D(0,0);
         Vector2D planetFnet = new Vector2D(0,0);
 
         super.setRadius(Planet.SIZES.SMALL);
-        super.setMass(100);
+        super.setMass(1);
 
         super.setPos(planetPos);
         super.setVel(planetVel);

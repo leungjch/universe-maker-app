@@ -18,7 +18,7 @@ public class Universe {
 
     public final class CONSTANTS {
 //      Actual gravitational constant is much smaller
-        public static final double G = 10000;
+        public static final double G = 1000000;
 
         // Maximum force allowed to be exerted
         // This solves problem of extreme acceleration when two objects are near each other
@@ -31,7 +31,7 @@ public class Universe {
 
 //      Time step for integration
 //      Smaller time step is more precise
-        public static final double STEPS = 5000;
+        public static final double STEPS = 50000;
         public static final double dT = 1.0/STEPS;
     }
     private List<Star> stars;
@@ -54,15 +54,13 @@ public class Universe {
         Star star = new Star();
         star.setRadius(Star.SIZES.MEDIUM);
         star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
-        stars.add(star);
         objects.add(star);
 
 //      Create planets
-        int numPlanets = 100;
+        int numPlanets = 50;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet();
             tempPlanet.setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
-            planets.add(tempPlanet);
             objects.add(tempPlanet);
         }
     }
