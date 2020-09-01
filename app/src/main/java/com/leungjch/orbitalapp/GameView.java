@@ -151,24 +151,46 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         switch(action) {
             // Single tap
             case (MotionEvent.ACTION_DOWN) :
-                switch(currentAddType) {
-                    case PLANET:
-                        universe.addPlanet(new Vector2D(x,y), currentPlacementType);
-                        return true;
-                    case STAR:
-                        universe.addStar(new Vector2D(x,y));
-                        return true;
+                if(mVelocityTracker == null) {
+                    // Retrieve a new VelocityTracker object to watch the
+                    // velocity of a motion.
+                    mVelocityTracker = VelocityTracker.obtain();
                 }
+                else
+                {
+                    mVelocityTracker.clear();
+                }
+                mVelocityTracker.addMovement(event);
+                universe.addCelestialBody(new Vector2D(x, y),
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getXVelocity(pointerId)),
+                        event, currentAddType, currentPlacementType);
+
+                return true;
             case (MotionEvent.ACTION_MOVE) :
-                switch(currentAddType) {
-                    case PLANET:
-                        universe.addPlanet(new Vector2D(x,y), currentPlacementType);
-                        return true;
-                }
+                mVelocityTracker.addMovement(event);
+                // When you want to determine the velocity, call
+                // computeCurrentVelocity(). Then call getXVelocity()
+                // and getYVelocity() to retrieve the velocity for each pointer ID.
+                mVelocityTracker.computeCurrentVelocity(1000);
+                // Log velocity of pixels per second
+                // Best practice to use VelocityTrackerCompat where possible.
+                Log.d("Vel", "X velocity: " + mVelocityTracker.getXVelocity(pointerId));
+                Log.d("Vel", "Y velocity: " + mVelocityTracker.getYVelocity(pointerId));
+
+                universe.addCelestialBody(new Vector2D(x, y),
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getXVelocity(pointerId)),
+                        event, currentAddType, currentPlacementType);
+                return true;
 
             case (MotionEvent.ACTION_UP) :
+                universe.addCelestialBody(new Vector2D(x, y),
+                                          new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getXVelocity(pointerId)),
+                                          event, currentAddType, currentPlacementType);
+
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
+                mVelocityTracker.recycle();
+
                 return true;
             case (MotionEvent.ACTION_OUTSIDE) :
                 return true;

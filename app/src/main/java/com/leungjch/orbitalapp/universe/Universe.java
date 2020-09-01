@@ -224,8 +224,31 @@ public class Universe {
 
     }
 
-    public void addCelestialObject(Vector2D pos, MotionEvent event, GameView.ADD_TYPE addType, GameView.PLACEMENT_TYPE placementType)
+    public void addCelestialBody(Vector2D pos, Vector2D vel, MotionEvent event, GameView.ADD_TYPE addType, GameView.PLACEMENT_TYPE placementType)
     {
+        CelestialBody tempObject = new CelestialBody();
+        switch (addType) {
+            case PLANET:
+                tempObject = new Planet();
+                break;
+            case STAR:
+                tempObject = new Star();
+                break;
+        }
+
+        if (objects.size() < 1000)
+        {
+            switch (placementType) {
+                case SCATTER:
+                    tempObject.setVel(new Vector2D(rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1),
+                            rand.nextInt(100000) * (rand.nextInt(2) == 1? -1 : 1)));
+                case TARGET:
+
+            }
+//            planets.add(tempPlanet);
+            tempObject.setPos(pos);
+            objectsToAdd.add(tempObject);
+        }
 
     }
 
