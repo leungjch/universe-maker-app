@@ -228,6 +228,8 @@ public class Universe {
     {
         CelestialBody tempObject = new CelestialBody();
         switch (addType) {
+            case ASTEROID:
+                tempObject = new Asteroid();
             case PLANET:
                 tempObject = new Planet();
                 break;
@@ -249,7 +251,7 @@ public class Universe {
                 case TARGET:
                     if (action == MotionEvent.ACTION_UP)
                     {
-                        tempObject.setVel(new Vector2D(vel.getX()*100, vel.getY()*100));
+                        tempObject.setVel(new Vector2D(vel.getX()*1000, vel.getY()*1000));
                         tempObject.setPos(pos);
                         objectsToAdd.add(tempObject);
 
@@ -262,9 +264,7 @@ public class Universe {
 
                     break;
             }
-//            planets.add(tempPlanet);
         }
-
     }
 
 

@@ -85,13 +85,18 @@ public class MainActivity extends Activity {
 
                 switch (which) {
                     case 0:
-                        Toast.makeText(MainActivity.this, "Planet Mode", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Asteroid", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        addTypeState = ADD_TYPE.ASTEROID;
+
+                    case 1:
+                        Toast.makeText(MainActivity.this, "Planet", Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                         addTypeState = ADD_TYPE.PLANET;
 
                         break;
-                    case 1:
-                        Toast.makeText(MainActivity.this, "Star Mode", Toast.LENGTH_LONG).show();
+                    case 2:
+                        Toast.makeText(MainActivity.this, "Star", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.STAR;
 
                         break;
@@ -123,16 +128,16 @@ public class MainActivity extends Activity {
                         placementState = PLACEMENT_TYPE.SCATTER;
                         break;
                     case 1:
+                        Toast.makeText(MainActivity.this, "Flick", Toast.LENGTH_LONG).show();
+                        placementState = PLACEMENT_TYPE.FLICK;
+                        break;
+                    case 2:
                         Toast.makeText(MainActivity.this, "Target", Toast.LENGTH_LONG).show();
                         placementState = PLACEMENT_TYPE.TARGET;
                         break;
-                    case 2:
+                    case 3:
                         Toast.makeText(MainActivity.this, "Orbit", Toast.LENGTH_LONG).show();
                         placementState = PLACEMENT_TYPE.ORBIT;
-                        break;
-                    case 3:
-                        Toast.makeText(MainActivity.this, "Flick", Toast.LENGTH_LONG).show();
-                        placementState = PLACEMENT_TYPE.FLICK;
                         break;
                 }
                 dialog.dismiss();

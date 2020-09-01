@@ -28,7 +28,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Control which type of celestial body to add
     public static enum ADD_TYPE{
 
-        PLANET, STAR;
+        ASTEROID, PLANET, STAR;
 
         // Return string enum with only first letter capitalized
         public static String[] getString() {
@@ -45,7 +45,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Control which placement method
     public static enum PLACEMENT_TYPE{
 
-        SCATTER, TARGET, ORBIT, FLICK;
+        SCATTER, FLICK, TARGET, ORBIT;
         // Return string enum with only first letter capitalized
         public static String[] getString() {
             String[] strs = new String[PLACEMENT_TYPE.values().length];
