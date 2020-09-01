@@ -20,11 +20,11 @@ public class Universe {
 
     public final class CONSTANTS {
 //      Actual gravitational constant is much smaller
-        public static final double G = 1000000;
+        public static final double G = 100000000;
 
         // Maximum force allowed to be exerted
         // This solves problem of extreme acceleration when two objects are near each other
-        public static final double MAXFORCE = 1000000000;
+        public static final double MAXFORCE = 100000000;
 
         // The exponent to raise distance when calculating gravitational force
         // In real life, this is 2 (Gmm/r^2)
@@ -53,9 +53,9 @@ public class Universe {
         objectsToAdd = new ArrayList<CelestialBody>();
         objectsToRemove = new ArrayList<CelestialBody>();
 //      Create stars
-        Star star = new Star(GameView.SIZE_TYPE.MEDIUM);
-        star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
-        objects.add(star);
+//        Star star = new Star(GameView.SIZE_TYPE.MEDIUM);
+//        star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
+//        objects.add(star);
 
 //      Create planets
         int numPlanets = 50;
@@ -235,6 +235,13 @@ public class Universe {
             case STAR:
                 tempObject = new Star(sizeType);
                 break;
+            case BLACK_HOLE:
+                tempObject = new BlackHole(sizeType);
+                break;
+            case WHITE_HOLE:
+                tempObject = new WhiteHole(sizeType);
+                break;
+
         }
 
         if (objects.size() < 1000)

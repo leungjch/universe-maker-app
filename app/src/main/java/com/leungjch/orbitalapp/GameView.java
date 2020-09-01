@@ -28,14 +28,14 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Control which type of celestial body to add
     public static enum ADD_TYPE{
 
-        ASTEROID, PLANET, STAR;
+        ASTEROID, PLANET, STAR, BLACK_HOLE, WHITE_HOLE;
 
         // Return string enum with only first letter capitalized
         public static String[] getString() {
         String[] strs = new String[ADD_TYPE.values().length];
         int i = 0;
         for (ADD_TYPE p: ADD_TYPE.values()) {
-                strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase();
+                strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase().replace("_", " ");
             }
         return strs;
         }

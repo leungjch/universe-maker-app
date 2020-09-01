@@ -112,6 +112,14 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "Star", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.STAR;
                         break;
+                    case 3:
+                        Toast.makeText(MainActivity.this, "Black Hole", Toast.LENGTH_LONG).show();
+                        addTypeState = ADD_TYPE.BLACK_HOLE;
+                        break;
+                    case 4:
+                        Toast.makeText(MainActivity.this, "White Hole", Toast.LENGTH_LONG).show();
+                        addTypeState = ADD_TYPE.WHITE_HOLE;
+                        break;
                 }
                 dialog.dismiss();
                 addTypeButton.setText(addTypeState.name());
