@@ -194,12 +194,12 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     mVelocityTracker.clear();
                 }
                 mVelocityTracker.addMovement(event);
-                universe.addCelestialBody(new Vector2D(x, y),
-                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getYVelocity(pointerId)),
+                universe.addCelestialBody(new Vector2D((int)x*scaleFactor, (int)y*scaleFactor),
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId)*scaleFactor,mVelocityTracker.getYVelocity(pointerId)*scaleFactor),
                         action, currentAddType, currentSizeType, currentPlacementType);
                 // Track original position
-                xOriginal = x;
-                yOriginal = y;
+                xOriginal = Math.round(x*scaleFactor);
+                yOriginal = Math.round(y*scaleFactor);
 
                 return true;
             case (MotionEvent.ACTION_MOVE) :
@@ -213,9 +213,11 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 // Best practice to use VelocityTrackerCompat where possible.
                 Log.d("Vel", "X velocity: " + mVelocityTracker.getXVelocity(pointerId));
                 Log.d("Vel", "Y velocity: " + mVelocityTracker.getYVelocity(pointerId));
+                Log.d("MV", "XPOS: " + x);
+                Log.d("MV", "SCLF: " + scaleFactor);
 
-                universe.addCelestialBody(new Vector2D(x, y),
-                        new Vector2D(mVelocityTracker.getXVelocity(pointerId),mVelocityTracker.getYVelocity(pointerId)),
+                universe.addCelestialBody(new Vector2D(Math.round(x/scaleFactor), Math.round(y/scaleFactor)),
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/                                                                                                                                                                                                                                                                                                       scaleFactor),
                         action, currentAddType, currentSizeType, currentPlacementType);
                 return true;
 

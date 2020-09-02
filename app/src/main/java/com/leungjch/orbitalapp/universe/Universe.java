@@ -152,8 +152,8 @@ public class Universe {
             object1.setAcc(Acc);
             object1.setVel(Vel);
             // Check if past screen boundaries
-            if (Pos.getX() > getScreenWidth()*2 || Pos.getX() < -getScreenWidth()*2
-            ||  Pos.getY() > getScreenHeight()*2|| Pos.getY() < -getScreenHeight()*2)
+            if (Pos.getX() > 10000 || Pos.getX() < -10000
+            ||  Pos.getY() > 10000|| Pos.getY() < -10000)
             {
                 if (object1 instanceof Planet)
                 {
