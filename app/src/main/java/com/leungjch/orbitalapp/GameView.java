@@ -3,6 +3,8 @@ package com.leungjch.orbitalapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.AudioPlaybackCaptureConfiguration;
@@ -35,8 +37,11 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     private float scaleFactor = 1.f;
 
     // For pan control
-    private float dx = 0.f;
-    private float dy = 0.f;
+//    private float dx = -Universe.CONSTANTS.UNIVERSEWIDTH/2;
+//    private float dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/2;
+    private float dx = 0;
+    private float dy = 0;
+
     private boolean isPanning = false;
     private float panStartX = 0.f;
     private float panStartY = 0.f;
@@ -47,6 +52,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Zoom mode
     public boolean isZoomMode = false;
 
+    // Paint for bondary
+    public Paint boundaryPaint = new Paint();
+    public Rect boundaryRect = new Rect(0,0, Universe.CONSTANTS.UNIVERSEWIDTH, Universe.CONSTANTS.UNIVERSEHEIGHT);
 
 
 
@@ -114,7 +122,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-
+        boundaryPaint = new Paint();
+        boundaryPaint.setColor(Color.argb(255, 255,255,255));
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -124,6 +133,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        boundaryPaint = new Paint();
+        boundaryPaint.setColor(Color.argb(255, 255,255,255));
+
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -134,6 +146,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        boundaryPaint = new Paint();
+        boundaryPaint.setColor(Color.argb(255, 255,255,255));
+
     }
 
     @Override
@@ -332,6 +347,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         canvas.scale(scaleFactor, scaleFactor);
 
         if(canvas!=null){
+            // draw boundary
+            canvas.drawRect(boundaryRect,boundaryPaint);
+            // draw all objects
             universe.draw(canvas);
         }
         canvas.restore();
@@ -350,7 +368,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 scaleFactor *= detector.getScaleFactor();
 
                 // Don't let the object get too small or too large.
-                scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
+                scaleFactor = Math.max(0.3f, Math.min(scaleFactor, 5.0f));
 
                 invalidate();
 
