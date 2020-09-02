@@ -7,6 +7,7 @@ import android.media.AudioPlaybackCaptureConfiguration;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.VelocityTracker;
@@ -24,7 +25,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     private MainThread thread;
     private Universe universe;
 
+    private ScaleGestureDetector scaleDetector;
+    private float scaleFactor = 1.f;
+
     // User settings
+    // Zoom mode
+    public boolean isZoomMode = true;
+
     // Control which type of celestial body to add
     public static enum ADD_TYPE{
 
@@ -79,6 +86,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     }
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -86,6 +94,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -94,6 +104,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
+
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -103,6 +116,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
     }
 
     @Override
@@ -140,15 +155,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     }
 
-    @Override
-    public void draw(Canvas canvas) {
 
-        super.draw(canvas);
-
-        if(canvas!=null){
-            universe.draw(canvas);
-        }
-    }
 
 
     private VelocityTracker mVelocityTracker = null;
@@ -167,6 +174,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         int index = event.getActionIndex();
         int action = event.getActionMasked();
         int pointerId = event.getPointerId(index);
+
+        // For zooming
+        scaleDetector.onTouchEvent(event);
+
 
         String DEBUG_TAG = "Gesture";
         switch(action) {
@@ -197,6 +208,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 // computeCurrentVelocity(). Then call getXVelocity()
                 // and getYVelocity() to retrieve the velocity for each pointer ID.
                 mVelocityTracker.computeCurrentVelocity(1000);
+
                 // Log velocity of pixels per second
                 // Best practice to use VelocityTrackerCompat where possible.
                 Log.d("Vel", "X velocity: " + mVelocityTracker.getXVelocity(pointerId));
@@ -245,11 +257,38 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     }
     public void setCurrentPlacementType(PLACEMENT_TYPE newPlacementType) {
         currentPlacementType = newPlacementType;
+
     }
 
 
     public void setCurrentSizeType(SIZE_TYPE newSizeType) {
         currentSizeType = newSizeType;
+    }
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.save();
+        super.draw(canvas);
+        canvas.scale(scaleFactor, scaleFactor);
+        if(canvas!=null){
+            universe.draw(canvas);
+        }
+        canvas.restore();
+
+    }
+
+
+    private class ScaleListener
+            extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            scaleFactor *= detector.getScaleFactor();
+
+            // Don't let the object get too small or too large.
+            scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
+
+            invalidate();
+            return true;
+        }
     }
 
 }
