@@ -245,9 +245,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-                universe.addCelestialBody(new Vector2D((xOriginal-dx)/scaleFactor, (yOriginal-dy)/scaleFactor),
-                                          new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
-                                          action, currentAddType, currentSizeType, currentPlacementType);
+                    universe.addCelestialBody(new Vector2D((xOriginal-dx)/scaleFactor, (yOriginal-dy)/scaleFactor),
+                            new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
+                            action, currentAddType, currentSizeType, currentPlacementType);
 
                 return true;
             case (MotionEvent.ACTION_CANCEL) :

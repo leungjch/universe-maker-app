@@ -19,6 +19,13 @@ import java.util.Random;
 public class Universe {
 
     public final class CONSTANTS {
+
+        // Boundaries of the universe
+        // (-UNIVERSEWIDTH, UNIVERSEWIDTH) x (-UNIVERSEHEIGHT, UNIVERSEHEIGHT)
+        // Any object past this boundary is deleted
+        public static final int UNIVERSEWIDTH = 5000;
+        public static final int UNIVERSEHEIGHT = 5000;
+
 //      Actual gravitational constant is much smaller
         public static final double G = 100000000;
 
@@ -58,10 +65,10 @@ public class Universe {
 //        objects.add(star);
 
 //      Create planets
-        int numPlanets = 50;
+        int numPlanets = 0;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
-            tempPlanet.setPos(new Vector2D(rand.nextInt(getScreenWidth()), rand.nextInt(getScreenHeight())));
+            tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));
             objects.add(tempPlanet);
         }
     }
@@ -100,26 +107,8 @@ public class Universe {
                     continue;
                 }
                 // Check if collide
-                if (object1.isCollide(object2)) {
-//                    Fnet = new Vector2D(0,0);
-//                    Acc = new Vector2D(0,0);
-//                    Vel = new Vector2D(0,0);
-//                    Log.d("Collision", "cloided");
-                    // Biggest planet will absorb the smaller one
-                    if (object2.getRadius() > object1.getRadius())
-                    {
-                        object2.setMass(object1.getMass()+object2.getMass());
-                        object2.setRadius(object2.getRadius()+object1.getRadius()/object2.getRadius());
-
-                        objectsToRemove.add(object1);
-                    }
-                    else
-                    {
-                        object1.setMass(object2.getMass()+object1.getMass());
-                        object1.setRadius(object1.getRadius()+object2.getRadius()/object1.getRadius());
-                        objectsToRemove.add(object2);
-
-                    }
+                if (object1.isCollide(object2) && !objectsToRemove.contains(object1)) {
+                    handleCollide(object1, object2);
                     continue;
                 }
 
@@ -152,8 +141,8 @@ public class Universe {
             object1.setAcc(Acc);
             object1.setVel(Vel);
             // Check if past screen boundaries
-            if (Pos.getX() > 5000 || Pos.getX() < -5000
-            ||  Pos.getY() > 5000|| Pos.getY() < -5000)
+            if (Pos.getX() > Universe.CONSTANTS.UNIVERSEWIDTH || Pos.getX() < -Universe.CONSTANTS.UNIVERSEWIDTH
+            ||  Pos.getY() > Universe.CONSTANTS.UNIVERSEHEIGHT|| Pos.getY() < -Universe.CONSTANTS.UNIVERSEHEIGHT)
             {
                 if (object1 instanceof Planet)
                 {
@@ -272,7 +261,39 @@ public class Universe {
             }
         }
     }
+    public void handleCollide(CelestialBody object1, CelestialBody object2) {
 
+        double vAbs1 = object1.getVel().magnitude();
+        double vAbs2 = object2.getVel().magnitude();
+
+        double distX = object1.getPos().getX() - object2.getPos().getX();
+        double distY = object1.getPos().getY() - object2.getPos().getY();
+
+        double phi = Math.PI - Math.atan2(distY, distX);
+        double theta1 = Math.atan2(object1.getVel().getY(), object1.getVel().getX());
+        double theta2 = Math.atan2(object2.getVel().getY(), object2.getVel().getX());
+
+        // Biggest planet will absorb the smaller one
+
+        // https://en.wikipedia.org/wiki/Inelastic_collision
+        double vx = (object1.getMass() * object1.getVel().getX() + (object2.getMass() * object2.getVel().getX()))/(object1.getMass()+object2.getMass());
+        double vy = (object1.getMass() * object1.getVel().getY() + (object2.getMass() * object2.getVel().getY()))/(object1.getMass()+object2.getMass());
+
+        if (object2.getMass() >= object1.getMass())
+        {
+            object2.setMass(object1.getMass()+object2.getMass());
+            object2.setRadius(object2.getRadius()+object1.getRadius()/object2.getRadius());
+            object2.setVel(new Vector2D(vx, vy));
+            objectsToRemove.add(object1);
+        }
+        else
+        {
+            object1.setMass(object2.getMass()+object1.getMass());
+            object1.setRadius(object1.getRadius()+object2.getRadius()/object1.getRadius());
+            object1.setVel(new Vector2D(vx, vy));
+            objectsToRemove.add(object2);
+        }
+    }
 
     // Return screen width
     public static int getScreenWidth() {

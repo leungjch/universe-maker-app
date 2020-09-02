@@ -23,10 +23,12 @@ public class Vector2D {
     public double dotProduct(Vector2D vec2) {
         return (x*vec2.getX()) + (y*vec2.getY());
     }
+
     // Magnitude of a vector
     public double magnitude() {
         return Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
     }
+
     // Getter and setter functions
     public void set(double new_x, double new_y) {
         x = new_x;
