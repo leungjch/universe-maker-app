@@ -210,7 +210,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     mVelocityTracker.clear();
                 }
                 mVelocityTracker.addMovement(event);
-                universe.addCelestialBody(new Vector2D((int)x/scaleFactor, (int)y/scaleFactor),
+                universe.addCelestialBody(new Vector2D(Math.round((x+dx)/scaleFactor), Math.round((y+dy)/scaleFactor)),
                         new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
                         action, currentAddType, currentSizeType, currentPlacementType);
                 // Track original position
@@ -222,8 +222,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             case (MotionEvent.ACTION_MOVE) :
                 if (isPanning)
                 {
-                    panEndX = x;
-                    panEndY = y;
+//                    panEndX = x;
+//                    panEndY = y;
+                    dx = panStartX - x;
+                    dy = panStartY - y;
                 }
                 else
                 {
@@ -233,7 +235,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     // and getYVelocity() to retrieve the velocity for each pointer ID.
                     mVelocityTracker.computeCurrentVelocity(1000);
 
-                    universe.addCelestialBody(new Vector2D(Math.round(x/scaleFactor), Math.round(y/scaleFactor)),
+                    universe.addCelestialBody(new Vector2D(Math.round(((x-dx)/scaleFactor)), Math.round((y-dy)/scaleFactor)),
                             new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
                             action, currentAddType, currentSizeType, currentPlacementType);
 
@@ -243,8 +245,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-                universe.addCelestialBody(new Vector2D(xOriginal/scaleFactor, yOriginal/scaleFactor),
-                                          new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
+                universe.addCelestialBody(new Vector2D((xOriginal+dx)/scaleFactor, ((yOriginal+dy)/scaleFactor)),
+                                          new Vector2D((xOriginal-x+dx)/scaleFactor, (yOriginal-y+dy)/scaleFactor),
                                           action, currentAddType, currentSizeType, currentPlacementType);
 
                 return true;
@@ -257,13 +259,15 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             // Both fingers down
             // Start pan
             case (MotionEvent.ACTION_POINTER_DOWN):
-                panStartX = x;
-                panStartY = y;
+                panStartX = dx + x;
+                panStartY = dy + y;
                 isPanning = true;
                 return true;
             case (MotionEvent.ACTION_POINTER_UP):
                 panEndX = x;
                 panEndY = y;
+//                dx =  panEndX - panStartX;
+//                dy = panEndY - panStartY;
                 isPanning = false;
                 return true;
 
@@ -305,8 +309,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void draw(Canvas canvas) {
         canvas.save();
         super.draw(canvas);
+            canvas.translate(dx, dy);
         canvas.scale(scaleFactor, scaleFactor);
-        canvas.translate(panStartX-panEndX, panStartY-panEndY);
+
         if(canvas!=null){
             universe.draw(canvas);
         }
