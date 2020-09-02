@@ -45,7 +45,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     // User settings
     // Zoom mode
-    public boolean isZoomMode = true;
+    public boolean isZoomMode = false;
 
 
 
@@ -304,6 +304,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     public void setCurrentSizeType(SIZE_TYPE newSizeType) {
         currentSizeType = newSizeType;
+    }
+
+    public void toggleZoomMode() {
+        isZoomMode = !isZoomMode;
     }
     @Override
     public void draw(Canvas canvas) {

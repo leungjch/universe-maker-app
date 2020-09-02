@@ -52,8 +52,7 @@ public class Universe {
     Random rand = new Random();
 
     public Universe() {
-
-//      Initialize everything
+        //  Initialize everything
         stars = new ArrayList<Star>();
         planets = new ArrayList<Planet>();
         objects = new ArrayList<CelestialBody>();
@@ -64,7 +63,7 @@ public class Universe {
 //        star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
 //        objects.add(star);
 
-//      Create planets
+        //  Create planets
         int numPlanets = 0;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
@@ -72,12 +71,12 @@ public class Universe {
             objects.add(tempPlanet);
         }
     }
-//  Perform Euler integration
-//  Calculate Fnet for each object
+
+    //  Perform Euler integration
+    //  Calculate Fnet for each object
     public void update() {
         ListIterator<CelestialBody> iter1 = objects.listIterator();
         while (iter1.hasNext()) {
-//        for (CelestialBody object1 : objects) {
             CelestialBody object1 = iter1.next();
             Vector2D Fnet = new Vector2D(0,0);
             Vector2D Acc = new Vector2D(0,0);
@@ -140,7 +139,8 @@ public class Universe {
             object1.setFnet(Fnet);
             object1.setAcc(Acc);
             object1.setVel(Vel);
-            // Check if past screen boundaries
+
+            // Check if outside screen boundaries
             if (Pos.getX() > Universe.CONSTANTS.UNIVERSEWIDTH || Pos.getX() < -Universe.CONSTANTS.UNIVERSEWIDTH
             ||  Pos.getY() > Universe.CONSTANTS.UNIVERSEHEIGHT|| Pos.getY() < -Universe.CONSTANTS.UNIVERSEHEIGHT)
             {
@@ -154,7 +154,6 @@ public class Universe {
             {
                 object1.setPos(Pos);
             }
-            object1.setPos(Pos);
 
 
         }

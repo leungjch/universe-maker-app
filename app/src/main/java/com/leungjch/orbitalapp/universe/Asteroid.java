@@ -9,9 +9,9 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class Asteroid extends CelestialBody {
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.01,1);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(0.1,3);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(1,5);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.000001,1);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(0.00001,3);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(0.00001,5);
     }
 
     public Asteroid(GameView.SIZE_TYPE size) {
