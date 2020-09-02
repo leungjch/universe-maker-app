@@ -85,6 +85,27 @@ public class MainActivity extends Activity {
             }
         });
 
+        // Zoom mode toggle
+        final Button zoomButton = (Button)findViewById(R.id.zoomMode);
+        zoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!gameView.isZoomMode)
+                {
+                    zoomButton.setAlpha(0.2f);
+                    Toast.makeText(MainActivity.this, "Use two fingers to move, pinch to zoom", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    zoomButton.setAlpha(1.f);
+                    Toast.makeText(MainActivity.this, "Move mode disabled", Toast.LENGTH_LONG).show();
+
+                }
+                gameView.toggleZoomMode();
+
+
+            }
+        });
     }
 
     // Choose type

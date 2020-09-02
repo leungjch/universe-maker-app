@@ -64,7 +64,7 @@ public class Universe {
 //        objects.add(star);
 
         //  Create planets
-        int numPlanets = 0;
+        int numPlanets = 200;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
             tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));
@@ -141,14 +141,10 @@ public class Universe {
             object1.setVel(Vel);
 
             // Check if outside screen boundaries
-            if (Pos.getX() > Universe.CONSTANTS.UNIVERSEWIDTH || Pos.getX() < -Universe.CONSTANTS.UNIVERSEWIDTH
-            ||  Pos.getY() > Universe.CONSTANTS.UNIVERSEHEIGHT|| Pos.getY() < -Universe.CONSTANTS.UNIVERSEHEIGHT)
+            if (Pos.getX() > Universe.CONSTANTS.UNIVERSEWIDTH || Pos.getX() < 0
+            ||  Pos.getY() > Universe.CONSTANTS.UNIVERSEHEIGHT|| Pos.getY() < 0)
             {
-                if (object1 instanceof Planet)
-                {
-//                    objects.remove(object1);
-                    objectsToRemove.add(object1);
-                }
+                objectsToRemove.add(object1);
             }
             else
             {

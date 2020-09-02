@@ -8,6 +8,6 @@ public class ColorGenerator {
 
     }
 
-    public Paint generateColor()
+//    public Paint generateColor()
 
 }
