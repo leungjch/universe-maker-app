@@ -3,9 +3,12 @@ package com.leungjch.orbitalapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.media.AudioPlaybackCaptureConfiguration;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
@@ -16,7 +19,9 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.core.view.MotionEventCompat;
+
 
 import com.leungjch.orbitalapp.helpers.Vector2D;
 import com.leungjch.orbitalapp.universe.Universe;
@@ -25,12 +30,25 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     private MainThread thread;
     private Universe universe;
 
+    // For scale control
     private ScaleGestureDetector scaleDetector;
     private float scaleFactor = 1.f;
+
+    // For pan control
+    private float dx = 0.f;
+    private float dy = 0.f;
+    private boolean isPanning = false;
+    private float panStartX = 0.f;
+    private float panStartY = 0.f;
+    private float panEndX = 0.f;
+    private float panEndY = 0.f;
 
     // User settings
     // Zoom mode
     public boolean isZoomMode = true;
+
+
+
 
     // Control which type of celestial body to add
     public static enum ADD_TYPE{
@@ -87,6 +105,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+
     }
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -105,8 +124,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-
-
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -117,7 +134,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-
     }
 
     @Override
@@ -194,36 +210,41 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     mVelocityTracker.clear();
                 }
                 mVelocityTracker.addMovement(event);
-                universe.addCelestialBody(new Vector2D((int)x*scaleFactor, (int)y*scaleFactor),
-                        new Vector2D(mVelocityTracker.getXVelocity(pointerId)*scaleFactor,mVelocityTracker.getYVelocity(pointerId)*scaleFactor),
+                universe.addCelestialBody(new Vector2D((int)x/scaleFactor, (int)y/scaleFactor),
+                        new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
                         action, currentAddType, currentSizeType, currentPlacementType);
                 // Track original position
-                xOriginal = Math.round(x*scaleFactor);
-                yOriginal = Math.round(y*scaleFactor);
+                // Scale after
+                xOriginal = x;
+                yOriginal = y;
 
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                mVelocityTracker.addMovement(event);
-                // When you want to determine the velocity, call
-                // computeCurrentVelocity(). Then call getXVelocity()
-                // and getYVelocity() to retrieve the velocity for each pointer ID.
-                mVelocityTracker.computeCurrentVelocity(1000);
+                if (isPanning)
+                {
+                    panEndX = x;
+                    panEndY = y;
+                }
+                else
+                {
+                    mVelocityTracker.addMovement(event);
+                    // When you want to determine the velocity, call
+                    // computeCurrentVelocity(). Then call getXVelocity()
+                    // and getYVelocity() to retrieve the velocity for each pointer ID.
+                    mVelocityTracker.computeCurrentVelocity(1000);
 
-                // Log velocity of pixels per second
-                // Best practice to use VelocityTrackerCompat where possible.
-                Log.d("Vel", "X velocity: " + mVelocityTracker.getXVelocity(pointerId));
-                Log.d("Vel", "Y velocity: " + mVelocityTracker.getYVelocity(pointerId));
-                Log.d("MV", "XPOS: " + x);
-                Log.d("MV", "SCLF: " + scaleFactor);
+                    universe.addCelestialBody(new Vector2D(Math.round(x/scaleFactor), Math.round(y/scaleFactor)),
+                            new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
+                            action, currentAddType, currentSizeType, currentPlacementType);
 
-                universe.addCelestialBody(new Vector2D(Math.round(x/scaleFactor), Math.round(y/scaleFactor)),
-                        new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/                                                                                                                                                                                                                                                                                                       scaleFactor),
-                        action, currentAddType, currentSizeType, currentPlacementType);
+
+                }
+
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-                universe.addCelestialBody(new Vector2D(xOriginal, yOriginal),
-                                          new Vector2D(xOriginal-x, yOriginal-y),
+                universe.addCelestialBody(new Vector2D(xOriginal/scaleFactor, yOriginal/scaleFactor),
+                                          new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
                                           action, currentAddType, currentSizeType, currentPlacementType);
 
                 return true;
@@ -233,6 +254,20 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 return true;
             case (MotionEvent.ACTION_OUTSIDE) :
                 return true;
+            // Both fingers down
+            // Start pan
+            case (MotionEvent.ACTION_POINTER_DOWN):
+                panStartX = x;
+                panStartY = y;
+                isPanning = true;
+                return true;
+            case (MotionEvent.ACTION_POINTER_UP):
+                panEndX = x;
+                panEndY = y;
+                isPanning = false;
+                return true;
+
+
             default :
                 return super.onTouchEvent(event);
         }
@@ -271,12 +306,16 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         canvas.save();
         super.draw(canvas);
         canvas.scale(scaleFactor, scaleFactor);
+        canvas.translate(panStartX-panEndX, panStartY-panEndY);
         if(canvas!=null){
             universe.draw(canvas);
         }
         canvas.restore();
 
     }
+
+
+
 
 
     private class ScaleListener
