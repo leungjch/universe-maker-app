@@ -363,7 +363,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             // draw all objects
             universe.draw(canvas);
         }
-
         canvas.restore();
 
     }

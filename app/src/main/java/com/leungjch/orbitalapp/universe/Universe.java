@@ -27,20 +27,20 @@ public class Universe {
         public static final int UNIVERSEHEIGHT = 5000;
 
 //      Actual gravitational constant is much smaller
-        public static final double G = 100000000;
+        public static final double G = 1000000000;
 
         // Maximum force allowed to be exerted
         // This solves problem of extreme acceleration when two objects are near each other
-        public static final double MAXFORCE = 100000000;
+        public static final double MAXFORCE = 1000000000;
 
         // The exponent to raise distance when calculating gravitational force
         // In real life, this is 2 (Gmm/r^2)
         // But modify it to adjust how "heavy" gravity feels
-        public static final double EPSILON = 1.5;
+        public static final double EPSILON = 2;
 
 //      Time step for integration
 //      Smaller time step is more precise
-        public static final double STEPS = 10000;
+        public static final double STEPS = 30000;
         public static final double dT = 1.0/STEPS;
     }
     private List<Star> stars;

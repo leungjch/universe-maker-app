@@ -9,16 +9,24 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class BlackHole extends CelestialBody {
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(1000,5);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(10000,10);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(20000,20);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(10000000,5);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(1000000,10);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(2000000,20);
     }
 
 
 
     public BlackHole(GameView.SIZE_TYPE size) {
         Paint blackHolePaint = new Paint();
-        blackHolePaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+
+        // Fill black
+        blackHolePaint.setStyle(Paint.Style.FILL);
+        blackHolePaint.setColor(Color.argb(255, 0,0,0));
+
+        // White Stroke
+//        blackHolePaint.setStyle(Paint.Style.STROKE);
+//        blackHolePaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+//        blackHolePaint.setStrokeWidth(1.0f);
 
         Vector2D blackHolePos = new Vector2D(0,0);
         Vector2D blackHoleVel = new Vector2D( 0,0);
