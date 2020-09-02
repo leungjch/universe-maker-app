@@ -64,7 +64,7 @@ public class Universe {
 //        objects.add(star);
 
         //  Create planets
-        int numPlanets = 200;
+        int numPlanets = 10;
         for (int i = 0; i < numPlanets; i++) {
             Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
             tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));

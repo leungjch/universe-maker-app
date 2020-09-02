@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.AudioPlaybackCaptureConfiguration;
@@ -35,12 +36,15 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // For scale control
     private ScaleGestureDetector scaleDetector;
     private float scaleFactor = 1.f;
+    // For scale pivot to center
+    private float focusX;
+    private float focusY;
 
     // For pan control
-//    private float dx = -Universe.CONSTANTS.UNIVERSEWIDTH/2;
-//    private float dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/2;
-    private float dx = 0;
-    private float dy = 0;
+    private float dx = -Universe.CONSTANTS.UNIVERSEWIDTH/2;
+    private float dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/2;
+//    private float dx = 0;
+//    private float dy = 0;
 
     private boolean isPanning = false;
     private float panStartX = 0.f;
@@ -214,18 +218,20 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         switch(action) {
             // Single tap
             case (MotionEvent.ACTION_DOWN) :
+                if(mVelocityTracker == null) {
+                    // Retrieve a new VelocityTracker object to watch the
+                    // velocity of a motion.
+                    mVelocityTracker = VelocityTracker.obtain();
+
+                }
+                else
+                {
+                    mVelocityTracker.clear();
+                }
                 if (!isZoomMode && !isPanning)
                 {
-                    if(mVelocityTracker == null) {
-                        // Retrieve a new VelocityTracker object to watch the
-                        // velocity of a motion.
-                        mVelocityTracker = VelocityTracker.obtain();
 
-                    }
-                    else
-                    {
-                        mVelocityTracker.clear();
-                    }
+
                     mVelocityTracker.addMovement(event);
 
                     universe.addCelestialBody(new Vector2D(Math.round((x-dx)/scaleFactor), Math.round((y-dy)/scaleFactor)),
@@ -238,13 +244,12 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     xOriginal = x;
                     yOriginal = y;
 
-
                 return true;
             case (MotionEvent.ACTION_MOVE) :
+                Log.d("POS", Float.toString((x-dx)/scaleFactor)  +" " + Float.toString((y-dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
+
                 if (isPanning && isZoomMode)
                 {
-//                    panEndX = x;
-//                    panEndY = y;
                     dx = panStartX - x;
                     dy = panStartY - y;
                 }
@@ -343,15 +348,22 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void draw(Canvas canvas) {
         canvas.save();
         super.draw(canvas);
+
         canvas.translate(dx, dy);
+        canvas.translate(Universe.CONSTANTS.UNIVERSEWIDTH/2, Universe.CONSTANTS.UNIVERSEHEIGHT/2);
         canvas.scale(scaleFactor, scaleFactor);
+        canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH/2/scaleFactor, -Universe.CONSTANTS.UNIVERSEHEIGHT/2/scaleFactor);
+
+//        canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH/2, -Universe.CONSTANTS.UNIVERSEHEIGHT/2);
 
         if(canvas!=null){
-            // draw boundary
+
+            // draw boundary area
             canvas.drawRect(boundaryRect,boundaryPaint);
             // draw all objects
             universe.draw(canvas);
         }
+
         canvas.restore();
 
     }
@@ -363,12 +375,19 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     private class ScaleListener
             extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
+        public boolean onScaleBegin(ScaleGestureDetector detector) {
+            focusX = (detector.getFocusX()-dx)/scaleFactor;
+            focusY = (detector.getFocusY()-dy)/scaleFactor;
+            Log.d("FOCUS", Float.toString(focusX) + " " + Float.toString(focusY));
+            return true;
+        }
+        @Override
         public boolean onScale(ScaleGestureDetector detector) {
             if (isZoomMode) {
                 scaleFactor *= detector.getScaleFactor();
 
                 // Don't let the object get too small or too large.
-                scaleFactor = Math.max(0.3f, Math.min(scaleFactor, 5.0f));
+                scaleFactor = Math.max(0.2f, Math.min(scaleFactor, 5.0f));
 
                 invalidate();
 
