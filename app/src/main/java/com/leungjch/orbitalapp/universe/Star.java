@@ -19,9 +19,9 @@ public class Star extends CelestialBody {
 
 //  Constants for radii of stars
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(10000, 25);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(300000,50);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(1000000,100);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(100, 25);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(300,50);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(1000,100);
     }
 
     public Star(GameView.SIZE_TYPE size) {

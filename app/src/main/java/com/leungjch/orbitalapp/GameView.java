@@ -210,7 +210,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     mVelocityTracker.clear();
                 }
                 mVelocityTracker.addMovement(event);
-                universe.addCelestialBody(new Vector2D(Math.round((x+dx)/scaleFactor), Math.round((y+dy)/scaleFactor)),
+                universe.addCelestialBody(new Vector2D(Math.round((x-dx)/scaleFactor), Math.round((y-dy)/scaleFactor)),
                         new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
                         action, currentAddType, currentSizeType, currentPlacementType);
                 // Track original position
@@ -245,8 +245,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-                universe.addCelestialBody(new Vector2D((xOriginal+dx)/scaleFactor, ((yOriginal+dy)/scaleFactor)),
-                                          new Vector2D((xOriginal-x+dx)/scaleFactor, (yOriginal-y+dy)/scaleFactor),
+                universe.addCelestialBody(new Vector2D((xOriginal-dx)/scaleFactor, (yOriginal-dy)/scaleFactor),
+                                          new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
                                           action, currentAddType, currentSizeType, currentPlacementType);
 
                 return true;
@@ -309,7 +309,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void draw(Canvas canvas) {
         canvas.save();
         super.draw(canvas);
-            canvas.translate(dx, dy);
+        canvas.translate(dx, dy);
         canvas.scale(scaleFactor, scaleFactor);
 
         if(canvas!=null){

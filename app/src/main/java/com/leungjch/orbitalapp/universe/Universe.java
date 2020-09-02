@@ -87,13 +87,13 @@ public class Universe {
                     continue;
                 }
                 // Skip if star
-                if (object1 instanceof Star)
-                {
-                    Fnet.setX(0);
-                    Fnet.setY(0);
-
-                    continue;
-                }
+//                if (object1 instanceof Star)
+//                {
+//                    Fnet.setX(0);
+//                    Fnet.setY(0);
+//
+//                    continue;
+//                }
                 // Asteroids exert negligible force, ignore them
                 if (object2 instanceof Asteroid)
                 {
@@ -152,8 +152,8 @@ public class Universe {
             object1.setAcc(Acc);
             object1.setVel(Vel);
             // Check if past screen boundaries
-            if (Pos.getX() > 10000 || Pos.getX() < -10000
-            ||  Pos.getY() > 10000|| Pos.getY() < -10000)
+            if (Pos.getX() > 5000 || Pos.getX() < -5000
+            ||  Pos.getY() > 5000|| Pos.getY() < -5000)
             {
                 if (object1 instanceof Planet)
                 {

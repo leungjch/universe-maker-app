@@ -16,7 +16,7 @@ public class WhiteHole extends CelestialBody {
 
     public WhiteHole(GameView.SIZE_TYPE size) {
         Paint whiteHolePaint = new Paint();
-        whiteHolePaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+        whiteHolePaint.setColor(Color.argb(255, 255,255,255));
 
         Vector2D whiteHolePos = new Vector2D(0,0);
         Vector2D whiteHoleVel = new Vector2D( 0,0);
