@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sizeType"
     android:layout_width="match_parent"
@@ -74,19 +75,9 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="-1dp"
-        android:layout_marginEnd="156dp"
-        android:text="3" />
-
-    <Button
-        android:id="@+id/pauseplay"
-        android:layout_width="47dp"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="-1dp"
-        android:layout_marginEnd="281dp"
-        android:text="P" />
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:text="3X" />
 
     <Button
         android:id="@+id/speed1"
@@ -95,18 +86,30 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="237dp"
-        android:text="1" />
+        android:layout_marginEnd="90dp"
+        android:text="1X" />
 
     <Button
         android:id="@+id/speed2"
-        android:layout_width="42dp"
+        android:layout_width="43dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="197dp"
-        android:text="2" />
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="46dp"
+        android:text="2X" />
+
+    <ImageButton
+        android:id="@+id/pauseplay"
+        android:layout_width="44dp"
+        android:layout_height="42dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="210dp"
+        android:layout_marginTop="2dp"
+        android:background="#D2D3D3"
+        android:src="@android:drawable/ic_media_pause"
+        android:tint="#6C6C6C" />
 
 </RelativeLayout>

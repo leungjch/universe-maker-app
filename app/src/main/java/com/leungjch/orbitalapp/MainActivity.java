@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.leungjch.orbitalapp.universe.Universe;
@@ -107,7 +108,7 @@ public class MainActivity extends Activity {
             }
         });
         // Speed button #0 (pause)
-        final Button pauseButton = (Button)findViewById(R.id.pauseplay);
+        final ImageButton pauseButton = (ImageButton)findViewById(R.id.pauseplay);
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

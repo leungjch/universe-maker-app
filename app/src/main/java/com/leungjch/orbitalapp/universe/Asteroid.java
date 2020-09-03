@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.leungjch.orbitalapp.GameView;
+import com.leungjch.orbitalapp.helpers.ColorGenerator;
 import com.leungjch.orbitalapp.helpers.MassRadiusTuple;
 import com.leungjch.orbitalapp.helpers.Vector2D;
 
@@ -15,8 +16,8 @@ public class Asteroid extends CelestialBody {
     }
 
     public Asteroid(GameView.SIZE_TYPE size) {
-        Paint asteroidPaint = new Paint();
-        asteroidPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+        Paint asteroidPaint = ColorGenerator.generateColor(GameView.ADD_TYPE.ASTEROID);
+//        asteroidPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
 
         Vector2D asteroidPos = new Vector2D(0,0);
         Vector2D asteroidVel = new Vector2D( 0,0);

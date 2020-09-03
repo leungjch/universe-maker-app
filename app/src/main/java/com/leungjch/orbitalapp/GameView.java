@@ -315,12 +315,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                             action, currentAddType, currentSizeType, currentPlacementType);
                 }
                 // In zoom mode and stopped touching, stop panning
-                else {
-                    panEndX = x;
-                    panEndY = y;
-                    isPanning = false;
+                    if (isPanning)
+                    {
+                        panEndX = x;
+                        panEndY = y;
+                        isPanning = false;
 
-                }
+                    }
 
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
@@ -354,6 +355,14 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     public void reset() {
         universe = new Universe();
+        dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
+        dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
+        xOriginal = 0;
+        yOriginal = 0;
+        panStartY = 0;
+        panStartX = 0;
+        scaleFactor = 0.7f;
+
     }
 
     // Called by MainActivity after selecting radio button
