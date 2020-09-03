@@ -5,7 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
 import android.graphics.Rect;
 import android.util.Log;
@@ -37,23 +39,36 @@ public class CelestialBody {
     //  Color
     private Paint paint;
 
+    // Trace list
+    // an array of past positions
+    private ArrayList<Vector2D> traceList = new ArrayList<Vector2D>();
+
+    // If object is stationary (does not move)
     public boolean isFixed = false;
 
+    // If object is initially set to orbit mode
     public boolean isOrbit = false;
 
     Random rand = new Random();
 
     public void draw(Canvas canvas) {
         canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
+        for (Vector2D trace : traceList) {
+            canvas.drawCircle((int)trace.getX(), (int)trace.getY(), (int)2, paint);
+
+        }
         if (this instanceof DroneAI) {
-            canvas.drawRect(new Rect((int)pos.getX(), (int)pos.getY(), (int)pos.getX()+(int)getRadius(), (int)pos.getY()+(int)getRadius()), paint);
+            canvas.drawRect(new Rect((int)pos.getX()-(int)getRadius(), (int)pos.getY()-(int)getRadius(), (int)pos.getX()+(int)getRadius(), (int)pos.getY()+(int)getRadius()), paint);
+        }
+        traceList.add(new Vector2D(pos.getX(), pos.getY()));
+        if (traceList.size() > 50) {
+            traceList.remove(0);
         }
     }
 
     //  Calculate gravitational force of attraction induced by another object
     //  https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation
     public Vector2D calculateGrav(CelestialBody object2) {
-
 
         double d = pos.distance(object2.getPos());
         double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);

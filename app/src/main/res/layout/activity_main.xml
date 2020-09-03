@@ -112,4 +112,14 @@
         android:src="@android:drawable/ic_media_pause"
         android:tint="#6C6C6C" />
 
+    <Button
+        android:id="@+id/traceMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="2dp"
+        android:text="Trace" />
+
 </RelativeLayout>

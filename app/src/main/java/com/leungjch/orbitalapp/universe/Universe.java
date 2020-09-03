@@ -180,11 +180,11 @@ public class Universe {
             if (object1.isOrbit) {
                 double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
 
-//                double vAbs = object1.getVel().magnitude()*10;
+
                 double vAbs = Math.sqrt((CONSTANTS.G*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));
                 Log.d("DIST", Double.toString((object1.getPos().distance(maxForceObject.getPos()))));
-                object1.setFnet(new Vector2D(-Fnet.getX(), -Fnet.getY()));
-                object1.setAcc(new Vector2D(-Acc.getX(), -Acc.getY()));
+                object1.setFnet(new Vector2D(0, 0));
+                object1.setAcc(new Vector2D(0, 0));
                 object1.setVel(new Vector2D(vAbs*Math.cos(theta_f + Math.PI/2), vAbs*Math.sin(theta_f + Math.PI/2)));
                 object1.isOrbit = false;
             }
@@ -283,7 +283,7 @@ public class Universe {
             case WHITE_HOLE:
                 tempObject = new WhiteHole(sizeType, tempPaint);
                 break;
-            case DRONE:
+            case SATELLITE:
                 tempObject = new DroneAI(sizeType, tempPaint);
                 break;
 

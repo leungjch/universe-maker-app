@@ -176,8 +176,8 @@ public class MainActivity extends Activity {
                         addTypeState = ADD_TYPE.WHITE_HOLE;
                         break;
                     case 5:
-                        Toast.makeText(MainActivity.this, "Drone AI", Toast.LENGTH_LONG).show();
-                        addTypeState = ADD_TYPE.DRONE;
+                        Toast.makeText(MainActivity.this, "Satellite", Toast.LENGTH_LONG).show();
+                        addTypeState = ADD_TYPE.SATELLITE;
                         break;
 
                 }
