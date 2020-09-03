@@ -256,12 +256,18 @@ public class Universe {
         {
             switch (placementType) {
                 case SCATTER:
-                    tempObject.setVel(new Vector2D(rand.nextInt(20000) * (rand.nextInt(2) == 1? -1 : 1),
-                            rand.nextInt(20000) * (rand.nextInt(2) == 1? -1 : 1)));
+                    tempObject.setVel(new Vector2D(rand.nextInt(50000) * (rand.nextInt(2) == 1? -1 : 1),
+                            rand.nextInt(50000) * (rand.nextInt(2) == 1? -1 : 1)));
                     tempObject.setPos(pos);
                     objectsToAdd.add(tempObject);
 
                     break;
+                case FLICK:
+                    tempObject.setVel(new Vector2D(vel.getX()*20, vel.getY()*20));
+                    tempObject.setPos(pos);
+                    objectsToAdd.add(tempObject);
+                    break;
+
                 case TARGET:
                     if (action == MotionEvent.ACTION_UP)
                     {
@@ -271,12 +277,12 @@ public class Universe {
 
                     }
                     break;
-                case FLICK:
-                    tempObject.setVel(new Vector2D(vel.getX()*20, vel.getY()*20));
+                case IDLE:
+                    tempObject.setVel(new Vector2D(0,0));
                     tempObject.setPos(pos);
                     objectsToAdd.add(tempObject);
-
                     break;
+
             }
         }
     }
