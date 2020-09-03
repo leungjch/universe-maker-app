@@ -42,6 +42,7 @@ public class ColorGenerator {
                 break;
             case BLACK_HOLE:
                 paint.setColor(Color.rgb(0,0,0));
+
                 break;
             case WHITE_HOLE:
                 paint.setColor(Color.rgb(255,255,255));

@@ -146,10 +146,11 @@ public class MainActivity extends Activity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
         alertDialog.setTitle("Celestial Body");
         String[] list = ADD_TYPE.getString();
+        final Button addTypeButton = (Button)findViewById(R.id.addType);
+
         alertDialog.setSingleChoiceItems(list, addTypeState.ordinal(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Button addTypeButton = (Button)findViewById(R.id.addType);
 
                 switch (which) {
                     case 0:
@@ -176,11 +177,12 @@ public class MainActivity extends Activity {
                         break;
                 }
                 dialog.dismiss();
-                addTypeButton.setText(addTypeState.name());
+                addTypeButton.setText(ADD_TYPE.getString()[addTypeState.ordinal()]);
                 gameView.setCurrentAddType(addTypeState);
             }
         });
         AlertDialog alert = alertDialog.create();
+
         alert.setCanceledOnTouchOutside(true);
         alert.show();
     }
@@ -209,8 +211,8 @@ public class MainActivity extends Activity {
                         placementState = PLACEMENT_TYPE.TARGET;
                         break;
                     case 3:
-                        Toast.makeText(MainActivity.this, "Orbit", Toast.LENGTH_LONG).show();
-                        placementState = PLACEMENT_TYPE.ORBIT;
+                        Toast.makeText(MainActivity.this, "Idle", Toast.LENGTH_LONG).show();
+                        placementState = PLACEMENT_TYPE.IDLE;
                         break;
                 }
                 dialog.dismiss();

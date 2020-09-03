@@ -81,7 +81,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Control current placement mode
     public static enum PLACEMENT_TYPE{
 
-        SCATTER, FLICK, TARGET, ORBIT;
+        SCATTER, FLICK, TARGET, IDLE;
         // Return string enum with only first letter capitalized
         public static String[] getString() {
             String[] strs = new String[PLACEMENT_TYPE.values().length];
