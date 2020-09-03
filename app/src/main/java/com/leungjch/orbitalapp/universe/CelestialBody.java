@@ -51,19 +51,25 @@ public class CelestialBody {
 
     Random rand = new Random();
 
-    public void draw(Canvas canvas) {
-        canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
-        for (Vector2D trace : traceList) {
-            canvas.drawCircle((int)trace.getX(), (int)trace.getY(), (int)2, paint);
+    public void draw(Canvas canvas, Boolean isTraceMode) {
+        // Draw trace paths
+        if (isTraceMode) {
+            for (Vector2D trace : traceList) {
+                canvas.drawCircle((int)trace.getX(), (int)trace.getY(), (int)2, paint);
 
-        }
-        if (this instanceof DroneAI) {
-            canvas.drawRect(new Rect((int)pos.getX()-(int)getRadius(), (int)pos.getY()-(int)getRadius(), (int)pos.getX()+(int)getRadius(), (int)pos.getY()+(int)getRadius()), paint);
+            }
         }
         traceList.add(new Vector2D(pos.getX(), pos.getY()));
         if (traceList.size() > 50) {
             traceList.remove(0);
         }
+
+        canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
+
+        if (this instanceof DroneAI) {
+            canvas.drawRect(new Rect((int)pos.getX()-(int)getRadius(), (int)pos.getY()-(int)getRadius(), (int)pos.getX()+(int)getRadius(), (int)pos.getY()+(int)getRadius()), paint);
+        }
+
     }
 
     //  Calculate gravitational force of attraction induced by another object

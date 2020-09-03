@@ -107,6 +107,26 @@ public class MainActivity extends Activity {
                 gameView.toggleZoomMode();
             }
         });
+        // Zoom mode toggle
+        final Button traceButton = (Button)findViewById(R.id.traceMode);
+        traceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!gameView.isTraceMode)
+                {
+                    traceButton.setAlpha(0.2f);
+                    Toast.makeText(MainActivity.this, "Trace paths ON", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    traceButton.setAlpha(1.0f);
+                    Toast.makeText(MainActivity.this, "Trace paths OFF", Toast.LENGTH_LONG).show();
+
+                }
+                gameView.toggleTraceMode();
+            }
+        });
+
         // Speed button #0 (pause)
         final ImageButton pauseButton = (ImageButton)findViewById(R.id.pauseplay);
         pauseButton.setOnClickListener(new View.OnClickListener() {

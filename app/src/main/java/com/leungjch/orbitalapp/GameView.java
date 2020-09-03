@@ -56,9 +56,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Zoom mode
     public boolean isZoomMode = false;
 
+    // Trace paths
+    public boolean isTraceMode = false;
+
     // Paint for bondary
     public Paint boundaryPaint = new Paint();
     public Rect boundaryRect = new Rect(0,0, Universe.CONSTANTS.UNIVERSEWIDTH, Universe.CONSTANTS.UNIVERSEHEIGHT);
+
 
 
 
@@ -376,6 +380,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void toggleZoomMode() {
         isZoomMode = !isZoomMode;
     }
+    public void toggleTraceMode() { isTraceMode = !isTraceMode; }
     public void setCurrentDeltaT(double newDt) {
         universe.setCurrentDeltaT(newDt);
     }
@@ -398,7 +403,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             // draw boundary area
             canvas.drawRect(boundaryRect,boundaryPaint);
             // draw all objects
-            universe.draw(canvas);
+            universe.draw(canvas, isTraceMode);
         }
         canvas.restore();
 

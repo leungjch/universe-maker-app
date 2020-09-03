@@ -224,9 +224,10 @@ public class Universe {
 
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, Boolean isTraceMode) {
         for (CelestialBody object : objects) {
-            object.draw(canvas);
+            object.draw(canvas, isTraceMode);
+
         }
 
     }
