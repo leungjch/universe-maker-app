@@ -3,6 +3,7 @@ package com.leungjch.orbitalapp.universe;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.leungjch.orbitalapp.GameView;
@@ -107,6 +108,9 @@ public class Universe {
             Vector2D Pos = new Vector2D(0,0);
 
             ListIterator<CelestialBody> iter2 = objects.listIterator();
+            CelestialBody maxForceObject = iter2.next(); // for searching for object exerting most force on object1, only for orbit mode
+            double maxForce = 0;
+
             while (iter2.hasNext()) {
                 CelestialBody object2 = iter2.next();
 
@@ -115,19 +119,21 @@ public class Universe {
                 if (object1 == object2) {
                     continue;
                 }
-                // Skip if star
-//                if (object1 instanceof Star)
-//                {
-//                    Fnet.setX(0);
-//                    Fnet.setY(0);
-//
-//                    continue;
-//                }
+                // If fixed, set f = 0
+                if (object1.isFixed)
+                {
+                    Fnet.setX(0);
+                    Fnet.setY(0);
+                    object1.setVel(new Vector2D(0,0));
+                    continue;
+                }
                 // Asteroids exert negligible force, ignore them
-                if (object2 instanceof Asteroid)
+                if (object2 instanceof Asteroid && object2 instanceof DroneAI)
                 {
                     continue;
                 }
+
+
                 // Check if collide
                 if (object1.isCollide(object2) && !objectsToRemove.contains(object1)) {
                     handleCollide(object1, object2);
@@ -137,6 +143,11 @@ public class Universe {
                 // Get gravitational attraction
                 Vector2D grav = object1.calculateGrav(object2);
 
+                // If current object is set to orbit mode, keep track of the most massive object
+                if (object1.isOrbit && grav.magnitude() > maxForce) {
+                    maxForceObject = object2;
+                    maxForce = grav.magnitude();
+                }
                 // Increment current FNet
                 Fnet.setX(Fnet.getX() + grav.getX());
                 Fnet.setY(Fnet.getY() + grav.getY());
@@ -158,20 +169,42 @@ public class Universe {
             Pos.setX(object1.getPos().getX() + (Vel.getX() * currentDeltaT));
             Pos.setY(object1.getPos().getY() + (Vel.getY() * currentDeltaT));
 
+
             // Update object
             object1.setFnet(Fnet);
             object1.setAcc(Acc);
             object1.setVel(Vel);
 
-            // Check if outside screen boundaries
-            if (Pos.getX() > Universe.CONSTANTS.UNIVERSEWIDTH || Pos.getX() < 0
-            ||  Pos.getY() > Universe.CONSTANTS.UNIVERSEHEIGHT|| Pos.getY() < 0)
+            // If object set to orbit
+            // Set the initial velocity at an angle perpendicular to the angle of the force vector
+            if (object1.isOrbit) {
+                double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
+
+//                double vAbs = object1.getVel().magnitude()*10;
+                double vAbs = Math.sqrt((CONSTANTS.G*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));
+                Log.d("DIST", Double.toString((object1.getPos().distance(maxForceObject.getPos()))));
+                object1.setFnet(new Vector2D(-Fnet.getX(), -Fnet.getY()));
+                object1.setAcc(new Vector2D(-Acc.getX(), -Acc.getY()));
+                object1.setVel(new Vector2D(vAbs*Math.cos(theta_f + Math.PI/2), vAbs*Math.sin(theta_f + Math.PI/2)));
+                object1.isOrbit = false;
+            }
+
+            // Check if outside screen boundaries before placing
+            // If outside boundaries, remove the object
+            // Else, place it normally
+            if (Pos.getX() > Universe.CONSTANTS.UNIVERSEWIDTH + Universe.CONSTANTS.UNIVERSEWIDTH/4 || Pos.getX() < -Universe.CONSTANTS.UNIVERSEWIDTH/4
+            ||  Pos.getY() > Universe.CONSTANTS.UNIVERSEHEIGHT + Universe.CONSTANTS.UNIVERSEHEIGHT/4|| Pos.getY() < -Universe.CONSTANTS.UNIVERSEHEIGHT/4)
             {
                 objectsToRemove.add(object1);
             }
             else
             {
                 object1.setPos(Pos);
+            }
+
+            // Special objects - Drones and player
+            if (object1 instanceof DroneAI) {
+                object1.control();
             }
 
 
@@ -233,6 +266,7 @@ public class Universe {
     {
         CelestialBody tempObject = new CelestialBody();
         Paint tempPaint = colorGenerator.generateColor(addType, sizeType);
+
         switch (addType) {
             case ASTEROID:
                 tempObject = new Asteroid(sizeType, tempPaint);
@@ -248,6 +282,9 @@ public class Universe {
                 break;
             case WHITE_HOLE:
                 tempObject = new WhiteHole(sizeType, tempPaint);
+                break;
+            case DRONE:
+                tempObject = new DroneAI(sizeType, tempPaint);
                 break;
 
         }
@@ -280,6 +317,18 @@ public class Universe {
                 case IDLE:
                     tempObject.setVel(new Vector2D(0,0));
                     tempObject.setPos(pos);
+                    objectsToAdd.add(tempObject);
+                    break;
+                case FIXED:
+                    tempObject.setVel(new Vector2D(0,0));
+                    tempObject.setPos(pos);
+                    tempObject.isFixed = true;
+                    objectsToAdd.add(tempObject);
+                    break;
+                case ORBIT:
+                    tempObject.setVel(new Vector2D(0,0));
+                    tempObject.setPos(pos);
+                    tempObject.isOrbit = true;
                     objectsToAdd.add(tempObject);
                     break;
 

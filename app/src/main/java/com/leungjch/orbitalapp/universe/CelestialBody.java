@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.Random;
+
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.leungjch.orbitalapp.helpers.Vector2D;
@@ -35,10 +37,17 @@ public class CelestialBody {
     //  Color
     private Paint paint;
 
+    public boolean isFixed = false;
+
+    public boolean isOrbit = false;
+
     Random rand = new Random();
 
     public void draw(Canvas canvas) {
         canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
+        if (this instanceof DroneAI) {
+            canvas.drawRect(new Rect((int)pos.getX(), (int)pos.getY(), (int)pos.getX()+(int)getRadius(), (int)pos.getY()+(int)getRadius()), paint);
+        }
     }
 
     //  Calculate gravitational force of attraction induced by another object
@@ -46,7 +55,7 @@ public class CelestialBody {
     public Vector2D calculateGrav(CelestialBody object2) {
 
 
-        double d = pos.distance(object2.getPos()) - radius - object2.getRadius();
+        double d = pos.distance(object2.getPos());
         double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);
         fGravAbs = Math.min(Universe.CONSTANTS.MAXFORCE, fGravAbs);
         Vector2D fGrav;
@@ -71,6 +80,12 @@ public class CelestialBody {
         else {
             return false;
         }
+    }
+
+    // Empty update function
+    // Overridden by drone and player
+    public void control() {
+
     }
 
     //

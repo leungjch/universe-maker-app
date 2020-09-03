@@ -175,6 +175,11 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "White Hole", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.WHITE_HOLE;
                         break;
+                    case 5:
+                        Toast.makeText(MainActivity.this, "Drone AI", Toast.LENGTH_LONG).show();
+                        addTypeState = ADD_TYPE.DRONE;
+                        break;
+
                 }
                 dialog.dismiss();
                 addTypeButton.setText(ADD_TYPE.getString()[addTypeState.ordinal()]);
@@ -214,6 +219,15 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "Idle", Toast.LENGTH_LONG).show();
                         placementState = PLACEMENT_TYPE.IDLE;
                         break;
+                    case 4:
+                        Toast.makeText(MainActivity.this, "Fixed", Toast.LENGTH_LONG).show();
+                        placementState = PLACEMENT_TYPE.FIXED;
+                        break;
+                    case 5:
+                        Toast.makeText(MainActivity.this, "Orbit", Toast.LENGTH_LONG).show();
+                        placementState = PLACEMENT_TYPE.ORBIT;
+                        break;
+
                 }
                 dialog.dismiss();
                 placementButton.setText(placementState.name());

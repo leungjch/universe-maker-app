@@ -46,6 +46,11 @@ public class ColorGenerator {
                 break;
             case WHITE_HOLE:
                 paint.setColor(Color.rgb(255,255,255));
+            case DRONE:
+                int grayD = rand.nextInt(100)+100;
+                paint.setColor(Color.rgb(grayD,grayD,grayD));
+                break;
+
         }
 
 
