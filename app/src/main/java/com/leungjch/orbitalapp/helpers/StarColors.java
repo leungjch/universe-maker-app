@@ -26,8 +26,6 @@ public class StarColors {
    }
    // Get closest RGB
    public StarColorInfo bv2rgb(double bv) {
-        // Limit domain to -0.4 <= bv <= 2.00
-//        double mBv = Math.max(-0.4, Math.min(bv, 2.00));
         double mBv = bv;
         int index = (int)Math.floor((mBv+0.4f)/0.05);
 

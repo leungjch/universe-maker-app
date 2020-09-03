@@ -43,7 +43,6 @@ public class Planet extends CelestialBody {
                 break;
 
         }
-        
         super.setPos(planetPos);
         super.setVel(planetVel);
         super.setAcc(planetAcc);

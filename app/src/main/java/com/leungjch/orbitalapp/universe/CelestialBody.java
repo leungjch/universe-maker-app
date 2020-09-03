@@ -41,10 +41,6 @@ public class CelestialBody {
         canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
     }
 
-    // Updates all properties when given a new FNet
-//    public void update() {
-//    }
-
     //  Calculate gravitational force of attraction induced by another object
     //  https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation
     public Vector2D calculateGrav(CelestialBody object2) {

@@ -281,12 +281,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     else if (-(dy+universe.getScreenHeight()*0.0f) < 0) {
                         dy = universe.getScreenHeight()*0.0f;
                     }
-
-
-//                    Log.d("POS", Float.toString((x-dx)/scaleFactor)  +" " + Float.toString((y-dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
-//                    Log.d("POSDX", Float.toString(dx/scaleFactor)  +" " + Float.toString((dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
-                    Log.d("POSDXE", Float.toString(dx) +" " + Float.toString(-(Universe.CONSTANTS.UNIVERSEWIDTH + Universe.CONSTANTS.UNIVERSEWIDTH*0.1f)));
-
                 }
                 else
                 {

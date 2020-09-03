@@ -16,18 +16,7 @@ public class BlackHole extends CelestialBody {
 
 
 
-    public BlackHole(GameView.SIZE_TYPE size, Paint blackholePaint) {
-        Paint blackHolePaint = new Paint();
-
-        // Fill black
-        blackHolePaint.setStyle(Paint.Style.FILL);
-        blackHolePaint.setColor(Color.argb(255, 0,0,0));
-
-        // White Stroke
-//        blackHolePaint.setStyle(Paint.Style.STROKE);
-//        blackHolePaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
-//        blackHolePaint.setStrokeWidth(1.0f);
-
+    public BlackHole(GameView.SIZE_TYPE size, Paint blackHolePaint) {
         Vector2D blackHolePos = new Vector2D(0,0);
         Vector2D blackHoleVel = new Vector2D( 0,0);
         Vector2D blackHoleAcc = new Vector2D(0,0);

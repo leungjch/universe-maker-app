@@ -25,11 +25,6 @@ public class Star extends CelestialBody {
     }
 
     public Star(GameView.SIZE_TYPE size, Paint starPaint) {
-
-//        Paint starPaint = new Paint();
-//        starPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
-
-//        Vector2D starPos = new Vector2D(500.00,100.00);
         Vector2D starVel = new Vector2D(0,0);
         Vector2D starAcc = new Vector2D(0,0);
         Vector2D starFnet = new Vector2D(0,0);
@@ -56,7 +51,6 @@ public class Star extends CelestialBody {
 
         }
 
-//        super.setPos(starPos);
         super.setVel(starVel);
         super.setAcc(starAcc);
         super.setFnet(starFnet);
