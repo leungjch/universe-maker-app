@@ -136,7 +136,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         boundaryPaint = new Paint();
         boundaryPaint.setStyle(Paint.Style.FILL);
         boundaryPaint.setColor(Color.argb(255, 20,20,20));
-
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -354,6 +353,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     public void toggleZoomMode() {
         isZoomMode = !isZoomMode;
+    }
+    public void setCurrentDeltaT(double newDt) {
+        universe.setCurrentDeltaT(newDt);
     }
     @Override
     public void draw(Canvas canvas) {

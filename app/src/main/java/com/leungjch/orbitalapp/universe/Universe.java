@@ -2,13 +2,11 @@ package com.leungjch.orbitalapp.universe;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.leungjch.orbitalapp.GameView;
 import com.leungjch.orbitalapp.helpers.Vector2D;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -39,15 +37,29 @@ public class Universe {
         public static final double EPSILON = 2;
 
 //      Time step for integration
-//      Smaller time step is more precise
-        public static final double STEPS = 30000;
-        public static final double dT = 1.0/STEPS;
+//      More steps = more precise
+        public static final double STEPS_0 = 0;
+        public static final double dT_0 = 0;
+
+
+        public static final double STEPS_1 = 50000;
+        public static final double dT_1 = 1.0/ STEPS_1;
+
+        public static final double STEPS_2 = 10000;
+        public static final double dT_2 = 1.0/ STEPS_2;
+
+        public static final double STEPS_3 = 5000;
+        public static final double dT_3 = 1.0/ STEPS_3;
+
     }
     private List<Star> stars;
     private List<Planet> planets;
     private List<CelestialBody> objects;
     private List<CelestialBody> objectsToAdd;
     private List<CelestialBody> objectsToRemove;
+
+    private double currentSteps;
+    private double currentDeltaT;
 
     Random rand = new Random();
 
@@ -128,12 +140,12 @@ public class Universe {
             Acc.setY(Fnet.getY()/object1.getMass());
 
             // Obtain velocity by integrating acceleration
-            Vel.setX(object1.getVel().getX() + (Acc.getX() * Universe.CONSTANTS.dT));
-            Vel.setY(object1.getVel().getY() + (Acc.getY() * Universe.CONSTANTS.dT));
+            Vel.setX(object1.getVel().getX() + (Acc.getX() * currentDeltaT));
+            Vel.setY(object1.getVel().getY() + (Acc.getY() * currentDeltaT));
 
             // Obtain position by integrating  velocity
-            Pos.setX(object1.getPos().getX() + (Vel.getX() * Universe.CONSTANTS.dT));
-            Pos.setY(object1.getPos().getY() + (Vel.getY() * Universe.CONSTANTS.dT));
+            Pos.setX(object1.getPos().getX() + (Vel.getX() * currentDeltaT));
+            Pos.setY(object1.getPos().getY() + (Vel.getY() * currentDeltaT));
 
             // Update object
             object1.setFnet(Fnet);
@@ -297,5 +309,10 @@ public class Universe {
     // Return screen height
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    // Set current delta time step
+    public void setCurrentDeltaT(double newDt) {
+        currentDeltaT = newDt;
     }
 }

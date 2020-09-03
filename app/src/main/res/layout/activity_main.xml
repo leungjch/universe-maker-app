@@ -68,4 +68,45 @@
         android:layout_alignParentTop="true"
         android:text="Zoom" />
 
+    <Button
+        android:id="@+id/speed3"
+        android:layout_width="47dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-2dp"
+        android:layout_marginEnd="150dp"
+        android:text="3" />
+
+    <Button
+        android:id="@+id/speed2"
+        android:layout_width="35dp"
+        android:layout_height="49dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="197dp"
+        android:text="2" />
+
+    <Button
+        android:id="@+id/speed1"
+        android:layout_width="44dp"
+        android:layout_height="49dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-1dp"
+        android:layout_marginEnd="232dp"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/pauseplay"
+        android:layout_width="47dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-2dp"
+        android:layout_marginEnd="276dp"
+        android:text="P" />
+
 </RelativeLayout>

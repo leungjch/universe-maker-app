@@ -15,6 +15,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.leungjch.orbitalapp.universe.Universe;
+
 import java.util.Random;
 
 import static com.leungjch.orbitalapp.GameView.ADD_TYPE;
@@ -102,8 +104,38 @@ public class MainActivity extends Activity {
 
                 }
                 gameView.toggleZoomMode();
-
-
+            }
+        });
+        // Speed button #0 (pause)
+        final Button pauseButton = (Button)findViewById(R.id.pauseplay);
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.setCurrentDeltaT(Universe.CONSTANTS.dT_0);
+            }
+        });
+        // Speed button #1 (slow)
+        final Button speedButton1 = (Button)findViewById(R.id.speed1);
+        speedButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.setCurrentDeltaT(Universe.CONSTANTS.dT_1);
+            }
+        });
+        // Speed button #2 (medium)
+        final Button speedButton2 = (Button)findViewById(R.id.speed2);
+        speedButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.setCurrentDeltaT(Universe.CONSTANTS.dT_2);
+            }
+        });
+        // Speed button #3 (fast)
+        final Button speedButton3 = (Button)findViewById(R.id.speed3);
+        speedButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gameView.setCurrentDeltaT(Universe.CONSTANTS.dT_3);
             }
         });
     }
