@@ -14,8 +14,7 @@ public class Planet extends CelestialBody {
         public static final MassRadiusTuple LARGE = new MassRadiusTuple(10,20);
     }
 
-    public Planet(GameView.SIZE_TYPE size) {
-        Paint planetPaint = new Paint();
+    public Planet(GameView.SIZE_TYPE size, Paint planetPaint) {
         planetPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
 
         Vector2D planetPos = new Vector2D(0,0);

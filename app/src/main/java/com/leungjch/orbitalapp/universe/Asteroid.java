@@ -15,9 +15,7 @@ public class Asteroid extends CelestialBody {
         public static final MassRadiusTuple LARGE = new MassRadiusTuple(0.00001,5);
     }
 
-    public Asteroid(GameView.SIZE_TYPE size) {
-        Paint asteroidPaint = ColorGenerator.generateColor(GameView.ADD_TYPE.ASTEROID, this);
-//        asteroidPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+    public Asteroid(GameView.SIZE_TYPE size, Paint asteroidPaint) {
 
         Vector2D asteroidPos = new Vector2D(0,0);
         Vector2D asteroidVel = new Vector2D( 0,0);

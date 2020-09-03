@@ -24,10 +24,10 @@ public class Star extends CelestialBody {
         public static final MassRadiusTuple LARGE = new MassRadiusTuple(1000,100);
     }
 
-    public Star(GameView.SIZE_TYPE size) {
+    public Star(GameView.SIZE_TYPE size, Paint starPaint) {
 
-        Paint starPaint = new Paint();
-        starPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+//        Paint starPaint = new Paint();
+//        starPaint.setColor(Color.argb(255, rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
 
 //        Vector2D starPos = new Vector2D(500.00,100.00);
         Vector2D starVel = new Vector2D(0,0);

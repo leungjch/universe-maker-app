@@ -16,7 +16,7 @@ public class BlackHole extends CelestialBody {
 
 
 
-    public BlackHole(GameView.SIZE_TYPE size) {
+    public BlackHole(GameView.SIZE_TYPE size, Paint blackholePaint) {
         Paint blackHolePaint = new Paint();
 
         // Fill black

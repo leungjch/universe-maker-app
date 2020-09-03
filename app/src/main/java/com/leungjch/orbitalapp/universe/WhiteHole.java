@@ -14,10 +14,10 @@ public class WhiteHole extends CelestialBody {
         public static final MassRadiusTuple LARGE = new MassRadiusTuple(-2000000,20);
     }
 
-    public WhiteHole(GameView.SIZE_TYPE size) {
-        Paint whiteHolePaint = new Paint();
-        whiteHolePaint.setStyle(Paint.Style.FILL);
-        whiteHolePaint.setColor(Color.argb(255, 255,255,255));
+    public WhiteHole(GameView.SIZE_TYPE size, Paint whiteHolePaint) {
+//        Paint whiteHolePaint = new Paint();
+//        whiteHolePaint.setStyle(Paint.Style.FILL);
+//        whiteHolePaint.setColor(Color.argb(255, 255,255,255));
 
 //         White Stroke
 //        whiteHolePaint.setStyle(Paint.Style.STROKE);

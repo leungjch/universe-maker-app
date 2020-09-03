@@ -2,6 +2,7 @@ package com.leungjch.orbitalapp.helpers;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.leungjch.orbitalapp.GameView;
 import com.leungjch.orbitalapp.universe.CelestialBody;
@@ -16,23 +17,34 @@ import java.util.Random;
 
 public class ColorGenerator {
 
-    StarColors starColors;
+    static StarColors starColors;
     public ColorGenerator () {
         starColors = new StarColors();
     }
 
     // Create a unique paint given a celestial body type
-    public static Paint generateColor(GameView.ADD_TYPE celestialBodyType, CelestialBody celestialBody) {
+    public static Paint generateColor(GameView.ADD_TYPE celestialBodyType, GameView.SIZE_TYPE sizeType) {
         Random rand = new Random();
 
         Paint paint = new Paint();
         switch (celestialBodyType) {
             case ASTEROID:
-                int gray = rand.nextInt(100)+100;
-                paint.setColor(Color.rgb(gray,gray,gray));
+                int grayA = rand.nextInt(100)+100;
+                paint.setColor(Color.rgb(grayA,grayA,grayA));
                 break;
             case PLANET:
-
+                paint.setColor(Color.rgb(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+                break;
+            case STAR:
+                StarColors.StarColorInfo starcol = starColors.bv2rgb(rand.nextDouble()*2.4f - 0.4f);
+                Log.d("COLS", Integer.toString(starcol.r));
+                paint.setColor(Color.rgb(starcol.r, starcol.g, starcol.b));
+                break;
+            case BLACK_HOLE:
+                paint.setColor(Color.rgb(0,0,0));
+                break;
+            case WHITE_HOLE:
+                paint.setColor(Color.rgb(255,255,255));
         }
 
 

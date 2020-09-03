@@ -89,7 +89,7 @@ public class Universe {
         //  Create planets
         int numPlanets = 10;
         for (int i = 0; i < numPlanets; i++) {
-            Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
+            Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM, colorGenerator.generateColor(GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.MEDIUM));
             tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));
             objects.add(tempPlanet);
         }
@@ -200,7 +200,7 @@ public class Universe {
 
     // Add planet on touch
     public void addPlanet(Vector2D pos, GameView.PLACEMENT_TYPE placementType) {
-        Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM);
+        Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM, colorGenerator.generateColor(GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.MEDIUM));
         tempPlanet.setPos(pos);
 
         if (objects.size() < 1000)
@@ -221,7 +221,7 @@ public class Universe {
     public void addStar(Vector2D pos) {
         if (objects.size() < 1000)
         {
-            Star tempStar = new Star(GameView.SIZE_TYPE.MEDIUM);
+            Star tempStar = new Star(GameView.SIZE_TYPE.MEDIUM, colorGenerator.generateColor(GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.MEDIUM));
             tempStar.setPos(pos);
 //            planets.add(tempPlanet);
             objectsToAdd.add(tempStar);
@@ -232,22 +232,22 @@ public class Universe {
     public void addCelestialBody(Vector2D pos, Vector2D vel, int action, GameView.ADD_TYPE addType, GameView.SIZE_TYPE sizeType, GameView.PLACEMENT_TYPE placementType)
     {
         CelestialBody tempObject = new CelestialBody();
-        Paint tempPaint = ColorGenerator(addType, sizeType);
+        Paint tempPaint = colorGenerator.generateColor(addType, sizeType);
         switch (addType) {
             case ASTEROID:
-                tempObject = new Asteroid(sizeType);
+                tempObject = new Asteroid(sizeType, tempPaint);
                 break;
             case PLANET:
-                tempObject = new Planet(sizeType);
+                tempObject = new Planet(sizeType, tempPaint);
                 break;
             case STAR:
-                tempObject = new Star(sizeType);
+                tempObject = new Star(sizeType, tempPaint);
                 break;
             case BLACK_HOLE:
-                tempObject = new BlackHole(sizeType);
+                tempObject = new BlackHole(sizeType, tempPaint);
                 break;
             case WHITE_HOLE:
-                tempObject = new WhiteHole(sizeType);
+                tempObject = new WhiteHole(sizeType, tempPaint);
                 break;
 
         }
