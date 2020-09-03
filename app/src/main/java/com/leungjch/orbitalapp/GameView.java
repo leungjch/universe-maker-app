@@ -248,6 +248,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                             new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
                             action, currentAddType, currentSizeType, currentPlacementType);
                 }
+                // If zoom mode, start panning
+                if (isZoomMode) {
+                    panStartX = dx + x;
+                    panStartY = dy + y;
+                    isPanning = true;
+
+                }
 
                     // Track original position
                     // Scale after
@@ -256,12 +263,19 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                Log.d("POS", Float.toString((x-dx)/scaleFactor)  +" " + Float.toString((y-dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
 
                 if (isPanning && isZoomMode)
                 {
                     dx = panStartX - x;
                     dy = panStartY - y;
+                    if (-(dx-universe.getScreenWidth())/scaleFactor > Universe.CONSTANTS.UNIVERSEWIDTH)
+                    {
+                        dx = -(Universe.CONSTANTS.UNIVERSEWIDTH-2*universe.getScreenWidth()/scaleFactor);
+                    }
+//                    Log.d("POS", Float.toString((x-dx)/scaleFactor)  +" " + Float.toString((y-dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
+//                    Log.d("POSDX", Float.toString(dx/scaleFactor)  +" " + Float.toString((dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
+                    Log.d("POSDXE", Float.toString(-(dx-universe.getScreenWidth())/scaleFactor)  +" " + Float.toString((dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
+
                 }
                 else
                 {
@@ -289,6 +303,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                             new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
                             action, currentAddType, currentSizeType, currentPlacementType);
                 }
+                // In zoom mode and stopped touching, stop panning
+                else {
+                    panEndX = x;
+                    panEndY = y;
+                    isPanning = false;
+
+                }
 
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
@@ -298,23 +319,11 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             case (MotionEvent.ACTION_OUTSIDE) :
                 return true;
             // Both fingers down
-            // Start pan
-            case (MotionEvent.ACTION_POINTER_DOWN):
-                if (isZoomMode) {
-                    panStartX = dx + x;
-                    panStartY = dy + y;
-                    isPanning = true;
-
-                }
-                return true;
-            case (MotionEvent.ACTION_POINTER_UP):
-                if (isZoomMode) {
-                    panEndX = x;
-                    panEndY = y;
-                    isPanning = false;
-
-                }
-                return true;
+//            case (MotionEvent.ACTION_POINTER_DOWN):
+//
+//                return true;
+//            case (MotionEvent.ACTION_POINTER_UP):
+//                return true;
 
 
             default :
@@ -329,7 +338,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             case R.id.resetButton:
                 Log.d("Hello", "Press");
                 break;
-
         }
     }
 
@@ -366,7 +374,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         canvas.translate(dx, dy);
         canvas.translate(Universe.CONSTANTS.UNIVERSEWIDTH/2, Universe.CONSTANTS.UNIVERSEHEIGHT/2);
-        dx = Math.min(Universe.CONSTANTS.UNIVERSEWIDTH/2, dx);
         canvas.scale(scaleFactor, scaleFactor);
         canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH/2/scaleFactor, -Universe.CONSTANTS.UNIVERSEHEIGHT/2/scaleFactor);
 

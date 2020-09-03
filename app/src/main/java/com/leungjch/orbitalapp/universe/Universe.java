@@ -64,6 +64,9 @@ public class Universe {
     Random rand = new Random();
 
     public Universe() {
+        // Set delta T
+        currentDeltaT = CONSTANTS.dT_1;
+
         //  Initialize everything
         stars = new ArrayList<Star>();
         planets = new ArrayList<Planet>();
