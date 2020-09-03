@@ -2,9 +2,11 @@ package com.leungjch.orbitalapp.universe;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.leungjch.orbitalapp.GameView;
+import com.leungjch.orbitalapp.helpers.ColorGenerator;
 import com.leungjch.orbitalapp.helpers.Vector2D;
 
 import java.util.ArrayList;
@@ -58,6 +60,9 @@ public class Universe {
     private List<CelestialBody> objectsToAdd;
     private List<CelestialBody> objectsToRemove;
 
+    // Create one color generator to use for all objects
+    private ColorGenerator colorGenerator;
+
     private double currentSteps;
     private double currentDeltaT;
 
@@ -73,6 +78,9 @@ public class Universe {
         objects = new ArrayList<CelestialBody>();
         objectsToAdd = new ArrayList<CelestialBody>();
         objectsToRemove = new ArrayList<CelestialBody>();
+
+        // Create color generator
+        colorGenerator = new ColorGenerator();
 //      Create stars
 //        Star star = new Star(GameView.SIZE_TYPE.MEDIUM);
 //        star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
@@ -224,6 +232,7 @@ public class Universe {
     public void addCelestialBody(Vector2D pos, Vector2D vel, int action, GameView.ADD_TYPE addType, GameView.SIZE_TYPE sizeType, GameView.PLACEMENT_TYPE placementType)
     {
         CelestialBody tempObject = new CelestialBody();
+        Paint tempPaint = ColorGenerator(addType, sizeType);
         switch (addType) {
             case ASTEROID:
                 tempObject = new Asteroid(sizeType);

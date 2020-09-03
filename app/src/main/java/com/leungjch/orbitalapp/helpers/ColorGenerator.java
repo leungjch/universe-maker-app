@@ -16,7 +16,9 @@ import java.util.Random;
 
 public class ColorGenerator {
 
+    StarColors starColors;
     public ColorGenerator () {
+        starColors = new StarColors();
     }
 
     // Create a unique paint given a celestial body type
