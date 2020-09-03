@@ -59,6 +59,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Trace paths
     public boolean isTraceMode = false;
 
+    // Player control mode
+    public boolean isPlayerShipMode = false;
+
     // Paint for bondary
     public Paint boundaryPaint = new Paint();
     public Rect boundaryRect = new Rect(0,0, Universe.CONSTANTS.UNIVERSEWIDTH, Universe.CONSTANTS.UNIVERSEHEIGHT);
@@ -69,7 +72,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // Control which type of celestial body to add
     public static enum ADD_TYPE{
 
-        ASTEROID, PLANET, STAR, BLACK_HOLE, WHITE_HOLE, SATELLITE;
+        ASTEROID, PLANET, STAR, BLACK_HOLE, WHITE_HOLE, SATELLITE, PLAYER_SHIP;
 
         // Return string enum with only first letter capitalized
         public static String[] getString() {
@@ -236,7 +239,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     // Retrieve a new VelocityTracker object to watch the
                     // velocity of a motion.
                     mVelocityTracker = VelocityTracker.obtain();
-
+                    Log.d("Touched at", "dx = " + Double.toString(dx) + ", dy = " + Double.toString(dy));
                 }
                 else
                 {
@@ -289,9 +292,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 else
                 {
                     mVelocityTracker.addMovement(event);
-                    // When you want to determine the velocity, call
-                    // computeCurrentVelocity(). Then call getXVelocity()
-                    // and getYVelocity() to retrieve the velocity for each pointer ID.
                     mVelocityTracker.computeCurrentVelocity(1000);
                     if (!isZoomMode)
                     {
@@ -299,7 +299,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                                 new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
                                 action, currentAddType, currentSizeType, currentPlacementType);
                     }
-
 
                 }
 
@@ -436,6 +435,14 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             return true;
 
         }
+    }
+
+    public void resetView() {
+        scaleFactor = 0.7f;
+
+        dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
+        dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
+        universe = new Universe();
     }
 
 }

@@ -287,7 +287,10 @@ public class Universe {
             case SATELLITE:
                 tempObject = new DroneAI(sizeType, tempPaint);
                 break;
+            case PLAYER_SHIP:
+                tempObject = new PlayerShip(sizeType, tempPaint);
 
+                break;
         }
 
         if (objects.size() < 1000)

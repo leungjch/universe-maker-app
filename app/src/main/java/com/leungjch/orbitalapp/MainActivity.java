@@ -121,7 +121,6 @@ public class MainActivity extends Activity {
                 {
                     traceButton.setAlpha(1.0f);
                     Toast.makeText(MainActivity.this, "Trace paths OFF", Toast.LENGTH_LONG).show();
-
                 }
                 gameView.toggleTraceMode();
             }
@@ -198,6 +197,11 @@ public class MainActivity extends Activity {
                     case 5:
                         Toast.makeText(MainActivity.this, "Satellite", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.SATELLITE;
+                        break;
+                    case 6:
+                        Toast.makeText(MainActivity.this, "Player ship", Toast.LENGTH_LONG).show();
+                        addTypeState = ADD_TYPE.PLAYER_SHIP;
+                        gameView.isPlayerShipMode = true; // Enable player ship mode
                         break;
 
                 }
@@ -296,6 +300,10 @@ public class MainActivity extends Activity {
         AlertDialog alert = alertDialog.create();
         alert.setCanceledOnTouchOutside(true);
         alert.show();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 }
