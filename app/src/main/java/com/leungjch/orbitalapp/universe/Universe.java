@@ -16,13 +16,13 @@ import java.util.Random;
 // It also performs integration of forces here
 public class Universe {
 
-    public final class CONSTANTS {
+    public static final class CONSTANTS {
 
         // Boundaries of the universe
         // (-UNIVERSEWIDTH, UNIVERSEWIDTH) x (-UNIVERSEHEIGHT, UNIVERSEHEIGHT)
         // Any object past this boundary is deleted
-        public static final int UNIVERSEWIDTH = 5000;
-        public static final int UNIVERSEHEIGHT = 5000;
+        public static final int UNIVERSEWIDTH = getScreenWidth()*5;
+        public static final int UNIVERSEHEIGHT = getScreenHeight()*5;
 
 //      Actual gravitational constant is much smaller
         public static final double G = 1000000000;

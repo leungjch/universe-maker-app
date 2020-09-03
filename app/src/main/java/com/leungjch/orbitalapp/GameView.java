@@ -41,10 +41,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     private float focusY;
 
     // For pan control
-//    private float dx = -Universe.CONSTANTS.UNIVERSEWIDTH/2;
-//    private float dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/2;
-    private float dx = 0;
-    private float dy = 0;
+    private float dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
+    private float dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
+//    private float dx = 0;
+//    private float dy = 0;
 
     private boolean isPanning = false;
     private float panStartX = 0.f;
@@ -268,13 +268,24 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 {
                     dx = panStartX - x;
                     dy = panStartY - y;
-                    if (-(dx-universe.getScreenWidth())/scaleFactor > Universe.CONSTANTS.UNIVERSEWIDTH)
-                    {
-                        dx = -(Universe.CONSTANTS.UNIVERSEWIDTH-2*universe.getScreenWidth()/scaleFactor);
+                    if (-(dx-universe.getScreenWidth())/scaleFactor > (Universe.CONSTANTS.UNIVERSEWIDTH + Universe.CONSTANTS.UNIVERSEWIDTH*0.00f)) {
+                        dx = -(Universe.CONSTANTS.UNIVERSEWIDTH + Universe.CONSTANTS.UNIVERSEWIDTH*0.00f)*scaleFactor + universe.getScreenWidth();
                     }
+                    else if (-(dx+universe.getScreenWidth()*0) < 0) {
+                        dx = universe.getScreenWidth()*0.0f;
+                    }
+                    // Check top boundary
+                    if (-(dy-universe.getScreenHeight())/scaleFactor > (Universe.CONSTANTS.UNIVERSEHEIGHT + Universe.CONSTANTS.UNIVERSEHEIGHT*0.00f)) {
+                        dy = -(Universe.CONSTANTS.UNIVERSEHEIGHT + Universe.CONSTANTS.UNIVERSEHEIGHT*0.00f)*scaleFactor + universe.getScreenHeight();
+                    }
+                    else if (-(dy+universe.getScreenHeight()*0.0f) < 0) {
+                        dy = universe.getScreenHeight()*0.0f;
+                    }
+
+
 //                    Log.d("POS", Float.toString((x-dx)/scaleFactor)  +" " + Float.toString((y-dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
 //                    Log.d("POSDX", Float.toString(dx/scaleFactor)  +" " + Float.toString((dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
-                    Log.d("POSDXE", Float.toString(-(dx-universe.getScreenWidth())/scaleFactor)  +" " + Float.toString((dy)/scaleFactor) + " SCLF " + Float.toString(scaleFactor));
+                    Log.d("POSDXE", Float.toString(dx) +" " + Float.toString(-(Universe.CONSTANTS.UNIVERSEWIDTH + Universe.CONSTANTS.UNIVERSEWIDTH*0.1f)));
 
                 }
                 else
@@ -370,7 +381,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         canvas.save();
 
         super.draw(canvas);
-        canvas.drawColor(-1);
+        canvas.drawColor(1);
 
         canvas.translate(dx, dy);
         canvas.translate(Universe.CONSTANTS.UNIVERSEWIDTH/2, Universe.CONSTANTS.UNIVERSEHEIGHT/2);
