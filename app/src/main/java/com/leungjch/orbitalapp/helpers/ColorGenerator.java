@@ -17,8 +17,6 @@ import java.util.Random;
 public class ColorGenerator {
 
     public ColorGenerator () {
-        CSVReader reader = new CSVReader(new FileReader("/starcolors.csv"));
-        List myEntries = reader.readAll();
     }
 
     // Create a unique paint given a celestial body type
