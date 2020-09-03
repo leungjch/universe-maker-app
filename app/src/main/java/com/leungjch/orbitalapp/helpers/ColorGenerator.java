@@ -8,13 +8,17 @@ import com.leungjch.orbitalapp.universe.CelestialBody;
 import com.leungjch.orbitalapp.universe.Asteroid;
 import com.leungjch.orbitalapp.universe.Planet;
 import com.leungjch.orbitalapp.universe.Star;
+import com.opencsv.CSVReader;
 
+import java.io.FileReader;
+import java.util.List;
 import java.util.Random;
 
 public class ColorGenerator {
 
     public ColorGenerator () {
-
+        CSVReader reader = new CSVReader(new FileReader("/starcolors.csv"));
+        List myEntries = reader.readAll();
     }
 
     // Create a unique paint given a celestial body type
@@ -37,7 +41,8 @@ public class ColorGenerator {
     // "Pastel-izes" a colour by mixing more white into it
     // passes specifies how many times to mix white (default 1), higher passes = more white
     public static Paint generatePastel(Paint oldPaint, int passes) {
-
+        Paint pastel = new Paint();
+        return pastel;
     }
 
 }
