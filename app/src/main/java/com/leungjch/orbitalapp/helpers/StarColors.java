@@ -31,8 +31,6 @@ public class StarColors {
 
         return StarColorsList.get(index);
 
-
-
    }
 
     public StarColors() {
