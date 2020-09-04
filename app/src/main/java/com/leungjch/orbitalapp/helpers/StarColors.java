@@ -89,7 +89,6 @@ public class StarColors {
                 );
 
         StarColorListSize = StarColorsList.size();
-
     }
 
 

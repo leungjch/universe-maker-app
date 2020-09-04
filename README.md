@@ -28,3 +28,8 @@ A `CelestialBody` is a superclass of all celestial objects that can be created. 
 - `Satellite`: An artificial object that circles the celestial body that is currently exerting the most force applied to it. Try it out in a binary star system and watch how it moves!
 - `Player ship`: An object that can be controlled by the player. Touch and drag to apply thrust in the desired direction. Note that the ship can only be controlled when the `Player ship` option is selected.
 
+There are also some other helper classes that I made.
+- `Vector2D`: A utility class that implements 2D vectors and common operations on vectors, such as finding the magnitude of its x and y components, the angle between a vector and another vector, distance between two vectors, and dot product of two vectors.
+- `StarColors`: A class that maps the B-V color index of different star colour/temperatures to their RGB values. The B-V index can be a minimum of -0.4 (hottest / blue) and a maximum of 2.0 (coolest / red). A `StarColor` object is created upon initialization of a `ColorGenerator` object.
+- `ColorGenerator`: A class that controls the appropriate colours assigned to every type of celestial body. Only one `ColorGenerator` is created upon initialization of the simulation.
+
