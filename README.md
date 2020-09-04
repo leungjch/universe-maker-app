@@ -23,5 +23,8 @@ A `CelestialBody` is a superclass of all celestial objects that can be created. 
 - `Asteroid`: A small object with very low mass and radius. These objects move the fastest. During integration, we ignore the force exerted by these objects on other objects because it is negligible.
 - `Planet`: An medium-sized object with considerable mass and radius. Place these objects in Orbit mode near a Star to simulate a solar system. 
 - `Star`: A large-sized object with high mass and radius. You may find it useful to place these in the Fixed placement mode when playing around with planets and asteroids.
-- 
+- `Black hole`: A dense object with extremely high mass and low radius. These exert the highest gravitational force of all celestial bodies.
+- `White hole`: A hypothetical celestial body that yields negative mass and therefore repels any other objects with positive mass with its negative gravitational force.
+- `Satellite`: An artificial object that circles the celestial body that is currently exerting the most force applied to it. Try it out in a binary star system and watch how it moves!
+- `Player ship`: An object that can be controlled by the player. Touch and drag to apply thrust in the desired direction. Note that the ship can only be controlled when the `Player ship` option is selected.
 
