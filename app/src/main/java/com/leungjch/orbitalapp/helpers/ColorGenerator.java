@@ -51,10 +51,10 @@ public class ColorGenerator {
                 int grayD = rand.nextInt(100)+100;
                 paint.setColor(Color.rgb(grayD,grayD,grayD));
                 break;
-
+            case PLAYER_SHIP:
+                paint.setColor(Color.rgb(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+                break;
         }
-
-
         return paint;
     }
     // "Pastel-izes" a colour by mixing more white into it

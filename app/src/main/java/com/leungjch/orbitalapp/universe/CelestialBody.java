@@ -66,10 +66,9 @@ public class CelestialBody {
 
         canvas.drawCircle((int)pos.getX(), (int)pos.getY(), (int)radius, paint);
 
-        if (this instanceof DroneAI) {
+        if (this instanceof DroneAI || this instanceof PlayerShip) {
             canvas.drawRect(new Rect((int)pos.getX()-(int)getRadius(), (int)pos.getY()-(int)getRadius(), (int)pos.getX()+(int)getRadius(), (int)pos.getY()+(int)getRadius()), paint);
         }
-
     }
 
     //  Calculate gravitational force of attraction induced by another object

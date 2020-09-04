@@ -25,7 +25,6 @@ import androidx.annotation.Nullable;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.core.view.MotionEventCompat;
 
-
 import com.leungjch.orbitalapp.helpers.Vector2D;
 import com.leungjch.orbitalapp.universe.Universe;
 
@@ -43,8 +42,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     // For pan control
     private float dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
     private float dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
-//    private float dx = 0;
-//    private float dy = 0;
 
     private boolean isPanning = false;
     private float panStartX = 0.f;
@@ -64,6 +61,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     // Paint for bondary
     public Paint boundaryPaint = new Paint();
+    public Paint joystickPaint = new Paint();
     public Rect boundaryRect = new Rect(0,0, Universe.CONSTANTS.UNIVERSEWIDTH, Universe.CONSTANTS.UNIVERSEHEIGHT);
 
 
@@ -132,6 +130,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         boundaryPaint.setColor(Color.argb(255, 255,255,255));
         boundaryPaint.setStrokeWidth(20f);
 
+        joystickPaint = new Paint();
+        joystickPaint.setStyle(Paint.Style.FILL);
+        joystickPaint.setColor(Color.argb(255, 255,255,255));
+
     }
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -143,6 +145,11 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         boundaryPaint = new Paint();
         boundaryPaint.setStyle(Paint.Style.FILL);
         boundaryPaint.setColor(Color.argb(255, 20,20,20));
+
+        joystickPaint = new Paint();
+        joystickPaint.setStyle(Paint.Style.FILL);
+        joystickPaint.setColor(Color.argb(255, 255,255,255));
+
     }
 
     public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -155,6 +162,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         boundaryPaint = new Paint();
         boundaryPaint.setStyle(Paint.Style.FILL);
         boundaryPaint.setColor(Color.argb(255, 20,20,20));
+
+        joystickPaint = new Paint();
+        joystickPaint.setStyle(Paint.Style.FILL);
+        joystickPaint.setColor(Color.argb(255, 255,255,255));
 
     }
 
@@ -169,6 +180,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         boundaryPaint = new Paint();
         boundaryPaint.setStyle(Paint.Style.FILL);
         boundaryPaint.setColor(Color.argb(255, 20,20,20));
+
+        joystickPaint = new Paint();
+        joystickPaint.setStyle(Paint.Style.FILL);
+        joystickPaint.setColor(Color.argb(255, 255,255,255));
 
     }
 
@@ -270,6 +285,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
                 return true;
             case (MotionEvent.ACTION_MOVE) :
+                mVelocityTracker.addMovement(event);
+                mVelocityTracker.computeCurrentVelocity(1000);
 
                 if (isPanning && isZoomMode)
                 {
@@ -289,10 +306,12 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                         dy = universe.getScreenHeight()*0.0f;
                     }
                 }
+                else if (universe.isPlayerMode) {
+                    universe.setPlayerControls(new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor*0.2,mVelocityTracker.getYVelocity(pointerId)/scaleFactor*0.2));
+                    Log.d("PLAYERCONTROLS", Double.toString(mVelocityTracker.getXVelocity(pointerId)/scaleFactor));
+                }
                 else
                 {
-                    mVelocityTracker.addMovement(event);
-                    mVelocityTracker.computeCurrentVelocity(1000);
                     if (!isZoomMode)
                     {
                         universe.addCelestialBody(new Vector2D(Math.round(((x-dx)/scaleFactor)), Math.round((y-dy)/scaleFactor)),
@@ -312,13 +331,16 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                             action, currentAddType, currentSizeType, currentPlacementType);
                 }
                 // In zoom mode and stopped touching, stop panning
-                    if (isPanning)
-                    {
-                        panEndX = x;
-                        panEndY = y;
-                        isPanning = false;
+                if (isPanning)
+                {
+                    panEndX = x;
+                    panEndY = y;
+                    isPanning = false;
 
-                    }
+                }
+                if (universe.isPlayerMode) {
+                    universe.setPlayerControls(new Vector2D(0,0));
+                }
 
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
@@ -368,14 +390,12 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     }
     public void setCurrentPlacementType(PLACEMENT_TYPE newPlacementType) {
         currentPlacementType = newPlacementType;
-
     }
 
 
     public void setCurrentSizeType(SIZE_TYPE newSizeType) {
         currentSizeType = newSizeType;
     }
-
     public void toggleZoomMode() {
         isZoomMode = !isZoomMode;
     }
@@ -407,9 +427,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         canvas.restore();
 
     }
-
-
-
 
 
     private class ScaleListener

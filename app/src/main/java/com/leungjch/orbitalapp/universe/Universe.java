@@ -67,6 +67,9 @@ public class Universe {
     private double currentSteps;
     private double currentDeltaT;
 
+    public Boolean isPlayerMode = false;
+    private Vector2D currentPlayerForce = new Vector2D(0,0);
+
     Random rand = new Random();
 
     public Universe() {
@@ -79,6 +82,7 @@ public class Universe {
         objects = new ArrayList<CelestialBody>();
         objectsToAdd = new ArrayList<CelestialBody>();
         objectsToRemove = new ArrayList<CelestialBody>();
+
 
         // Create color generator
         colorGenerator = new ColorGenerator();
@@ -153,6 +157,13 @@ public class Universe {
                 Fnet.setY(Fnet.getY() + grav.getY());
 //                Log.d("TestGrav", Double.toString(Fnet.getX()));
 
+            }
+
+            // If in player mode, add player force
+            if (object1 instanceof PlayerShip) {
+                Fnet.setX(Fnet.getX() + currentPlayerForce.getX());
+                Fnet.setY(Fnet.getY() + currentPlayerForce.getY());
+                Log.d("PLAYERFORCE", Double.toString(currentPlayerForce.getX()));
             }
 
             // Integrate by time step
@@ -288,8 +299,15 @@ public class Universe {
                 tempObject = new DroneAI(sizeType, tempPaint);
                 break;
             case PLAYER_SHIP:
-                tempObject = new PlayerShip(sizeType, tempPaint);
-
+                if (!isPlayerMode)
+                {
+                    tempObject = new PlayerShip(sizeType, tempPaint);
+                    setPlayerMode(true);
+                }
+                // Don't create more than one ship if already in player mode
+                else {
+                    return;
+                }
                 break;
         }
 
@@ -386,4 +404,13 @@ public class Universe {
     public void setCurrentDeltaT(double newDt) {
         currentDeltaT = newDt;
     }
+
+    // Set play mode
+    public void setPlayerMode(Boolean mode) {
+        isPlayerMode = mode;
+    }
+    // Set player force
+    public void setPlayerControls(Vector2D newForce){ currentPlayerForce = newForce;}
+
+
 }

@@ -199,7 +199,7 @@ public class MainActivity extends Activity {
                         addTypeState = ADD_TYPE.SATELLITE;
                         break;
                     case 6:
-                        Toast.makeText(MainActivity.this, "Player ship", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Player ship: Drag to control", Toast.LENGTH_LONG).show();
                         addTypeState = ADD_TYPE.PLAYER_SHIP;
                         gameView.isPlayerShipMode = true; // Enable player ship mode
                         break;
