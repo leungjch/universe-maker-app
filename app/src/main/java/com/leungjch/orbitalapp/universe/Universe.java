@@ -191,7 +191,6 @@ public class Universe {
             if (object1.isOrbit) {
                 double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
 
-
                 double vAbs = Math.sqrt((CONSTANTS.G*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));
                 Log.d("DIST", Double.toString((object1.getPos().distance(maxForceObject.getPos()))));
                 object1.setFnet(new Vector2D(0, 0));
@@ -223,6 +222,9 @@ public class Universe {
 
         // Remove planets queued for removal
         for (CelestialBody object : objectsToRemove) {
+            if (isPlayerMode && object instanceof PlayerShip) {
+                setPlayerMode(false);
+            }
             objects.remove(object);
         }
         objectsToRemove.clear();
@@ -377,17 +379,42 @@ public class Universe {
 
         if (object2.getMass() >= object1.getMass())
         {
-            object2.setMass(object1.getMass()+object2.getMass());
-            object2.setRadius(object2.getRadius()+object1.getRadius()/object2.getRadius());
-            object2.setVel(new Vector2D(vx, vy));
-            objectsToRemove.add(object1);
+
+            // If the object is a player ship and the ship landed slowly, keep it
+//            if (object1 instanceof PlayerShip) {
+//                object1.setPos(object1.getPos());
+//                object1.setVel(object1.getVel());
+//                object1.setAcc(new Vector2D(0,0));
+//                object1.setFnet(new Vector2D(0,0));
+//                object1.setPos(object1.getPos());
+//
+//            }
+//            else {
+                object2.setMass(object1.getMass()+object2.getMass());
+                object2.setRadius(object2.getRadius()+object1.getRadius()/object2.getRadius());
+                object2.setVel(new Vector2D(vx, vy));
+
+                objectsToRemove.add(object1);
+//            }
         }
         else
         {
-            object1.setMass(object2.getMass()+object1.getMass());
-            object1.setRadius(object1.getRadius()+object2.getRadius()/object1.getRadius());
-            object1.setVel(new Vector2D(vx, vy));
-            objectsToRemove.add(object2);
+            // If the object is a player ship and the ship landed slowly, keep it
+//            if (object2 instanceof PlayerShip) {
+//                object2.setFnet(new Vector2D(0,0));
+//                object2.setPos(object2.getPos());
+//                object2.setVel(object2.getVel());
+//                object2.setAcc(new Vector2D(0,0));
+//                object2.setPos(object1.getPos());
+//
+//            }
+//            else {
+                object1.setMass(object2.getMass()+object1.getMass());
+                object1.setRadius(object1.getRadius()+object2.getRadius()/object1.getRadius());
+                object1.setVel(new Vector2D(vx, vy));
+
+                objectsToRemove.add(object2);
+//            }
         }
     }
 

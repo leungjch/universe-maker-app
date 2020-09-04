@@ -26,6 +26,7 @@ import androidx.core.view.GestureDetectorCompat;
 import androidx.core.view.MotionEventCompat;
 
 import com.leungjch.orbitalapp.helpers.Vector2D;
+import com.leungjch.orbitalapp.universe.PlayerShip;
 import com.leungjch.orbitalapp.universe.Universe;
 
 public class GameView extends SurfaceView implements View.OnClickListener, SurfaceHolder.Callback{
@@ -219,11 +220,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     public void update() {
         universe.update();
-
     }
-
-
-
 
     private VelocityTracker mVelocityTracker = null;
 
@@ -236,7 +233,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
         int x = (int)event.getX();
         int y = (int)event.getY();
-
 
         int index = event.getActionIndex();
         int action = event.getActionMasked();
@@ -306,8 +302,10 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                         dy = universe.getScreenHeight()*0.0f;
                     }
                 }
-                else if (universe.isPlayerMode) {
-                    universe.setPlayerControls(new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor*0.2,mVelocityTracker.getYVelocity(pointerId)/scaleFactor*0.2));
+                else if (universe.isPlayerMode && currentAddType == ADD_TYPE.PLAYER_SHIP) {
+//                    universe.setPlayerControls(new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor*0.2,mVelocityTracker.getYVelocity(pointerId)/scaleFactor*0.2));
+                    universe.setPlayerControls(new Vector2D((x-xOriginal)*3, (y-yOriginal)*3));
+
                     Log.d("PLAYERCONTROLS", Double.toString(mVelocityTracker.getXVelocity(pointerId)/scaleFactor));
                 }
                 else
