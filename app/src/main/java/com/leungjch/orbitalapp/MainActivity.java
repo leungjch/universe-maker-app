@@ -20,6 +20,7 @@ import com.leungjch.orbitalapp.universe.Universe;
 
 import java.util.Random;
 
+import static com.leungjch.orbitalapp.GameView.RESET_TYPE;
 import static com.leungjch.orbitalapp.GameView.ADD_TYPE;
 import static com.leungjch.orbitalapp.GameView.PLACEMENT_TYPE;
 import static com.leungjch.orbitalapp.GameView.SIZE_TYPE;
@@ -28,6 +29,7 @@ import static java.sql.DriverManager.println;
 
 public class MainActivity extends Activity {
 
+    public RESET_TYPE loadTypeState;
     public ADD_TYPE addTypeState;
     public PLACEMENT_TYPE placementState;
     public SIZE_TYPE sizeState;
@@ -51,9 +53,12 @@ public class MainActivity extends Activity {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameView.reset();
+                gameView.reset(gameView.currentLoadType);
             }
         });
+
+        // Set default preset type
+        loadTypeState = RESET_TYPE.BLANK;
 
         // Set default selected addType
         addTypeState = ADD_TYPE.PLANET;
@@ -61,8 +66,19 @@ public class MainActivity extends Activity {
         // Set default selected placementType
         placementState = PLACEMENT_TYPE.SCATTER;
 
-        // Set default selectted size
+        // Set default selected size
         sizeState = SIZE_TYPE.MEDIUM;
+
+        // Load buttons
+        // Set load preset button
+        Button loadTypeButton = (Button)findViewById(R.id.loadButton);
+        loadTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialogLoadType();
+            }
+        });
+
         // Add type button
         Button addTypeButton = (Button)findViewById(R.id.addType);
         addTypeButton.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +111,8 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if (!gameView.isZoomMode)
                 {
-                    zoomButton.setAlpha(0.2f);
-                    Toast.makeText(MainActivity.this, "Use two fingers to move, pinch to zoom", Toast.LENGTH_LONG).show();
+                    zoomButton.setAlpha(0.45f);
+                    Toast.makeText(MainActivity.this, "Use drag move, pinch to zoom", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -114,7 +130,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if (!gameView.isTraceMode)
                 {
-                    traceButton.setAlpha(0.2f);
+                    traceButton.setAlpha(0.45f);
                     Toast.makeText(MainActivity.this, "Trace paths ON", Toast.LENGTH_LONG).show();
                 }
                 else
@@ -159,6 +175,53 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+
+    // Choose load preset type
+    private void showAlertDialogLoadType() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        alertDialog.setTitle("Load preset");
+        String[] list = RESET_TYPE.getString();
+        final Button loadTypeButton = (Button)findViewById(R.id.loadButton);
+
+        alertDialog.setSingleChoiceItems(list, loadTypeState.ordinal(), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (which) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, "Clear all", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        loadTypeState = RESET_TYPE.BLANK;
+                        break;
+                    case 1:
+                        Toast.makeText(MainActivity.this, "Single star system", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                        loadTypeState = RESET_TYPE.SINGLE_STAR_SYSTEM;
+                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this, "Binary star system", Toast.LENGTH_LONG).show();
+                        loadTypeState = RESET_TYPE.BINARY_STAR_SYSTEM;
+                        break;
+                    case 3:
+                        Toast.makeText(MainActivity.this, "Random Planets", Toast.LENGTH_LONG).show();
+                        loadTypeState = RESET_TYPE.RANDOM_PLANETS;
+                        break;
+                    case 4:
+                        Toast.makeText(MainActivity.this, "Random satellites", Toast.LENGTH_LONG).show();
+                        loadTypeState = RESET_TYPE.RANDOM_SATELLITES;
+                        break;
+               }
+                dialog.dismiss();
+                gameView.setCurrentResetType(loadTypeState);
+                gameView.reset(loadTypeState);
+            }
+        });
+        AlertDialog alert = alertDialog.create();
+        alert.setCanceledOnTouchOutside(true);
+        alert.show();
+    }
+
 
     // Choose type
     private void showAlertDialogAddType() {

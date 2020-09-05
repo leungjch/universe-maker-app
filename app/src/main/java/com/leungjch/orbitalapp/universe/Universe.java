@@ -72,7 +72,7 @@ public class Universe {
 
     Random rand = new Random();
 
-    public Universe() {
+    public Universe(GameView.RESET_TYPE resetType) {
         // Set delta T
         currentDeltaT = CONSTANTS.dT_1;
 
@@ -90,14 +90,30 @@ public class Universe {
 //        Star star = new Star(GameView.SIZE_TYPE.MEDIUM);
 //        star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
 //        objects.add(star);
+        int numPlanets = 50;
 
-        //  Create planets
-        int numPlanets = 10;
-        for (int i = 0; i < numPlanets; i++) {
-            Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM, colorGenerator.generateColor(GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.MEDIUM));
-            tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));
-            objects.add(tempPlanet);
+        switch (resetType) {
+
+            case BLANK:
+                break;
+            case SINGLE_STAR_SYSTEM:
+                // Create fixed star at center of universe
+                addCelestialBody(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2), new Vector2D(0,0),
+                                 0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.MEDIUM, GameView.PLACEMENT_TYPE.FIXED);
+                for (int i = 0; i < numPlanets; i++) {
+                    addCelestialBody(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                }
+                break;
+            case RANDOM_PLANETS:
+                //  Create planets
+                for (int j = 0; j < numPlanets; j++) {
+                    Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM, colorGenerator.generateColor(GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.MEDIUM));
+                    tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));
+                    objects.add(tempPlanet);
+                }
         }
+
     }
 
     //  Perform Euler integration

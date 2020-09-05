@@ -46,7 +46,7 @@
             android:background="#90909090"/>
 
         <Button
-            android:id="@+id/resetButton2"
+            android:id="@+id/loadButton"
             android:layout_width="36dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -98,6 +98,8 @@
             android:textColor="#ffffff"
 
             android:text="Size" />
+
+
         <View android:layout_height="fill_parent"
             android:layout_width="2px"
             android:background="#90909090"/>
@@ -112,7 +114,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Zoom" />
+        android:background="#aa647b"
+        android:textColor="#ffffff"
+
+
+        android:text="Move" />
 
     <Button
         android:id="@+id/traceMode"
@@ -122,6 +128,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="89dp"
         android:layout_marginTop="0dp"
+        android:background="#aa647b"
+        android:textColor="#ffffff"
+
+
         android:text="Trace" />
 
     <ImageButton

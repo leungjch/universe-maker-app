@@ -65,8 +65,27 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public Paint joystickPaint = new Paint();
     public Rect boundaryRect = new Rect(0,0, Universe.CONSTANTS.UNIVERSEWIDTH, Universe.CONSTANTS.UNIVERSEHEIGHT);
 
+    // State enums
+    public RESET_TYPE currentLoadType = RESET_TYPE.BLANK;
+    public ADD_TYPE currentAddType = ADD_TYPE.PLANET;
+    public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
+    public SIZE_TYPE currentSizeType = SIZE_TYPE.MEDIUM;
 
+    // Control which default preset to load when clear
+    public static enum RESET_TYPE{
 
+        BLANK, SINGLE_STAR_SYSTEM, BINARY_STAR_SYSTEM , RANDOM_PLANETS, RANDOM_SATELLITES;
+
+        // Return string enum with only first letter capitalized
+        public static String[] getString() {
+            String[] strs = new String[RESET_TYPE.values().length];
+            int i = 0;
+            for (RESET_TYPE p: RESET_TYPE.values()) {
+                strs[i++] = p.toString().substring(0,1).toUpperCase() + p.toString().substring(1).toLowerCase().replace("_", " ");
+            }
+            return strs;
+        }
+    }
 
     // Control which type of celestial body to add
     public static enum ADD_TYPE{
@@ -83,7 +102,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         return strs;
         }
     }
-    public ADD_TYPE currentAddType = ADD_TYPE.PLANET;
+
     // Control current placement mode
     public static enum PLACEMENT_TYPE{
 
@@ -98,7 +117,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             return strs;
         }
     }
-    public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
 
     // Control current size mode
     public static enum SIZE_TYPE{
@@ -129,7 +147,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             return strs;
         }
     }
-    public SIZE_TYPE currentSizeType = SIZE_TYPE.MEDIUM;
 
     public GameView(Context context){
         super(context);
@@ -210,7 +227,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        universe = new Universe();
+        universe = new Universe(currentLoadType);
 
         Log.d("Star","Star created");
 
@@ -385,8 +402,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
-    public void reset() {
-        universe = new Universe();
+    public void reset(GameView.RESET_TYPE requestedPreset) {
+        universe = new Universe(requestedPreset);
         dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
         dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
         xOriginal = 0;
@@ -398,6 +415,11 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     }
 
     // Called by MainActivity after selecting radio button
+
+    public void setCurrentResetType(RESET_TYPE newLoadType){
+        currentLoadType = newLoadType;
+    }
+
     public void setCurrentAddType(ADD_TYPE newAddType) {
         currentAddType = newAddType;
     }
@@ -416,6 +438,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void setCurrentDeltaT(double newDt) {
         universe.setCurrentDeltaT(newDt);
     }
+
     @Override
     public void draw(Canvas canvas) {
         canvas.save();
@@ -467,12 +490,5 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
-    public void resetView() {
-        scaleFactor = 0.7f;
-
-        dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
-        dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
-        universe = new Universe();
-    }
 
 }
