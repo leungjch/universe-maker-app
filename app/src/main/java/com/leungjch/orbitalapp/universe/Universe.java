@@ -118,23 +118,23 @@ public class Universe {
                             0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE, GameView.PLACEMENT_TYPE.FIXED);
                 addCelestialBody(starPos2, new Vector2D(0,0),
                         0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE, GameView.PLACEMENT_TYPE.FIXED);
-//                for (int i = 0; i < numBinaryPlanets; i++) {
-//
-//                    Vector2D pos;
-//
-//                    // Randomly select which positions to place the planets (relative to star 1 or 2)
-//                    if (rand.nextInt(2) == 1)
-//                    {
-//                        pos = randomDistanceFromStar(starPos1, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
-//                    }
-//                    else
-//                    {
-//                        pos = randomDistanceFromStar(starPos2, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
-//
-//                    }
-//                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
-//                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
-//                }
+                for (int i = 0; i < numBinaryPlanets; i++) {
+
+                    Vector2D pos;
+
+                    // Randomly select which positions to place the planets (relative to star 1 or 2)
+                    if (rand.nextInt(2) == 1)
+                    {
+                        pos = randomDistanceFromStar(starPos1, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
+                    }
+                    else
+                    {
+                        pos = randomDistanceFromStar(starPos2, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
+
+                    }
+                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                }
                 break;
             case RANDOM_PLANETS:
                 //  Create planets
