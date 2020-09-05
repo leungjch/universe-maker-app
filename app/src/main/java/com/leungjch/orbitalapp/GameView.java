@@ -408,13 +408,29 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     public void reset(GameView.RESET_TYPE requestedPreset, float scale) {
         universe = new Universe(requestedPreset);
-        dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
-        dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
+
+        switch (requestedPreset) {
+            case RANDOM_PLANETS:
+                dx = 0;
+                dy = 0;
+                scaleFactor = SCALECONSTANTS.MINSCALE;
+                break;
+            default:
+                dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
+                dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
+                scaleFactor = SCALECONSTANTS.DEFAULTSCALE;
+                break;
+        }
+
+//        dx = 0;
+//        dy = 0;
         xOriginal = 0;
         yOriginal = 0;
         panStartY = 0;
         panStartX = 0;
-        scaleFactor = scale;
+        panEndY = 0;
+        panEndX = 0;
+
 
     }
 

@@ -117,6 +117,7 @@ public class Universe {
                             0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
 
                 }
+            case RANDOM_SATELLITES:
         }
 
     }
