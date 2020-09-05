@@ -319,7 +319,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 }
                 else if (universe.isPlayerMode && currentAddType == ADD_TYPE.PLAYER_SHIP) {
 //                    universe.setPlayerControls(new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor*0.2,mVelocityTracker.getYVelocity(pointerId)/scaleFactor*0.2));
-                    universe.setPlayerControls(new Vector2D((x-xOriginal)*3, (y-yOriginal)*3));
+                    universe.setPlayerControls(new Vector2D((x-xOriginal), (y-yOriginal)));
 
                     Log.d("PLAYERCONTROLS", Double.toString(mVelocityTracker.getXVelocity(pointerId)/scaleFactor));
                 }
