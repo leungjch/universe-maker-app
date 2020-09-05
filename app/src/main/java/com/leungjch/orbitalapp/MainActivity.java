@@ -217,6 +217,10 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "Random satellites", Toast.LENGTH_LONG).show();
                         loadTypeState = RESET_TYPE.RANDOM_SATELLITES;
                         break;
+                    case 5:
+                        Toast.makeText(MainActivity.this, "Black hole accretion disk", Toast.LENGTH_LONG).show();
+                        loadTypeState = RESET_TYPE.BLACK_HOLE_ACCCRETION_DISK;
+                        break;
                }
                 dialog.dismiss();
                 gameView.setCurrentResetType(loadTypeState);

@@ -82,7 +82,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         // Control which default preset to load when clear
     public static enum RESET_TYPE{
 
-        BLANK, SINGLE_STAR_SYSTEM, BINARY_STAR_SYSTEM , RANDOM_PLANETS, RANDOM_SATELLITES;
+        BLANK, SINGLE_STAR_SYSTEM, BINARY_STAR_SYSTEM , RANDOM_PLANETS, RANDOM_SATELLITES, BLACK_HOLE_ACCCRETION_DISK;
 
         // Return string enum with only first letter capitalized
         public static String[] getString() {

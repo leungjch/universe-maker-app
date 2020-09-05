@@ -28,7 +28,7 @@ public class Universe {
         public static final int UNIVERSEHEIGHT = getScreenHeight()*5;
 
 //      Actual gravitational constant is much smaller
-        public static final double G = 1000000000;
+        public static final double G = 2000000000;
 
         // Maximum force allowed to be exerted
         // This solves problem of extreme acceleration when two objects are near each other
@@ -110,6 +110,32 @@ public class Universe {
                             0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
                 }
                 break;
+            case BINARY_STAR_SYSTEM:
+                int numBinaryPlanets = 20;
+                Vector2D starPos1 = new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2 - Universe.CONSTANTS.UNIVERSEWIDTH/32, Universe.CONSTANTS.UNIVERSEHEIGHT/2 - Universe.CONSTANTS.UNIVERSEHEIGHT/32);
+                Vector2D starPos2 = new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2 + Universe.CONSTANTS.UNIVERSEWIDTH/32, Universe.CONSTANTS.UNIVERSEHEIGHT/2 + Universe.CONSTANTS.UNIVERSEHEIGHT/32);
+                addCelestialBody(starPos1, new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE, GameView.PLACEMENT_TYPE.FIXED);
+                addCelestialBody(starPos2, new Vector2D(0,0),
+                        0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE, GameView.PLACEMENT_TYPE.FIXED);
+//                for (int i = 0; i < numBinaryPlanets; i++) {
+//
+//                    Vector2D pos;
+//
+//                    // Randomly select which positions to place the planets (relative to star 1 or 2)
+//                    if (rand.nextInt(2) == 1)
+//                    {
+//                        pos = randomDistanceFromStar(starPos1, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
+//                    }
+//                    else
+//                    {
+//                        pos = randomDistanceFromStar(starPos2, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
+//
+//                    }
+//                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
+//                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+//                }
+                break;
             case RANDOM_PLANETS:
                 //  Create planets
                 for (int j = 0; j < numPlanets; j++) {
@@ -118,6 +144,22 @@ public class Universe {
 
                 }
             case RANDOM_SATELLITES:
+
+            case BLACK_HOLE_ACCCRETION_DISK:
+                int numAsteroids = 300;
+
+                // Create fixed star at center of universe
+                BlackHole bhole = new BlackHole(GameView.SIZE_TYPE.LARGE, ColorGenerator.generateColor(GameView.ADD_TYPE.BLACK_HOLE, GameView.SIZE_TYPE.LARGE));
+                bhole.isFixed = true;
+                bhole.setPos(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2));
+                objects.add(bhole);
+
+                for (int i = 0; i < numAsteroids; i++) {
+                    Vector2D pos = randomDistanceFromStar(bhole.getPos(), bhole.getRadius(), Math.random()*bhole.getRadius()*25);
+                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.ASTEROID, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                }
+                break;
         }
 
     }
@@ -205,6 +247,7 @@ public class Universe {
             object1.setVel(Vel);
 
             // If object set to orbit
+            // Orbital velocity
             // Set the initial velocity at an angle perpendicular to the angle of the force vector
             if (object1.isOrbit) {
                 double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
