@@ -17,9 +17,11 @@
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="1dp"
         android:layout_marginTop="690dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginBottom="1dp"
+        android:backgroundTint="#e57373"
+        android:textColor="#ffffff"
         android:text="Reset" />
 
     <Button
@@ -30,7 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="690dp"
         android:layout_marginEnd="105dp"
-        android:layout_marginBottom="-3dp"
+        android:layout_marginBottom="1dp"
         android:text="Type" />
 
     <Button
@@ -41,7 +43,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="690dp"
         android:layout_marginEnd="206dp"
-        android:layout_marginBottom="-3dp"
+        android:layout_marginBottom="1dp"
         android:text="Size" />
 
     <Button
@@ -52,7 +54,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:layout_marginTop="690dp"
-        android:layout_marginBottom="-1dp"
+        android:layout_marginBottom="1dp"
         android:text="Placement" />
 
     <Button
