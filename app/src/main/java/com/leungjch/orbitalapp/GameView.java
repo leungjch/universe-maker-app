@@ -71,7 +71,15 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
     public SIZE_TYPE currentSizeType = SIZE_TYPE.MEDIUM;
 
-    // Control which default preset to load when clear
+    // Scale factor constants
+    public static class SCALECONSTANTS {
+        public static float MINSCALE = 0.2f;
+        public static float MAXSCALE = 5.0f;
+        public static float DEFAULTSCALE = 0.7f;
+
+    }
+
+        // Control which default preset to load when clear
     public static enum RESET_TYPE{
 
         BLANK, SINGLE_STAR_SYSTEM, BINARY_STAR_SYSTEM , RANDOM_PLANETS, RANDOM_SATELLITES;
@@ -229,8 +237,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         universe = new Universe(currentLoadType);
 
-        Log.d("Star","Star created");
-
         thread.setRunning(true);
         thread.start();
     }
@@ -290,8 +296,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 }
                 if (!isZoomMode && !isPanning)
                 {
-
-
                     mVelocityTracker.addMovement(event);
 
                     universe.addCelestialBody(new Vector2D(Math.round((x-dx)/scaleFactor), Math.round((y-dy)/scaleFactor)),
@@ -315,7 +319,8 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             case (MotionEvent.ACTION_MOVE) :
                 mVelocityTracker.addMovement(event);
                 mVelocityTracker.computeCurrentVelocity(1000);
-
+//              // Printing ccurrent position
+                Log.d("Positions: ", Double.toString(dx) + " " + Double.toString(dy));
                 if (isPanning && isZoomMode)
                 {
                     dx = panStartX - x;
@@ -335,10 +340,9 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     }
                 }
                 else if (universe.isPlayerMode && currentAddType == ADD_TYPE.PLAYER_SHIP) {
-//                    universe.setPlayerControls(new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor*0.2,mVelocityTracker.getYVelocity(pointerId)/scaleFactor*0.2));
                     universe.setPlayerControls(new Vector2D((x-xOriginal), (y-yOriginal)));
 
-                    Log.d("PLAYERCONTROLS", Double.toString(mVelocityTracker.getXVelocity(pointerId)/scaleFactor));
+//                    Log.d("PLAYERCONTROLS", Double.toString(mVelocityTracker.getXVelocity(pointerId)/scaleFactor));
                 }
                 else
                 {
@@ -402,7 +406,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
-    public void reset(GameView.RESET_TYPE requestedPreset) {
+    public void reset(GameView.RESET_TYPE requestedPreset, float scale) {
         universe = new Universe(requestedPreset);
         dx = -Universe.CONSTANTS.UNIVERSEWIDTH/4;
         dy = -Universe.CONSTANTS.UNIVERSEHEIGHT/4;
@@ -410,7 +414,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         yOriginal = 0;
         panStartY = 0;
         panStartX = 0;
-        scaleFactor = 0.7f;
+        scaleFactor = scale;
 
     }
 
@@ -480,7 +484,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 scaleFactor *= detector.getScaleFactor();
 
                 // Don't let the object get too small or too large.
-                scaleFactor = Math.max(0.2f, Math.min(scaleFactor, 5.0f));
+                scaleFactor = Math.max(SCALECONSTANTS.MINSCALE, Math.min(scaleFactor, SCALECONSTANTS.MAXSCALE));
 
                 invalidate();
 

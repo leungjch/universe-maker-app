@@ -70,7 +70,7 @@ public class Universe {
     public Boolean isPlayerMode = false;
     private Vector2D currentPlayerForce = new Vector2D(0,0);
 
-    Random rand = new Random();
+    public static Random rand = new Random();
 
     public Universe(GameView.RESET_TYPE resetType) {
         // Set delta T
@@ -83,34 +83,39 @@ public class Universe {
         objectsToAdd = new ArrayList<CelestialBody>();
         objectsToRemove = new ArrayList<CelestialBody>();
 
-
         // Create color generator
         colorGenerator = new ColorGenerator();
 //      Create stars
-//        Star star = new Star(GameView.SIZE_TYPE.MEDIUM);
-//        star.setPos(new Vector2D(getScreenWidth()/2,getScreenHeight()/2));
-//        objects.add(star);
-        int numPlanets = 50;
+        int numPlanets = 100;
 
         switch (resetType) {
 
             case BLANK:
                 break;
             case SINGLE_STAR_SYSTEM:
+
+                int numSinglePlanets = 5;
+
                 // Create fixed star at center of universe
-                addCelestialBody(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2), new Vector2D(0,0),
-                                 0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.MEDIUM, GameView.PLACEMENT_TYPE.FIXED);
-                for (int i = 0; i < numPlanets; i++) {
-                    addCelestialBody(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2), new Vector2D(0,0),
+                Star star = new Star(GameView.SIZE_TYPE.LARGE, ColorGenerator.generateColor(GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE));
+                Log.d("STARMASS", Double.toString(star.getMass()));
+                star.isFixed = true;
+                int radiusMultiplier = 10;
+                star.setPos(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2));
+                objects.add(star);
+
+                for (int i = 0; i < numSinglePlanets; i++) {
+                    Vector2D pos = randomDistanceFromStar(star.getPos(), star.getRadius(), Math.random()*star.getRadius()*10);
+                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
                             0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
                 }
                 break;
             case RANDOM_PLANETS:
                 //  Create planets
                 for (int j = 0; j < numPlanets; j++) {
-                    Planet tempPlanet = new Planet(GameView.SIZE_TYPE.MEDIUM, colorGenerator.generateColor(GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.MEDIUM));
-                    tempPlanet.setPos(new Vector2D(rand.nextInt(Universe.CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)));
-                    objects.add(tempPlanet);
+                    addCelestialBody(new Vector2D(rand.nextInt(CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
+
                 }
         }
 
@@ -119,20 +124,16 @@ public class Universe {
     //  Perform Euler integration
     //  Calculate Fnet for each object
     public void update() {
-        ListIterator<CelestialBody> iter1 = objects.listIterator();
-        while (iter1.hasNext()) {
-            CelestialBody object1 = iter1.next();
+        for (CelestialBody object1: objects) {
             Vector2D Fnet = new Vector2D(0,0);
             Vector2D Acc = new Vector2D(0,0);
             Vector2D Vel = new Vector2D(0,0);
             Vector2D Pos = new Vector2D(0,0);
 
-            ListIterator<CelestialBody> iter2 = objects.listIterator();
-            CelestialBody maxForceObject = iter2.next(); // for searching for object exerting most force on object1, only for orbit mode
+            CelestialBody maxForceObject = object1; // for searching for object exerting most force on object1, only for orbit mode
             double maxForce = 0;
 
-            while (iter2.hasNext()) {
-                CelestialBody object2 = iter2.next();
+            for (CelestialBody object2: objects) {
 
 //            for (CelestialBody object2 : objects) {
                 //  Skip if same object
@@ -148,7 +149,7 @@ public class Universe {
                     continue;
                 }
                 // Asteroids exert negligible force, ignore them
-                if (object2 instanceof Asteroid && object2 instanceof DroneAI)
+                if (object2 instanceof Asteroid || object2 instanceof DroneAI)
                 {
                     continue;
                 }
@@ -351,7 +352,6 @@ public class Universe {
                         tempObject.setVel(new Vector2D(vel.getX()*300, vel.getY()*300));
                         tempObject.setPos(pos);
                         objectsToAdd.add(tempObject);
-
                     }
                     break;
                 case IDLE:
@@ -455,5 +455,18 @@ public class Universe {
     // Set player force
     public void setPlayerControls(Vector2D newForce){ currentPlayerForce = newForce;}
 
+    public static int randRange(int min, int max) {
+
+        return rand.nextInt((max - min) + 1) + min;
+
+    }
+
+    public static Vector2D randomDistanceFromStar(Vector2D starPos, double starRadius, double dist) {
+
+        double randAngle = Math.random()*Math.PI*2;
+        Vector2D randPos = new Vector2D((int)(starPos.getX()+(starRadius*2+dist)*Math.cos(randAngle)),(int)(starPos.getY()+(starRadius*2+dist)*Math.sin(randAngle)));
+        return randPos;
+
+    }
 
 }

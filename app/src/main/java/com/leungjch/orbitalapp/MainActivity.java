@@ -24,6 +24,7 @@ import static com.leungjch.orbitalapp.GameView.RESET_TYPE;
 import static com.leungjch.orbitalapp.GameView.ADD_TYPE;
 import static com.leungjch.orbitalapp.GameView.PLACEMENT_TYPE;
 import static com.leungjch.orbitalapp.GameView.SIZE_TYPE;
+import static com.leungjch.orbitalapp.GameView.SCALECONSTANTS;
 
 import static java.sql.DriverManager.println;
 
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
     public ADD_TYPE addTypeState;
     public PLACEMENT_TYPE placementState;
     public SIZE_TYPE sizeState;
+    public float scaleState;
 
     GameView gameView;
     @Override
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gameView.reset(gameView.currentLoadType);
+                gameView.reset(gameView.currentLoadType, scaleState);
             }
         });
 
@@ -184,6 +186,9 @@ public class MainActivity extends Activity {
         String[] list = RESET_TYPE.getString();
         final Button loadTypeButton = (Button)findViewById(R.id.loadButton);
 
+        // scale factor after resetting for view
+        scaleState = GameView.SCALECONSTANTS.DEFAULTSCALE;
+
         alertDialog.setSingleChoiceItems(list, loadTypeState.ordinal(), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -206,6 +211,7 @@ public class MainActivity extends Activity {
                     case 3:
                         Toast.makeText(MainActivity.this, "Random Planets", Toast.LENGTH_LONG).show();
                         loadTypeState = RESET_TYPE.RANDOM_PLANETS;
+                        scaleState = GameView.SCALECONSTANTS.MINSCALE;
                         break;
                     case 4:
                         Toast.makeText(MainActivity.this, "Random satellites", Toast.LENGTH_LONG).show();
@@ -214,7 +220,7 @@ public class MainActivity extends Activity {
                }
                 dialog.dismiss();
                 gameView.setCurrentResetType(loadTypeState);
-                gameView.reset(loadTypeState);
+                gameView.reset(loadTypeState, scaleState);
             }
         });
         AlertDialog alert = alertDialog.create();

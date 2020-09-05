@@ -10,8 +10,8 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 public class Planet extends CelestialBody {
     public static final class SIZES {
         public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.1,5);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(100,10);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(1000,20);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(10,10);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(100,20);
     }
 
     public Planet(GameView.SIZE_TYPE size, Paint planetPaint) {
