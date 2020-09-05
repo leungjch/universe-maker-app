@@ -293,7 +293,7 @@ public class MainActivity extends Activity {
                         break;
                 }
                 dialog.dismiss();
-                sizeButton.setText(sizeState.name());
+                sizeButton.setText(SIZE_TYPE.getAbbreviation(sizeState));
                 gameView.setCurrentSizeType(sizeState);
             }
         });

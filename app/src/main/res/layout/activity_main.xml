@@ -21,43 +21,71 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="false"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
         android:weightSum="5">
 
         <Button
             android:id="@+id/resetButton"
-            android:layout_width="62dp"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#e57373"
+            android:background="#d32f2f"
+            android:backgroundTint="#d32f2f"
             android:text="Clear"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="2px"
+            android:background="#90909090"/>
 
         <Button
             android:id="@+id/resetButton2"
-            android:layout_width="54dp"
+            android:layout_width="36dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#e57373"
+            android:background="#f57c00"
             android:text="Load"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="2px"
+            android:background="#90909090"/>
 
         <Button
             android:id="@+id/addType"
-            android:layout_width="75dp"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#648dae"
+            android:textColor="#ffffff"
+
             android:text="Type" />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="2px"
+            android:background="#90909090"/>
 
         <Button
             android:id="@+id/objectSizeType"
-            android:layout_width="71dp"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#648dae"
+            android:textColor="#ffffff"
+
             android:text="Size" />
+
+        <View android:layout_height="fill_parent"
+            android:layout_width="2px"
+            android:background="#90909090"/>
 
         <Button
             android:id="@+id/placementType"
@@ -65,6 +93,9 @@
 
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="#648dae"
+            android:textColor="#ffffff"
+
             android:text="Put" />
 
     </LinearLayout>

@@ -104,6 +104,21 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public static enum SIZE_TYPE{
 
         SMALL, MEDIUM, LARGE, RANDOM;
+
+        public static String getAbbreviation(SIZE_TYPE type) {
+            switch (type) {
+                case SMALL:
+                    return "SM";
+                case MEDIUM:
+                    return "MD";
+                case LARGE:
+                    return "LG";
+                case RANDOM:
+                    return "RND";
+            }
+            return "";
+        }
+
         // Return string enum with only first letter capitalized
         public static String[] getString() {
             String[] strs = new String[SIZE_TYPE.values().length];
