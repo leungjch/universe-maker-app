@@ -94,7 +94,8 @@ public class Universe {
                 break;
             case SINGLE_STAR_SYSTEM:
 
-                int numSinglePlanets = 5;
+                int numSinglePlanets = rand.nextInt(20)+1;
+                int numSingleAsteroids =  rand.nextInt(100);
 
                 // Create fixed star at center of universe
                 Star star = new Star(GameView.SIZE_TYPE.LARGE, ColorGenerator.generateColor(GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE));
@@ -103,11 +104,26 @@ public class Universe {
                 int radiusMultiplier = 10;
                 star.setPos(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2));
                 objects.add(star);
+                Vector2D posSingleObjects;
 
+                for (int as = 0; as < numSingleAsteroids; as++) {
+                    posSingleObjects = randomDistanceFromStar(star.getPos(), star.getRadius(), Math.random()*star.getRadius()*10);
+                    addCelestialBody(new Vector2D(posSingleObjects.getX(), posSingleObjects.getY()), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.ASTEROID, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                }
                 for (int i = 0; i < numSinglePlanets; i++) {
-                    Vector2D pos = randomDistanceFromStar(star.getPos(), star.getRadius(), Math.random()*star.getRadius()*10);
-                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
-                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                    posSingleObjects = randomDistanceFromStar(star.getPos(), star.getRadius(), Math.random()*star.getRadius()*10);
+                    int randObject = rand.nextInt(2);
+                    if (randObject == 0)
+                    {
+                        addCelestialBody(new Vector2D(posSingleObjects.getX(), posSingleObjects.getY()), new Vector2D(0,0),
+                                0, GameView.ADD_TYPE.SATELLITE, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                    }
+                    else if (randObject == 1){
+                        addCelestialBody(new Vector2D(posSingleObjects.getX(), posSingleObjects.getY()), new Vector2D(0,0),
+                                0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                    }
+
                 }
                 break;
             case BINARY_STAR_SYSTEM:
@@ -118,9 +134,32 @@ public class Universe {
                             0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE, GameView.PLACEMENT_TYPE.FIXED);
                 addCelestialBody(starPos2, new Vector2D(0,0),
                         0, GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE, GameView.PLACEMENT_TYPE.FIXED);
+
+
+                Vector2D pos;
+                Vector2D posBinaryAsteroid;
+
+                int numBinaryAsteroids = 200;
+
+                for (int as = 0; as < numBinaryAsteroids; as++) {
+                    // Randomly select which positions to place the planets (relative to star 1 or 2)
+                    if (rand.nextInt(2) == 1)
+                    {
+                        posBinaryAsteroid = randomDistanceFromStar(starPos1, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
+                    }
+                    else
+                    {
+                        posBinaryAsteroid = randomDistanceFromStar(starPos2, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
+
+                    }
+
+                    addCelestialBody(new Vector2D(posBinaryAsteroid.getX(), posBinaryAsteroid.getY()), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.ASTEROID, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                }
+
+                // Add planets / satellites
                 for (int i = 0; i < numBinaryPlanets; i++) {
 
-                    Vector2D pos;
 
                     // Randomly select which positions to place the planets (relative to star 1 or 2)
                     if (rand.nextInt(2) == 1)
@@ -132,19 +171,42 @@ public class Universe {
                         pos = randomDistanceFromStar(starPos2, Star.SIZES.LARGE.radius, Math.random()*Star.SIZES.LARGE.radius*10);
 
                     }
-                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
-                            0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+                    if (rand.nextInt(2) == 1)
+                    {
+                        addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
+                                0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+
+                    }
+                    else {
+                        addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
+                                0, GameView.ADD_TYPE.SATELLITE, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
+
+                    }
                 }
                 break;
-            case RANDOM_PLANETS:
+            case PLANETS_COALESCING:
                 //  Create planets
                 for (int j = 0; j < numPlanets; j++) {
                     addCelestialBody(new Vector2D(rand.nextInt(CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)), new Vector2D(0,0),
                             0, GameView.ADD_TYPE.PLANET, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
 
                 }
-            case RANDOM_SATELLITES:
+                break;
+            case CIRCLING_SATELLITES:
+                //  Create satellites
+                int numSatellites = 100;
+                int numAsteroidsinSatellites = 20;
+                for (int sa = 0; sa < numSatellites; sa++) {
+                    addCelestialBody(new Vector2D(rand.nextInt(CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.SATELLITE, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
 
+                }
+                for (int sast = 0; sast < numAsteroidsinSatellites; sast++) {
+                    addCelestialBody(new Vector2D(rand.nextInt(CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)), new Vector2D(0,0),
+                            0, GameView.ADD_TYPE.ASTEROID, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
+
+                }
+                break;
             case BLACK_HOLE_ACCCRETION_DISK:
                 int numAsteroids = 300;
 
@@ -155,8 +217,8 @@ public class Universe {
                 objects.add(bhole);
 
                 for (int i = 0; i < numAsteroids; i++) {
-                    Vector2D pos = randomDistanceFromStar(bhole.getPos(), bhole.getRadius(), Math.random()*bhole.getRadius()*25);
-                    addCelestialBody(new Vector2D(pos.getX(), pos.getY()), new Vector2D(0,0),
+                    Vector2D posAsteroidsBhole = randomDistanceFromStar(bhole.getPos(), bhole.getRadius(), Math.random()*bhole.getRadius()*25);
+                    addCelestialBody(new Vector2D(posAsteroidsBhole.getX(), posAsteroidsBhole.getY()), new Vector2D(0,0),
                             0, GameView.ADD_TYPE.ASTEROID, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.ORBIT);
                 }
                 break;
@@ -192,7 +254,7 @@ public class Universe {
                     continue;
                 }
                 // Asteroids exert negligible force, ignore them
-                if (object2 instanceof Asteroid || object2 instanceof DroneAI)
+                if (object2 instanceof Asteroid)
                 {
                     continue;
                 }

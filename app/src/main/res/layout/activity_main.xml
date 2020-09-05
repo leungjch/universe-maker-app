@@ -37,9 +37,8 @@
             android:layout_weight="1"
             android:background="#d32f2f"
             android:backgroundTint="#d32f2f"
-            android:text="Clear"
-            android:textColor="#ffffff"
-            />
+            android:text="Reset"
+            android:textColor="#ffffff" />
 
         <View android:layout_height="fill_parent"
             android:layout_width="2px"

@@ -210,12 +210,12 @@ public class MainActivity extends Activity {
                         break;
                     case 3:
                         Toast.makeText(MainActivity.this, "Random Planets", Toast.LENGTH_LONG).show();
-                        loadTypeState = RESET_TYPE.RANDOM_PLANETS;
+                        loadTypeState = RESET_TYPE.PLANETS_COALESCING;
                         scaleState = GameView.SCALECONSTANTS.MINSCALE;
                         break;
                     case 4:
                         Toast.makeText(MainActivity.this, "Random satellites", Toast.LENGTH_LONG).show();
-                        loadTypeState = RESET_TYPE.RANDOM_SATELLITES;
+                        loadTypeState = RESET_TYPE.CIRCLING_SATELLITES;
                         break;
                     case 5:
                         Toast.makeText(MainActivity.this, "Black hole accretion disk", Toast.LENGTH_LONG).show();
