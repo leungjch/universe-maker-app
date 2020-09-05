@@ -30,7 +30,6 @@ public class StarColors {
         int index = (int)Math.floor((mBv+0.4f)/0.05);
 
         return StarColorsList.get(index);
-
    }
 
     public StarColors() {

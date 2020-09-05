@@ -14,9 +14,8 @@
     <Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
-        android:layout_height="41dp"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="690dp"
@@ -26,45 +25,40 @@
     <Button
         android:id="@+id/addType"
         android:layout_width="102dp"
-        android:layout_height="41dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="88dp"
         android:layout_marginTop="690dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginBottom="-3dp"
         android:text="Type" />
 
     <Button
         android:id="@+id/objectSizeType"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="190dp"
         android:layout_marginTop="690dp"
-        android:layout_marginBottom="-1dp"
+        android:layout_marginEnd="206dp"
+        android:layout_marginBottom="-3dp"
         android:text="Size" />
 
     <Button
         android:id="@+id/placementType"
-        android:layout_width="132dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="279dp"
-        android:layout_marginTop="690dp"
         android:layout_marginEnd="0dp"
+        android:layout_marginTop="690dp"
         android:layout_marginBottom="-1dp"
         android:text="Placement" />
 
     <Button
         android:id="@+id/zoomMode"
         android:layout_width="77dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="Zoom" />
@@ -103,14 +97,16 @@
     <ImageButton
         android:id="@+id/pauseplay"
         android:layout_width="44dp"
-        android:layout_height="42dp"
-        android:layout_alignParentStart="true"
+        android:layout_height="49dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="210dp"
-        android:layout_marginTop="2dp"
-        android:background="#D2D3D3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="134dp"
+        android:padding="0dp"
+        android:scaleType="fitXY"
         android:src="@android:drawable/ic_media_pause"
-        android:tint="#6C6C6C" />
+        android:background="?android:selectableItemBackground"
+        android:tint="@android:color/white" />
 
     <Button
         android:id="@+id/traceMode"
