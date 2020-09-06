@@ -43,7 +43,6 @@ public class ColorGenerator {
                 break;
             case STAR:
                 StarColors.StarColorInfo starcol = starColors.bv2rgb(rand.nextDouble()*2.4f - 0.4f);
-                Log.d("COLS", Integer.toString(starcol.r));
                 paint.setColor(Color.rgb(starcol.r, starcol.g, starcol.b));
                 paint.setShadowLayer(30,0,0, Color.rgb(starcol.r, starcol.g, starcol.b));
 

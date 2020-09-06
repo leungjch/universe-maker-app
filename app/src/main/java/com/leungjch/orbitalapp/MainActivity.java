@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d("MainActivity","Creating MainActivity");
+//        Log.d("MainActivity","Creating MainActivity");
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -185,7 +185,7 @@ public class MainActivity extends Activity {
 //        gameView.reset(RESET_TYPE.BLANK, SCALECONSTANTS.DEFAULTSCALE);
 //        gameView.setRunning(true);
         gameView.resume();
-        Log.d("MAINACTIVITY", "RESUMING");
+//        Log.d("MAINACTIVITY", "RESUMING");
     }
     @Override
     protected void onPause() {
@@ -193,7 +193,7 @@ public class MainActivity extends Activity {
 //        gameView.reset(RESET_TYPE.BLANK, SCALECONSTANTS.DEFAULTSCALE);
 //        gameView.setRunning(false);
         gameView.pause();
-        Log.d("MAINACTVITY", "PAUSING");
+//        Log.d("MAINACTVITY", "PAUSING");
     }
     // Called when user leaves app (presses home)
     // Save current state

@@ -239,7 +239,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                     // Retrieve a new VelocityTracker object to watch the
                     // velocity of a motion.
                     mVelocityTracker = VelocityTracker.obtain();
-                    Log.d("Touched at", "dx = " + Double.toString(dx) + ", dy = " + Double.toString(dy));
+//                    Log.d("Touched at", "dx = " + Double.toString(dx) + ", dy = " + Double.toString(dy));
                 }
                 else
                 {
@@ -271,7 +271,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 mVelocityTracker.addMovement(event);
                 mVelocityTracker.computeCurrentVelocity(1000);
 //              // Printing ccurrent position
-                Log.d("Positions: ", Double.toString(dx) + " " + Double.toString(dy));
+//                Log.d("Positions: ", Double.toString(dx) + " " + Double.toString(dy));
                 if (isPanning && isZoomMode)
                 {
                     dx = panStartX - x;
@@ -352,7 +352,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         switch (view.getId())
         {
             case R.id.resetButton:
-                Log.d("Hello", "Press");
                 break;
         }
     }
@@ -447,7 +446,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         public boolean onScaleBegin(ScaleGestureDetector detector) {
             focusX = (detector.getFocusX()-dx)/scaleFactor;
             focusY = (detector.getFocusY()-dy)/scaleFactor;
-            Log.d("FOCUS", Float.toString(focusX) + " " + Float.toString(focusY));
+//            Log.d("FOCUS", Float.toString(focusX) + " " + Float.toString(focusY));
             return true;
         }
         @Override

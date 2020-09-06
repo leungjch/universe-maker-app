@@ -99,7 +99,7 @@ public class Universe {
 
                 // Create fixed star at center of universe
                 Star star = new Star(GameView.SIZE_TYPE.LARGE, ColorGenerator.generateColor(GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE));
-                Log.d("STARMASS", Double.toString(star.getMass()));
+//                Log.d("STARMASS", Double.toString(star.getMass()));
                 star.isFixed = true;
                 int radiusMultiplier = 10;
                 star.setPos(new Vector2D(Universe.CONSTANTS.UNIVERSEWIDTH/2,Universe.CONSTANTS.UNIVERSEHEIGHT/2));
@@ -283,7 +283,7 @@ public class Universe {
             if (object1 instanceof PlayerShip) {
                 Fnet.setX(Fnet.getX() + currentPlayerForce.getX());
                 Fnet.setY(Fnet.getY() + currentPlayerForce.getY());
-                Log.d("PLAYERFORCE", Double.toString(currentPlayerForce.getX()));
+//                Log.d("PLAYERFORCE", Double.toString(currentPlayerForce.getX()));
             }
 
             // Integrate by time step
@@ -313,7 +313,7 @@ public class Universe {
                 double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
 
                 double vAbs = Math.sqrt((CONSTANTS.G*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));
-                Log.d("DIST", Double.toString((object1.getPos().distance(maxForceObject.getPos()))));
+//                Log.d("DIST", Double.toString((object1.getPos().distance(maxForceObject.getPos()))));
                 object1.setFnet(new Vector2D(0, 0));
                 object1.setAcc(new Vector2D(0, 0));
                 object1.setVel(new Vector2D(vAbs*Math.cos(theta_f + Math.PI/2), vAbs*Math.sin(theta_f + Math.PI/2)));
