@@ -29,7 +29,7 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 import com.leungjch.orbitalapp.universe.PlayerShip;
 import com.leungjch.orbitalapp.universe.Universe;
 
-public class GameView extends SurfaceView implements View.OnClickListener, SurfaceHolder.Callback{
+public class GameView extends SurfaceView implements View.OnClickListener, SurfaceHolder.Callback, Runnable{
     private MainThread thread;
     private Universe universe;
 
