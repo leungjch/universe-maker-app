@@ -171,26 +171,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
-//    public GameView(Context context){
-//        super(context);
-//        holder = getHolder();
-//
-//
-//        setFocusable(true);
-//        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-//        boundaryPaint = new Paint();
-//        boundaryPaint.setStyle(Paint.Style.FILL);
-//        boundaryPaint.setColor(Color.argb(255, 20,20,200));
-//
-//        boundaryPaint.setStyle(Paint.Style.STROKE);
-//        boundaryPaint.setColor(Color.argb(255, 255,255,255));
-//        boundaryPaint.setStrokeWidth(20f);
-//
-//        joystickPaint = new Paint();
-//        joystickPaint.setStyle(Paint.Style.FILL);
-//        joystickPaint.setColor(Color.argb(255, 255,255,255));
-//
-//    }
+
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         holder = getHolder();
@@ -209,38 +190,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     }
 
-//    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-//        super(context, attrs, defStyleAttr);
-//        holder = getHolder();
-//
-//
-//        setFocusable(true);
-//        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-//        boundaryPaint = new Paint();
-//        boundaryPaint.setStyle(Paint.Style.FILL);
-//        boundaryPaint.setColor(Color.argb(255, 20,20,20));
-//
-//        joystickPaint = new Paint();
-//        joystickPaint.setStyle(Paint.Style.FILL);
-//        joystickPaint.setColor(Color.argb(255, 255,255,255));
-//
-//    }
-//
-//    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-//        super(context, attrs, defStyleAttr, defStyleRes);
-//        holder = getHolder();
-//
-//
-//        setFocusable(true);
-//        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-//        boundaryPaint = new Paint();
-//        boundaryPaint.setStyle(Paint.Style.FILL);
-//        boundaryPaint.setColor(Color.argb(255, 20,20,20));
-//
-//        joystickPaint = new Paint();
-//        joystickPaint.setStyle(Paint.Style.FILL);
-//        joystickPaint.setColor(Color.argb(255, 255,255,255));
-//    }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -478,7 +427,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
             canvas.scale(scaleFactor, scaleFactor);
             canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH / 2 / scaleFactor, -Universe.CONSTANTS.UNIVERSEHEIGHT / 2 / scaleFactor);
 
-//        canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH/2, -Universe.CONSTANTS.UNIVERSEHEIGHT/2);
 
             if (canvas != null) {
 
