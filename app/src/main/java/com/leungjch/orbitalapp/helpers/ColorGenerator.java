@@ -33,16 +33,24 @@ public class ColorGenerator {
                 paint.setColor(Color.rgb(grayA,grayA,grayA));
                 break;
             case PLANET:
-                paint.setColor(Color.rgb(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+                Color planetCol = Color.valueOf(Color.rgb(rand.nextInt(255),rand.nextInt(255), rand.nextInt(255) ));//
+                Color atmosphereCol = Color.valueOf(Color.rgb(255-planetCol.red(),
+                        255-planetCol.green(),
+                        255-planetCol.blue()));
+                paint.setColor(planetCol.toArgb());
+                paint.setShadowLayer(8,0,0, atmosphereCol.toArgb());
+
                 break;
             case STAR:
                 StarColors.StarColorInfo starcol = starColors.bv2rgb(rand.nextDouble()*2.4f - 0.4f);
                 Log.d("COLS", Integer.toString(starcol.r));
                 paint.setColor(Color.rgb(starcol.r, starcol.g, starcol.b));
+                paint.setShadowLayer(30,0,0, Color.rgb(starcol.r, starcol.g, starcol.b));
+
                 break;
             case BLACK_HOLE:
                 paint.setColor(Color.rgb(0,0,0));
-                paint.setShadowLayer(10,0,0, Color.WHITE);
+                paint.setShadowLayer(15,0,0, Color.WHITE);
                 break;
             case WHITE_HOLE:
                 paint.setColor(Color.rgb(255,255,255));
@@ -52,6 +60,8 @@ public class ColorGenerator {
             case SATELLITE:
                 int grayD = rand.nextInt(100)+100;
                 paint.setColor(Color.rgb(grayD,grayD,grayD));
+                paint.setShadowLayer(10,0,0, Color.GRAY);
+
                 break;
             case PLAYER_SHIP:
                 paint.setColor(Color.rgb(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));

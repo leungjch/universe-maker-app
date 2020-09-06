@@ -8,9 +8,9 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class DroneAI extends CelestialBody {
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.000001,5);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(0.00001,10);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(0.00001,15);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(0.000001,2);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(0.00001,5);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(0.00001,7);
     }
 
     public DroneAI(GameView.SIZE_TYPE size, Paint dronePaint) {
