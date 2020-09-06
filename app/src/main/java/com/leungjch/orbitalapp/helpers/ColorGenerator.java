@@ -42,10 +42,12 @@ public class ColorGenerator {
                 break;
             case BLACK_HOLE:
                 paint.setColor(Color.rgb(0,0,0));
-
+                paint.setShadowLayer(10,0,0, Color.WHITE);
                 break;
             case WHITE_HOLE:
                 paint.setColor(Color.rgb(255,255,255));
+                paint.setShadowLayer(30,0,0, Color.BLACK);
+
                 break;
             case SATELLITE:
                 int grayD = rand.nextInt(100)+100;
