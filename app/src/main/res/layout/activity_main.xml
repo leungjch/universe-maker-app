@@ -108,89 +108,100 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/zoomMode"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#aa647b"
-        android:textColor="#ffffff"
+        >
+
+        <Button
+            android:id="@+id/zoomMode"
+            android:layout_width="74dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#aa647b"
+            android:text="Move"
 
 
-        android:text="Move" />
+            android:textColor="#ffffff" />
 
-    <Button
-        android:id="@+id/traceMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="89dp"
-        android:layout_marginTop="0dp"
-        android:background="#aa647b"
-        android:textColor="#ffffff"
+        <Button
+            android:id="@+id/traceMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="89dp"
+            android:layout_marginTop="0dp"
+            android:background="#aa647b"
+            android:textColor="#ffffff"
 
 
-        android:text="Trace" />
+            android:text="Trace" />
 
-    <ImageButton
-        android:id="@+id/pauseplay"
-        android:layout_width="44dp"
-        android:layout_height="49dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="134dp"
-        android:background="?android:selectableItemBackground"
-        android:padding="10dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/pause_material"
-        android:tint="@android:color/white" />
+        <ImageButton
+            android:id="@+id/pauseplay"
+            android:layout_width="44dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="134dp"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/pause_material"
+            android:tint="@android:color/white" />
 
-    <ImageButton
-        android:id="@+id/speed1"
-        android:layout_width="44dp"
-        android:layout_height="49dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="90dp"
-        android:background="?android:selectableItemBackground"
-        android:padding="10dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_singleforward"
-        android:tint="@android:color/white" />
+        <ImageButton
+            android:id="@+id/speed1"
+            android:layout_width="44dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="90dp"
+            android:background="?android:selectableItemBackground"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_singleforward"
+            android:tint="@android:color/white" />
 
-    <ImageButton
-        android:id="@+id/speed2"
-        android:layout_width="44dp"
-        android:layout_height="49dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="46dp"
-        android:background="?android:selectableItemBackground"
-        android:cropToPadding="true"
-        android:padding="5dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_doubleforward"
-        android:tint="@android:color/white" />
+        <ImageButton
+            android:id="@+id/speed2"
+            android:layout_width="44dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="46dp"
+            android:background="?android:selectableItemBackground"
+            android:cropToPadding="true"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_doubleforward"
+            android:tint="@android:color/white" />
 
-    <ImageButton
-        android:id="@+id/speed3"
-        android:layout_width="44dp"
-        android:layout_height="49dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="2dp"
-        android:background="?android:selectableItemBackground"
-        android:cropToPadding="false"
-        android:padding="-10dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_tripleforward"
-        android:tint="@android:color/white" />
+        <ImageButton
+            android:id="@+id/speed3"
+            android:layout_width="44dp"
+            android:layout_height="49dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="2dp"
+            android:background="?android:selectableItemBackground"
+            android:cropToPadding="false"
+            android:padding="-10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_tripleforward"
+            android:tint="@android:color/white" />
+
+
+
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
