@@ -1,5 +1,5 @@
 # Universe Maker | Planetary simulation game
-Orbital is an n-body simulation of a planetary system on an Android app, written in Java and Kotlin.
+Universe Maker is an n-body simulation of a planetary system on an Android app, written in Java and Kotlin.
 ## Features
 - Complete n-body simulation using an Euler integration physics solver.
 - Objects coalesce upon colliding, and collisions are inelastic.
