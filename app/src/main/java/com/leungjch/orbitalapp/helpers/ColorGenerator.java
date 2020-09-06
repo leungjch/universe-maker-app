@@ -65,6 +65,8 @@ public class ColorGenerator {
                 break;
             case PLAYER_SHIP:
                 paint.setColor(Color.rgb(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+                paint.setShadowLayer(50,0,0, Color.WHITE);
+
                 break;
         }
         return paint;

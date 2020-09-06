@@ -53,9 +53,12 @@ public class CelestialBody {
 
     public void draw(Canvas canvas, Boolean isTraceMode) {
         // Draw trace paths
+        Paint noGlow = new Paint(paint);
+        noGlow.setShadowLayer(0,0,0,00);
         if (isTraceMode) {
-            for (Vector2D trace : traceList) {
-                canvas.drawCircle((int)trace.getX(), (int)trace.getY(), (int)2, paint);
+            for (int i = 0; i < traceList.size()-1; i++) {
+                canvas.drawLine((float)traceList.get(i).getX(), (float)traceList.get(i).getY(), (float)traceList.get(i+1).getX(), (float)traceList.get(i+1).getY(), noGlow);
+//                canvas.drawCircle((int)trace.getX(), (int)trace.getY(), (int)2, noGlow);
 
             }
         }
