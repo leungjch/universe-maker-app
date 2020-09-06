@@ -30,12 +30,28 @@ import com.leungjch.orbitalapp.universe.PlayerShip;
 import com.leungjch.orbitalapp.universe.Universe;
 
 public class GameView extends SurfaceView implements View.OnClickListener, SurfaceHolder.Callback, Runnable{
-    private MainThread thread;
+
+    // Thread
+    Thread thread = null;
+    volatile boolean isRunning = false;
+
+    // Contains all celestial bodies
     private Universe universe;
+
+    // Canvas to draw on screen
+    Canvas canvas;
+
+    // Surfaceholder
+    SurfaceHolder holder;
+
+    // Track fps
+    long fps;
+    private long frameTime;
 
     // For scale control
     private ScaleGestureDetector scaleDetector;
     private float scaleFactor = 0.7f;
+
     // For scale pivot to center
     private float focusX;
     private float focusY;
@@ -76,7 +92,6 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         public static float MINSCALE = 0.2f;
         public static float MAXSCALE = 5.0f;
         public static float DEFAULTSCALE = 0.7f;
-
     }
 
         // Control which default preset to load when clear
@@ -156,31 +171,32 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
-    public GameView(Context context){
-        super(context);
-        getHolder().addCallback(this);
-
-        thread = new MainThread(getHolder(), this);
-        setFocusable(true);
-        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        boundaryPaint = new Paint();
-        boundaryPaint.setStyle(Paint.Style.FILL);
-        boundaryPaint.setColor(Color.argb(255, 20,20,200));
-
-        boundaryPaint.setStyle(Paint.Style.STROKE);
-        boundaryPaint.setColor(Color.argb(255, 255,255,255));
-        boundaryPaint.setStrokeWidth(20f);
-
-        joystickPaint = new Paint();
-        joystickPaint.setStyle(Paint.Style.FILL);
-        joystickPaint.setColor(Color.argb(255, 255,255,255));
-
-    }
+//    public GameView(Context context){
+//        super(context);
+//        holder = getHolder();
+//
+//
+//        setFocusable(true);
+//        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+//        boundaryPaint = new Paint();
+//        boundaryPaint.setStyle(Paint.Style.FILL);
+//        boundaryPaint.setColor(Color.argb(255, 20,20,200));
+//
+//        boundaryPaint.setStyle(Paint.Style.STROKE);
+//        boundaryPaint.setColor(Color.argb(255, 255,255,255));
+//        boundaryPaint.setStrokeWidth(20f);
+//
+//        joystickPaint = new Paint();
+//        joystickPaint.setStyle(Paint.Style.FILL);
+//        joystickPaint.setColor(Color.argb(255, 255,255,255));
+//
+//    }
     public GameView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        getHolder().addCallback(this);
+        holder = getHolder();
 
-        thread = new MainThread(getHolder(), this);
+        universe = new Universe(RESET_TYPE.BLANK);
+
         setFocusable(true);
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         boundaryPaint = new Paint();
@@ -193,40 +209,38 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     }
 
-    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        getHolder().addCallback(this);
-
-        thread = new MainThread(getHolder(), this);
-        setFocusable(true);
-        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        boundaryPaint = new Paint();
-        boundaryPaint.setStyle(Paint.Style.FILL);
-        boundaryPaint.setColor(Color.argb(255, 20,20,20));
-
-        joystickPaint = new Paint();
-        joystickPaint.setStyle(Paint.Style.FILL);
-        joystickPaint.setColor(Color.argb(255, 255,255,255));
-
-    }
-
-    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        getHolder().addCallback(this);
-
-
-        thread = new MainThread(getHolder(), this);
-        setFocusable(true);
-        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
-        boundaryPaint = new Paint();
-        boundaryPaint.setStyle(Paint.Style.FILL);
-        boundaryPaint.setColor(Color.argb(255, 20,20,20));
-
-        joystickPaint = new Paint();
-        joystickPaint.setStyle(Paint.Style.FILL);
-        joystickPaint.setColor(Color.argb(255, 255,255,255));
-
-    }
+//    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+//        super(context, attrs, defStyleAttr);
+//        holder = getHolder();
+//
+//
+//        setFocusable(true);
+//        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+//        boundaryPaint = new Paint();
+//        boundaryPaint.setStyle(Paint.Style.FILL);
+//        boundaryPaint.setColor(Color.argb(255, 20,20,20));
+//
+//        joystickPaint = new Paint();
+//        joystickPaint.setStyle(Paint.Style.FILL);
+//        joystickPaint.setColor(Color.argb(255, 255,255,255));
+//
+//    }
+//
+//    public GameView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+//        super(context, attrs, defStyleAttr, defStyleRes);
+//        holder = getHolder();
+//
+//
+//        setFocusable(true);
+//        scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+//        boundaryPaint = new Paint();
+//        boundaryPaint.setStyle(Paint.Style.FILL);
+//        boundaryPaint.setColor(Color.argb(255, 20,20,20));
+//
+//        joystickPaint = new Paint();
+//        joystickPaint.setStyle(Paint.Style.FILL);
+//        joystickPaint.setColor(Color.argb(255, 255,255,255));
+//    }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
@@ -235,25 +249,13 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        universe = new Universe(currentLoadType);
-        thread = new MainThread(surfaceHolder, this);
-        thread.setRunning(true);
-        thread.start();
+        resume();
+
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        while (retry) {
-            try {
-                thread.setRunning(false);
-                thread.join();
-
-            } catch(InterruptedException e) {
-                e.printStackTrace();
-            }
-            retry = false;
-        }
+        pause();
     }
 
     public void update() {
@@ -461,29 +463,33 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         universe.setCurrentDeltaT(newDt);
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        canvas.save();
+    public void draw() {
 
-        super.draw(canvas);
-        canvas.drawColor(1);
+        if (holder.getSurface().isValid()) {
+            canvas = holder.lockCanvas();
 
-        canvas.translate(dx, dy);
-        canvas.translate(Universe.CONSTANTS.UNIVERSEWIDTH/2, Universe.CONSTANTS.UNIVERSEHEIGHT/2);
-        canvas.scale(scaleFactor, scaleFactor);
-        canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH/2/scaleFactor, -Universe.CONSTANTS.UNIVERSEHEIGHT/2/scaleFactor);
+            canvas.save();
+
+            super.draw(canvas);
+            canvas.drawColor(1);
+
+            canvas.translate(dx, dy);
+            canvas.translate(Universe.CONSTANTS.UNIVERSEWIDTH / 2, Universe.CONSTANTS.UNIVERSEHEIGHT / 2);
+            canvas.scale(scaleFactor, scaleFactor);
+            canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH / 2 / scaleFactor, -Universe.CONSTANTS.UNIVERSEHEIGHT / 2 / scaleFactor);
 
 //        canvas.translate(-Universe.CONSTANTS.UNIVERSEWIDTH/2, -Universe.CONSTANTS.UNIVERSEHEIGHT/2);
 
-        if(canvas!=null){
+            if (canvas != null) {
 
-            // draw boundary area
-            canvas.drawRect(boundaryRect,boundaryPaint);
-            // draw all objects
-            universe.draw(canvas, isTraceMode);
+                // draw boundary area
+                canvas.drawRect(boundaryRect, boundaryPaint);
+                // draw all objects
+                universe.draw(canvas, isTraceMode);
+            }
+            canvas.restore();
+            holder.unlockCanvasAndPost(canvas);
         }
-        canvas.restore();
-
     }
 
 
@@ -512,21 +518,41 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
-    public void setRunning(boolean running) {
-        thread.setRunning(running);
-    }
-    public MainThread getThread() {
-        return thread;
-    }
-    public void resume(){
-        thread.onResume();
+    @Override
+    public void run() {
+        while (isRunning) {
+            // Capture the current time in milliseconds in startFrameTime
+            long startFrameTime = System.currentTimeMillis();
+
+            // Update the frame
+            this.update();
+
+            // Draw the frame
+            this.draw();
+
+            //            // Calculate the fps this frame
+            //            // We can then use the result to
+            //            // time animations and more.
+            //            timeThisFrame = System.currentTimeMillis() - startFrameTime;
+            //            if (timeThisFrame > 0) {
+            //                fps = 1000 / timeThisFrame;
+            //            }
+        }
     }
 
+    public void resume(){
+        isRunning = true;
+        thread = new Thread(this);
+        thread.start();
+    }
 
     public void pause() {
-        thread.onPause();
-
-//        }
+        isRunning = false;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            Log.e("ERROR", "JOINING THREAD");
+        }
     }
 
 }

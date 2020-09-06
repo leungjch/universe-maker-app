@@ -50,7 +50,6 @@ public class MainActivity extends Activity {
 
         gameView = (GameView) findViewById(R.id.gameView);
 
-
         // Handle buttons
         // Reset button
         Button resetButton = (Button)findViewById(R.id.resetButton);
@@ -184,7 +183,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 //        gameView.reset(RESET_TYPE.BLANK, SCALECONSTANTS.DEFAULTSCALE);
-        gameView.setRunning(true);
+//        gameView.setRunning(true);
         gameView.resume();
         Log.d("MAINACTIVITY", "RESUMING");
     }
@@ -192,7 +191,7 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
 //        gameView.reset(RESET_TYPE.BLANK, SCALECONSTANTS.DEFAULTSCALE);
-        gameView.setRunning(false);
+//        gameView.setRunning(false);
         gameView.pause();
         Log.d("MAINACTVITY", "PAUSING");
     }
