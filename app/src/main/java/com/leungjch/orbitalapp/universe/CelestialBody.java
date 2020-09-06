@@ -80,7 +80,7 @@ public class CelestialBody {
 
         double d = pos.distance(object2.getPos());
         double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);
-        fGravAbs = Math.min(Universe.CONSTANTS.MAXFORCE, fGravAbs);
+//        fGravAbs = Math.min(Universe.CONSTANTS.MAXFORCE, fGravAbs);
         Vector2D fGrav;
         // Get x and y components
         double angle = pos.angle(object2.getPos());

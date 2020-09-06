@@ -82,7 +82,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public Rect boundaryRect = new Rect(0,0, Universe.CONSTANTS.UNIVERSEWIDTH, Universe.CONSTANTS.UNIVERSEHEIGHT);
 
     // State enums
-    public RESET_TYPE currentLoadType = RESET_TYPE.BLANK;
+    public RESET_TYPE currentLoadType = RESET_TYPE.SINGLE_STAR_SYSTEM;
     public ADD_TYPE currentAddType = ADD_TYPE.PLANET;
     public PLACEMENT_TYPE currentPlacementType = PLACEMENT_TYPE.SCATTER;
     public SIZE_TYPE currentSizeType = SIZE_TYPE.MEDIUM;

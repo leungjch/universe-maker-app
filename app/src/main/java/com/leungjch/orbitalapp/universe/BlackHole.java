@@ -9,7 +9,7 @@ import com.leungjch.orbitalapp.helpers.Vector2D;
 
 public class BlackHole extends CelestialBody {
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(10000000,5);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(100000,5);
         public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(1000000,10);
         public static final MassRadiusTuple LARGE = new MassRadiusTuple(2000000,20);
     }
