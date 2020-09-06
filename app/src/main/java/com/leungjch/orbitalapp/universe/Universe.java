@@ -95,7 +95,7 @@ public class Universe {
             case SINGLE_STAR_SYSTEM:
 
                 int numSinglePlanets = rand.nextInt(20)+1;
-                int numSingleAsteroids =  rand.nextInt(100);
+                int numSingleAsteroids =  rand.nextInt(100)+100;
 
                 // Create fixed star at center of universe
                 Star star = new Star(GameView.SIZE_TYPE.LARGE, ColorGenerator.generateColor(GameView.ADD_TYPE.STAR, GameView.SIZE_TYPE.LARGE));
@@ -199,12 +199,10 @@ public class Universe {
                 for (int sa = 0; sa < numSatellites; sa++) {
                     addCelestialBody(new Vector2D(rand.nextInt(CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)), new Vector2D(0,0),
                             0, GameView.ADD_TYPE.SATELLITE, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
-
                 }
                 for (int sast = 0; sast < numAsteroidsinSatellites; sast++) {
                     addCelestialBody(new Vector2D(rand.nextInt(CONSTANTS.UNIVERSEWIDTH), rand.nextInt(CONSTANTS.UNIVERSEHEIGHT)), new Vector2D(0,0),
                             0, GameView.ADD_TYPE.ASTEROID, GameView.SIZE_TYPE.RANDOM, GameView.PLACEMENT_TYPE.SCATTER);
-
                 }
                 break;
             case BLACK_HOLE_ACCCRETION_DISK:

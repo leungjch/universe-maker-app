@@ -236,7 +236,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         universe = new Universe(currentLoadType);
-
+        thread = new MainThread(surfaceHolder, this);
         thread.setRunning(true);
         thread.start();
     }
@@ -406,6 +406,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
+
     public void reset(GameView.RESET_TYPE requestedPreset, float scale) {
         universe = new Universe(requestedPreset);
 
@@ -511,5 +512,21 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
         }
     }
 
+    public void setRunning(boolean running) {
+        thread.setRunning(running);
+    }
+    public MainThread getThread() {
+        return thread;
+    }
+    public void resume(){
+        thread.onResume();
+    }
+
+
+    public void pause() {
+        thread.onPause();
+
+//        }
+    }
 
 }

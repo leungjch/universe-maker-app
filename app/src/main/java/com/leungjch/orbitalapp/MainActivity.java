@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.leungjch.orbitalapp.universe.Universe;
 
 import java.util.Random;
@@ -44,10 +46,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        setContentView(new GameView(this));    }
         setContentView(R.layout.activity_main);
 
         gameView = (GameView) findViewById(R.id.gameView);
+
 
         // Handle buttons
         // Reset button
@@ -178,6 +180,33 @@ public class MainActivity extends Activity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        gameView.reset(RESET_TYPE.BLANK, SCALECONSTANTS.DEFAULTSCALE);
+        gameView.setRunning(true);
+        gameView.resume();
+        Log.d("MAINACTIVITY", "RESUMING");
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        gameView.reset(RESET_TYPE.BLANK, SCALECONSTANTS.DEFAULTSCALE);
+        gameView.setRunning(false);
+        gameView.pause();
+        Log.d("MAINACTVITY", "PAUSING");
+    }
+    // Called when user leaves app (presses home)
+    // Save current state
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
     // Choose load preset type
     private void showAlertDialogLoadType() {
@@ -276,7 +305,6 @@ public class MainActivity extends Activity {
                         addTypeState = ADD_TYPE.PLAYER_SHIP;
                         gameView.isPlayerShipMode = true; // Enable player ship mode
                         break;
-
                 }
                 dialog.dismiss();
                 addTypeButton.setText(ADD_TYPE.getString()[addTypeState.ordinal()]);
@@ -374,9 +402,6 @@ public class MainActivity extends Activity {
         alert.setCanceledOnTouchOutside(true);
         alert.show();
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+
 
 }
