@@ -177,6 +177,15 @@ public class MainActivity extends Activity {
                 gameView.setCurrentDeltaT(Universe.CONSTANTS.dT_3);
             }
         });
+
+        // Options button
+        final ImageButton optionsButton = (ImageButton)findViewById(R.id.options);
+        optionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialogOptions();
+            }
+        });
     }
 
     @Override
@@ -400,6 +409,31 @@ public class MainActivity extends Activity {
         AlertDialog alert = alertDialog.create();
         alert.setCanceledOnTouchOutside(true);
         alert.show();
+    }
+
+    // Show general options
+    private void showAlertDialogOptions() {
+        // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                builder.setTitle("Options");
+                builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+
+                builder.setNeutralButton("Rate app", null);
+
+                AlertDialog dialog = builder.create();
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+
     }
 
 

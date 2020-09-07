@@ -249,15 +249,18 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 {
                     mVelocityTracker.addMovement(event);
 
-                    universe.addCelestialBody(new Vector2D(Math.round((x-dx)/scaleFactor), Math.round((y-dy)/scaleFactor)),
-                            new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
-                            action, currentAddType, currentSizeType, currentPlacementType);
                 }
                 // If zoom mode, start panning
                 if (isZoomMode) {
                     panStartX = dx + x;
                     panStartY = dy + y;
                     isPanning = true;
+
+                }
+                else {
+                    universe.addCelestialBody(new Vector2D(Math.round((x-dx)/scaleFactor), Math.round((y-dy)/scaleFactor)),
+                            new Vector2D(mVelocityTracker.getXVelocity(pointerId)/scaleFactor,mVelocityTracker.getYVelocity(pointerId)/scaleFactor),
+                            action, currentAddType, currentSizeType, currentPlacementType);
 
                 }
 
@@ -309,7 +312,7 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
                 return true;
 
             case (MotionEvent.ACTION_UP) :
-                if (!isZoomMode)
+                if (!isZoomMode && !isPanning)
                 {
                     universe.addCelestialBody(new Vector2D((xOriginal-dx)/scaleFactor, (yOriginal-dy)/scaleFactor),
                             new Vector2D((xOriginal-x)/scaleFactor, (yOriginal-y)/scaleFactor),
