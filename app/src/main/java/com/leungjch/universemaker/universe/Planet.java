@@ -1,11 +1,11 @@
-package com.leungjch.orbitalapp.universe;
+package com.leungjch.universemaker.universe;
 
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import com.leungjch.orbitalapp.GameView;
-import com.leungjch.orbitalapp.helpers.MassRadiusTuple;
-import com.leungjch.orbitalapp.helpers.Vector2D;
+import com.leungjch.universemaker.GameView;
+import com.leungjch.universemaker.helpers.MassRadiusTuple;
+import com.leungjch.universemaker.helpers.Vector2D;
 
 public class Planet extends CelestialBody {
     public static final class SIZES {

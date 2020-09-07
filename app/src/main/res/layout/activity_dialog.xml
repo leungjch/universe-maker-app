@@ -52,6 +52,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
 
-        android:text="Made by Justin Leung. Please email me at justin.leung.ch@gmail.com for inquiries." />
+        android:text="Universe Maker was built by Justin Leung. Email me at justin.leung.ch@gmail.com for inquiries." />
 
 </LinearLayout>

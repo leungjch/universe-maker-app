@@ -1,4 +1,4 @@
-package com.leungjch.orbitalapp;
+package com.leungjch.universemaker;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.leungjch.orbitalapp", appContext.getPackageName());
+        assertEquals("com.leungjch.universemaker", appContext.getPackageName());
     }
 }

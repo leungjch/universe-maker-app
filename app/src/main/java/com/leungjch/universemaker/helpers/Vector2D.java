@@ -1,4 +1,4 @@
-package com.leungjch.orbitalapp.helpers;
+package com.leungjch.universemaker.helpers;
 
 public class Vector2D {
     private double x;

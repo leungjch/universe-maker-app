@@ -1,4 +1,4 @@
-package com.leungjch.orbitalapp.helpers;
+package com.leungjch.universemaker.helpers;
 
 public class MassRadiusTuple {
     public double mass;

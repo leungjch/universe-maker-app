@@ -1,4 +1,4 @@
-package com.leungjch.orbitalapp;
+package com.leungjch.universemaker;
 
 import org.junit.Test;
 

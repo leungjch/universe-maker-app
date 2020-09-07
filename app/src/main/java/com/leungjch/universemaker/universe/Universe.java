@@ -1,18 +1,16 @@
-package com.leungjch.orbitalapp.universe;
+package com.leungjch.universemaker.universe;
 
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 
-import com.leungjch.orbitalapp.GameView;
-import com.leungjch.orbitalapp.helpers.ColorGenerator;
-import com.leungjch.orbitalapp.helpers.Vector2D;
+import com.leungjch.universemaker.GameView;
+import com.leungjch.universemaker.helpers.ColorGenerator;
+import com.leungjch.universemaker.helpers.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Random;
 
 // The universe class contains all celestial objects defined

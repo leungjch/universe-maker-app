@@ -1,18 +1,14 @@
-package com.leungjch.orbitalapp.universe;
-import com.leungjch.orbitalapp.universe.Universe;
+package com.leungjch.universemaker.universe;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Vector;
 
 import android.graphics.Rect;
-import android.util.Log;
 
-import com.leungjch.orbitalapp.helpers.Vector2D;
+import com.leungjch.universemaker.helpers.Vector2D;
 
 // Superclass describing all objects in the simulation
 

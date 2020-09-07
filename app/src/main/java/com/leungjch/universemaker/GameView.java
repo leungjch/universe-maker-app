@@ -1,33 +1,24 @@
-package com.leungjch.orbitalapp;
+package com.leungjch.universemaker;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.media.AudioPlaybackCaptureConfiguration;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.VelocityTracker;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.core.view.MotionEventCompat;
 
-import com.leungjch.orbitalapp.helpers.Vector2D;
-import com.leungjch.orbitalapp.universe.PlayerShip;
-import com.leungjch.orbitalapp.universe.Universe;
+import com.leungjch.universemaker.helpers.Vector2D;
+import com.leungjch.universemaker.universe.Universe;
 
 public class GameView extends SurfaceView implements View.OnClickListener, SurfaceHolder.Callback, Runnable{
 

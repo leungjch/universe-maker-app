@@ -13,7 +13,7 @@
     android:layout_centerHorizontal="false"
     android:layout_centerVertical="false">
 
-    <com.leungjch.orbitalapp.GameView
+    <com.leungjch.universemaker.GameView
         android:id="@+id/gameView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -1,41 +1,27 @@
-package com.leungjch.orbitalapp;
+package com.leungjch.universemaker;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import com.leungjch.universemaker.universe.Universe;
 
-import com.leungjch.orbitalapp.universe.Universe;
-
-import java.util.Random;
-
-import static com.leungjch.orbitalapp.GameView.RESET_TYPE;
-import static com.leungjch.orbitalapp.GameView.ADD_TYPE;
-import static com.leungjch.orbitalapp.GameView.PLACEMENT_TYPE;
-import static com.leungjch.orbitalapp.GameView.SIZE_TYPE;
-import static com.leungjch.orbitalapp.GameView.SCALECONSTANTS;
-
-import static java.sql.DriverManager.println;
+import static com.leungjch.universemaker.GameView.RESET_TYPE;
+import static com.leungjch.universemaker.GameView.ADD_TYPE;
+import static com.leungjch.universemaker.GameView.PLACEMENT_TYPE;
+import static com.leungjch.universemaker.GameView.SIZE_TYPE;
 
 public class MainActivity extends Activity {
 

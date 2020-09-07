@@ -1,18 +1,10 @@
-package com.leungjch.orbitalapp.helpers;
+package com.leungjch.universemaker.helpers;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 
-import com.leungjch.orbitalapp.GameView;
-import com.leungjch.orbitalapp.universe.CelestialBody;
-import com.leungjch.orbitalapp.universe.Asteroid;
-import com.leungjch.orbitalapp.universe.Planet;
-import com.leungjch.orbitalapp.universe.Star;
-import com.opencsv.CSVReader;
+import com.leungjch.universemaker.GameView;
 
-import java.io.FileReader;
-import java.util.List;
 import java.util.Random;
 
 public class ColorGenerator {
