@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -421,11 +422,21 @@ public class MainActivity extends Activity {
     private void showAlertDialogOptions() {
         // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+
                 View dialogView = inflater.inflate(R.layout.activity_dialog, null);
+
+                // Set layout items to wrap content
+                ViewGroup.LayoutParams params= new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialogView.setLayoutParams(params);
+
                 final SeekBar timeSeeker = (SeekBar)dialogView.findViewById(R.id.timeSeeker);
-                timeSeeker.setMin((int)(Universe.CONSTANTS.STEPS_3/3)); // fastest setting
-                timeSeeker.setMax((int)(Universe.CONSTANTS.STEPS_1*3)); // slowest setting
+                // Avoid using seeker.setmin for API compatibility
+                final double minTime =  Universe.CONSTANTS.STEPS_3/3;
+                timeSeeker.setMax((int)(Universe.CONSTANTS.STEPS_1*3 - minTime)); // slowest setting
                 timeSeeker.setProgress(gameView.getCurrentSteps());
 
                 final SeekBar gravitySeeker = (SeekBar)dialogView.findViewById(R.id.gravitySeeker);
@@ -435,40 +446,40 @@ public class MainActivity extends Activity {
 
 
         builder.setTitle("Options");
-                builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                        // Apply changes
+        builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                // Apply changes
 
-                        // set gravity seekbar value
+                // set gravity seekbar value
 //                        gameView.setCurrentDeltaT((double)(1/timeSeeker.getProgress()));
-                        gameView.setCurrentSteps(timeSeeker.getProgress());
-                        gameView.setCurrentGravity(Universe.CONSTANTS.G*Math.pow(10,(gravitySeeker.getProgress()-5)));
-                        // set
-                        Toast.makeText(MainActivity.this, "GRAV is " + Double.toString(gameView.getCurrentGravity()), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+                gameView.setCurrentSteps((int)(timeSeeker.getProgress() - minTime));
+                gameView.setCurrentGravity(Universe.CONSTANTS.G*Math.pow(10,(gravitySeeker.getProgress()-5)));
+                // set
+                Toast.makeText(MainActivity.this, "Applied changes", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
 
-                    }
-                });
+            }
+        });
 
-                builder.setNeutralButton("Rate app", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Launch google play page
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pixelpaper.pixelpaper.wallpapergenerator")));
+        builder.setNeutralButton("Rate app", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // Launch google play page
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pixelpaper.pixelpaper.wallpapergenerator")));
 
-                    }
-                });
-                builder.setView(dialogView);
-                AlertDialog dialog = builder.create();
+            }
+        });
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
 
 
 
         dialog.setCanceledOnTouchOutside(false);
-                dialog.show();
+        dialog.show();
 
     }
 
