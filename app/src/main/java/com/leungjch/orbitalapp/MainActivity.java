@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -415,23 +421,40 @@ public class MainActivity extends Activity {
     private void showAlertDialogOptions() {
         // 1. Instantiate an <code><a href="/reference/android/app/AlertDialog.Builder.html">AlertDialog.Builder</a></code> with its constructor
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                View dialogView = inflater.inflate(R.layout.activity_dialog, null);
+                SeekBar seekBarGrav = (SeekBar)dialogView.findViewById(R.id.gravitySeeker);
 
                 builder.setTitle("Options");
                 builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
+                        // Apply changes
+
+                        Toast.makeText(MainActivity.this, "Applied changes", Toast.LENGTH_SHORT).show();
+
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
+
                     }
                 });
 
-                builder.setNeutralButton("Rate app", null);
+                builder.setNeutralButton("Rate app", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Launch google play page
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pixelpaper.pixelpaper.wallpapergenerator")));
 
+                    }
+                });
+                builder.setView(dialogView);
                 AlertDialog dialog = builder.create();
-                dialog.setCanceledOnTouchOutside(false);
+
+
+
+        dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
 
     }
