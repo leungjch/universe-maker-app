@@ -25,7 +25,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Timestep (lower = more precise)"
+        android:text="Physics quality (higher is slower)"
         />
 
     <SeekBar

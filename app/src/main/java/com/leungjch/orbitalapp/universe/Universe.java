@@ -28,7 +28,7 @@ public class Universe {
         public static final int UNIVERSEHEIGHT = getScreenHeight()*5;
 
 //      Actual gravitational constant is much smaller
-        public static final double G = 2000000000;
+        public static final double G = 2000000000.0;
 
         // Maximum force allowed to be exerted
         // This solves problem of extreme acceleration when two objects are near each other
@@ -66,6 +66,7 @@ public class Universe {
 
     private double currentSteps;
     private double currentDeltaT;
+    private double currentGravity;
 
     public Boolean isPlayerMode = false;
     private Vector2D currentPlayerForce = new Vector2D(0,0);
@@ -75,6 +76,9 @@ public class Universe {
     public Universe(GameView.RESET_TYPE resetType) {
         // Set delta T
         currentDeltaT = CONSTANTS.dT_1;
+
+        // Set gravity
+        currentGravity = CONSTANTS.G;
 
         //  Initialize everything
         stars = new ArrayList<Star>();
@@ -265,7 +269,7 @@ public class Universe {
                 }
 
                 // Get gravitational attraction
-                Vector2D grav = object1.calculateGrav(object2);
+                Vector2D grav = object1.calculateGrav(object2, currentGravity);
 
                 // If current object is set to orbit mode, keep track of the most massive object
                 if (object1.isOrbit && grav.magnitude() > maxForce) {
@@ -312,7 +316,7 @@ public class Universe {
             if (object1.isOrbit) {
                 double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
 
-                double vAbs = Math.sqrt((CONSTANTS.G*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));
+                double vAbs = Math.sqrt((currentGravity*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));
 //                Log.d("DIST", Double.toString((object1.getPos().distance(maxForceObject.getPos()))));
                 object1.setFnet(new Vector2D(0, 0));
                 object1.setAcc(new Vector2D(0, 0));
@@ -547,9 +551,21 @@ public class Universe {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
+    public int getCurrentSteps() {
+        return (int)(1/currentDeltaT);
+    }
+    public double getCurrentGravity() {
+        return currentGravity;
+    }
+
     // Set current delta time step
     public void setCurrentDeltaT(double newDt) {
         currentDeltaT = newDt;
+    }
+
+    // Set current gravitational constant
+    public void setGravity(double newGravity) {
+        currentGravity = newGravity;
     }
 
     // Set play mode

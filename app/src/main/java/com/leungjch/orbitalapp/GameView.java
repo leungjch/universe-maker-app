@@ -413,6 +413,22 @@ public class GameView extends SurfaceView implements View.OnClickListener, Surfa
     public void setCurrentDeltaT(double newDt) {
         universe.setCurrentDeltaT(newDt);
     }
+    public void setCurrentSteps(int newSteps) {
+        universe.setCurrentDeltaT((double)(1.0/newSteps));
+        Log.d("CURRENTDT", Double.toString(newSteps) + " " + Double.toString((double)(1.0/newSteps)));
+    }
+
+    public void setCurrentGravity(double newGravity) {
+        universe.setGravity(newGravity);
+        Log.d("GRAVITY", Double.toString(newGravity));
+
+    }
+    public int getCurrentSteps() {
+        return universe.getCurrentSteps();
+    }
+    public double getCurrentGravity() {
+        return universe.getCurrentGravity();
+    }
 
     public void draw() {
 

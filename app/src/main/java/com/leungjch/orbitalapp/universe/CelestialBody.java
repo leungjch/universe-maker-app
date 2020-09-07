@@ -76,10 +76,10 @@ public class CelestialBody {
 
     //  Calculate gravitational force of attraction induced by another object
     //  https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation
-    public Vector2D calculateGrav(CelestialBody object2) {
+    public Vector2D calculateGrav(CelestialBody object2, double currentGravity) {
 
         double d = pos.distance(object2.getPos());
-        double fGravAbs = (Universe.CONSTANTS.G * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);
+        double fGravAbs = (currentGravity * mass * object2.getMass()) / Math.pow(d, Universe.CONSTANTS.EPSILON);
 //        fGravAbs = Math.min(Universe.CONSTANTS.MAXFORCE, fGravAbs);
         Vector2D fGrav;
         // Get x and y components

@@ -423,16 +423,29 @@ public class MainActivity extends Activity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
                 View dialogView = inflater.inflate(R.layout.activity_dialog, null);
-                SeekBar seekBarGrav = (SeekBar)dialogView.findViewById(R.id.gravitySeeker);
+                final SeekBar timeSeeker = (SeekBar)dialogView.findViewById(R.id.timeSeeker);
+                timeSeeker.setMin((int)(Universe.CONSTANTS.STEPS_3/3)); // fastest setting
+                timeSeeker.setMax((int)(Universe.CONSTANTS.STEPS_1*3)); // slowest setting
+                timeSeeker.setProgress(gameView.getCurrentSteps());
 
-                builder.setTitle("Options");
+                final SeekBar gravitySeeker = (SeekBar)dialogView.findViewById(R.id.gravitySeeker);
+                gravitySeeker.setMax(10); // highest setting
+//                gravitySeeker.setMin(); // lowest setting
+                gravitySeeker.setProgress((int)(Math.log10(gameView.getCurrentGravity()/Universe.CONSTANTS.G)+5));
+
+
+        builder.setTitle("Options");
                 builder.setPositiveButton("Apply", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User clicked OK button
                         // Apply changes
 
-                        Toast.makeText(MainActivity.this, "Applied changes", Toast.LENGTH_SHORT).show();
-
+                        // set gravity seekbar value
+//                        gameView.setCurrentDeltaT((double)(1/timeSeeker.getProgress()));
+                        gameView.setCurrentSteps(timeSeeker.getProgress());
+                        gameView.setCurrentGravity(Universe.CONSTANTS.G*Math.pow(10,(gravitySeeker.getProgress()-5)));
+                        // set
+                        Toast.makeText(MainActivity.this, "GRAV is " + Double.toString(gameView.getCurrentGravity()), Toast.LENGTH_SHORT).show();
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
