@@ -39,6 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
         android:text="If you enjoy this app, please give it a 5 star rating and share with everyone!" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,6 +49,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Made by Justin Leung. Contact justin.leung.ch@gmail.com for inquiries." />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        android:text="Made by Justin Leung. Please email me at justin.leung.ch@gmail.com for inquiries." />
 
 </LinearLayout>

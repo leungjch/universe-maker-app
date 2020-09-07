@@ -428,10 +428,12 @@ public class MainActivity extends Activity {
                 View dialogView = inflater.inflate(R.layout.activity_dialog, null);
 
                 // Set layout items to wrap content
-                ViewGroup.LayoutParams params= new ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams params= new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(10,10,10,10);
                 dialogView.setLayoutParams(params);
+
 
                 final SeekBar timeSeeker = (SeekBar)dialogView.findViewById(R.id.timeSeeker);
                 // Avoid using seeker.setmin for API compatibility
@@ -470,16 +472,16 @@ public class MainActivity extends Activity {
             public void onClick(DialogInterface dialog, int id) {
                 // Launch google play page
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pixelpaper.pixelpaper.wallpapergenerator")));
-
             }
         });
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
 
-
+        // change buttoon colours
 
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+
 
     }
 
