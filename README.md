@@ -1,4 +1,5 @@
 # Universe Maker | Planetary simulation game
+![Promo image](screenshots/universe_maker_promo.png)
 Universe Maker is an n-body simulation of a planetary system on an Android app, written in Java and Kotlin.
 ## Features
 - Complete n-body simulation using an Euler integration physics solver.
