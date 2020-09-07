@@ -457,7 +457,7 @@ public class MainActivity extends Activity {
         builder.setNeutralButton("Rate app", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // Launch google play page
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.pixelpaper.pixelpaper.wallpapergenerator")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.leungjch.universemaker")));
             }
         });
         builder.setView(dialogView);
