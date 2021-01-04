@@ -241,7 +241,7 @@ public class Universe {
             for (CelestialBody object2: objects) {
 
 //            for (CelestialBody object2 : objects) {
-                //  Skip if same object
+                //  Skip if same object or white holes
                 if (object1 == object2) {
                     continue;
                 }
@@ -261,7 +261,7 @@ public class Universe {
 
 
                 // Check if collide
-                if (object1.isCollide(object2) && !objectsToRemove.contains(object1)) {
+                if (object1.isCollide(object2) && !objectsToRemove.contains(object1) &&  !(object2 instanceof WhiteHole || object1 instanceof WhiteHole)) {
                     handleCollide(object1, object2);
                     continue;
                 }
@@ -285,6 +285,7 @@ public class Universe {
             if (object1 instanceof PlayerShip) {
                 Fnet.setX(Fnet.getX() + currentPlayerForce.getX());
                 Fnet.setY(Fnet.getY() + currentPlayerForce.getY());
+
 //                Log.d("PLAYERFORCE", Double.toString(currentPlayerForce.getX()));
             }
 
@@ -311,7 +312,7 @@ public class Universe {
             // If object set to orbit
             // Orbital velocity
             // Set the initial velocity at an angle perpendicular to the angle of the force vector
-            if (object1.isOrbit) {
+            if (object1.isOrbit && !(object1 instanceof WhiteHole)) {
                 double theta_f = Math.atan2(object1.getFnet().getY(), object1.getFnet().getX());
 
                 double vAbs = Math.sqrt((currentGravity*maxForceObject.getMass()) / Math.pow(object1.getPos().distance(maxForceObject.getPos()),1));

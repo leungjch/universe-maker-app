@@ -8,9 +8,9 @@ import com.leungjch.universemaker.helpers.Vector2D;
 
 public class WhiteHole extends CelestialBody {
     public static final class SIZES {
-        public static final MassRadiusTuple SMALL = new MassRadiusTuple(-1000,5);
-        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(-10000,10);
-        public static final MassRadiusTuple LARGE = new MassRadiusTuple(-20000,20);
+        public static final MassRadiusTuple SMALL = new MassRadiusTuple(-100,5);
+        public static final MassRadiusTuple MEDIUM = new MassRadiusTuple(-1000,10);
+        public static final MassRadiusTuple LARGE = new MassRadiusTuple(-2000,20);
     }
 
     public WhiteHole(GameView.SIZE_TYPE size, Paint whiteHolePaint) {

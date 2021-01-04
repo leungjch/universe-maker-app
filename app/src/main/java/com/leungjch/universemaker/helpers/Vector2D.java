@@ -14,7 +14,7 @@ public class Vector2D {
         return Math.sqrt(Math.pow(x-vec2.getX(),2) + Math.pow(y-vec2.getY(),2));
     }
 
-    // Return angle between two vectors
+    // Return angle between two vectors (in Radians)
     public double angle(Vector2D vec2) {
         return Math.atan2(vec2.getY()-y, vec2.getX()-x);
     }

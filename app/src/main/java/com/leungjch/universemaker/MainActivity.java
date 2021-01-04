@@ -467,8 +467,6 @@ public class MainActivity extends Activity {
 
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-
-
     }
 
 
